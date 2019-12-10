@@ -51,7 +51,7 @@ let userController = {
 		res.redirect('/signin')
 	},
 	tourEdit: (req, res) => {
-		return res.render('hello tour Edit')
+		return res.render('tourEdit')
 	},
 	postTour: (req, res) => {
 		return res.redirect('/users/:tour_id/dailytour')
