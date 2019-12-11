@@ -11,10 +11,14 @@ module.exports = (sequelize, DataTypes) => {
     LocationId: DataTypes.INTEGER,
     favoritedCount: DataTypes.STRING,
     likedCount: DataTypes.STRING,
+    componentCount:DataTypes.STRING
   }, {});
   Attraction.associate = function(models) {
     // associations can be defined here
     Attraction.hasMany(models.Comment)
+    Attraction.hasMany(models.Component)
+    Attraction.hasMany(models.Like)
+    Attraction.hasMany(models.Favorite)
     Attraction.belongsTo(models.Location)
     Attraction.belongsToMany(models.User, {
       through: models.Favorite,
@@ -25,6 +29,11 @@ module.exports = (sequelize, DataTypes) => {
       through: models.Like,
       foreignKey: 'AttractionId',
       as: 'LikedUsers'
+    })
+    Attraction.belongsToMany(models.User, {
+      through: models.Component,
+      foreignKey: 'AttractionId',
+      as: 'ComponentUsers'
     })
 
   };

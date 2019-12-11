@@ -14,8 +14,21 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Blog.associate = function(models) {
     // associations can be defined here
+    Blog.hasMany(models.Comment)
+    Blog.hasMany(models.Like)
+    Blog.hasMany(models.Favorite)
     Blog.belongsTo(models.Tour)
     Blog.belongsTo(models.User)
+    Blog.belongsToMany(models.User, {
+      through: models.Like,
+      foreignKey: 'BlogId',
+      as: 'LikedUser'
+    })
+    Blog.belongsToMany(models.User, {
+      through: models.Favorite,
+      foreignKey: 'BlogId',
+      as: 'FavoritedUser'
+    })
   };
   return Blog;
 };

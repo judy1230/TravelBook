@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     Comment.belongsTo(models.Tour)
     Comment.belongsTo(models.Attraction)
     Comment.belongsTo(models.User)
+    Comment.belongsTo(models.Blog)
   };
   return Comment;
 };
