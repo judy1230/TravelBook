@@ -66,7 +66,7 @@ let userController = {
 	getDailyTour: (req, res) => {
 		//return res.render('dailyTour')
 		const googleMapsClient = require('@google/maps').createClient({
-			key: 'AIzaSyAbAkb-FhaJxIlX5sa2c_4f-p19gPLjwAU',
+			key: process.env.API_KEY,
 			Promise: Promise
 		})
 		googleMapsClient.geocode({ address: '台北101' })
@@ -75,7 +75,7 @@ let userController = {
 				console.log(response.json.results);
 				center = response.json.results[0].geometry.location
 				console.log("center",center)
-				res.render('dailyTour', { center:center })
+				res.render('dailyTour', { center:center,  })
 
 			})
 			.catch((err) => {

@@ -68,7 +68,9 @@
 	</div>
 	<!-- 地圖放置處 -->
 	<div class="col-6  mt-5 text-center">
-		<div class="mt-5 sticky-top" id="map">
+		<div class="mt-5 sticky-top" id="map"
+    ref="googleMap"
+    class="google-map">
 
 			{{!-- <div id="app" class="container">
 					<div class="row">
@@ -82,18 +84,22 @@
 	</div>
 </div>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbAkb-FhaJxIlX5sa2c_4f-p19gPLjwAU&callback=initMap" async defer></script>
-<script type="text/javascript">
-	let map;
+
+<script >
+
+  let map;
 	function initMap() {
 		map = new google.maps.Map(document.getElementById('map'), {
 			center: { lat: 25.033976, lng: 121.5645389 },
-			zoom: 8
+			zoom: 12
 		});
 
 	}
+	initMap()
+
 
 </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIrPF3ESAMOP0tphzblBhM-sKfVRZ2qZ4&callback=initMap" async defer></script>
 
 <script>
 	let items = document.querySelectorAll('#items-list > li')
