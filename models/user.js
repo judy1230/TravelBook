@@ -9,40 +9,62 @@ module.exports = (sequelize, DataTypes) => {
     introduction: DataTypes.TEXT,
     role: DataTypes.STRING
   }, {});
-  User.associate = function(models) {
+  User.associate = function (models) {
     User.hasMany(models.Comment)
     User.hasMany(models.Tour)
     User.hasMany(models.Blog)
     User.hasMany(models.Like)
-    User.belongsToMany(models.Restaurant, {
+    User.hasMany(models.Favorite)
+    User.hasMany(models.Component)
+    User.belongsToMany(models.Tour, {
       through: models.Favorite,
       foreignKey: 'UserId',
-      as: 'FvoritedRestaurants'
+      as: 'FavoritedTour'
     })
     User.belongsToMany(models.Attraction, {
       through: models.Favorite,
       foreignKey: 'UserId',
-      as: 'FvoritedAttractions'
+      as: 'FavoritedAttraction'
     })
-    User.belongsToMany(models.Tour, {
+    User.belongsToMany(models.Restaurant, {
       through: models.Favorite,
       foreignKey: 'UserId',
-      as: 'FvoritedTours'
+      as: 'FavoritedRestaurant'
+    })
+    User.belongsToMany(models.Blog, {
+      through: models.Favorite,
+      foreignKey: 'UserId',
+      as: 'FavoritedBlog'
     })
     User.belongsToMany(models.Restaurant, {
       through: models.Like,
       foreignKey: 'UserId',
-      as: 'LikedRestaurants'
+      as: 'LikedRestaurant'
+    })
+    User.belongsToMany(models.Blog, {
+      through: models.Like,
+      foreignKey: 'UserId',
+      as: 'LikedBlog'
+    })
+    User.belongsToMany(models.Tour, {
+      through: models.Like,
+      foreignKey: 'UserId',
+      as: 'LikedTour'
+    })
+    User.belongsToMany(models.Attraction, {
+      through: models.Like,
+      foreignKey: 'UserId',
+      as: 'LikedAttraction'
+    })
+    User.belongsToMany(models.Restaurant, {
+      through: models.Component,
+      foreignKey: 'UserId',
+      as: 'ComponentRestaurants'
     })
     User.belongsToMany(models.Attraction, {
       through: models.Favorite,
       foreignKey: 'UserId',
-      as: 'LikedAttractions'
-    })
-    User.belongsToMany(models.Tour, {
-      through: models.Favorite,
-      foreignKey: 'UserId',
-      as: 'LikedTours'
+      as: 'ComponentAttraction'
     })
   };
   return User;
