@@ -5,72 +5,72 @@
 
 
 <div class="container mt-5 mb-5 row">
-		<div class="col-6">
-			<h4>Today's Tour</h4>
-			<ul class="moveable timeline" id="items-list">
-				<li>
-					<a>現在位置</a>
-					<a class="float-right">09:00 12/23</a>
-				</li>
-				<li>
-					<div class="card mb-3" style="max-width: 800px;">
-						<div class="row no-gutters">
-							<div class="col-md-4">
-								<img src="..." class="card-img" alt="...">
-							</div>
-							<div class="col-md-8">
-								<div class="card-body">
-									<h5 class="card-title" href="https://www.totoprayogo.com/#">傳統藝術中心 <span>10:00 12/23</span></h5>
-									<p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-										additional content. This content is a little bit longer.</p>
-									<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-								</div>
+	<div class="col-6">
+		<h4>Today's Tour</h4>
+		<ul class="moveable timeline" id="items-list">
+			<li>
+				<a>現在位置</a>
+				<a class="float-right">09:00 12/23</a>
+			</li>
+			<li>
+				<div class="card mb-3" style="max-width: 800px;">
+					<div class="row no-gutters">
+						<div class="col-md-4">
+							<img src="..." class="card-img" alt="...">
+						</div>
+						<div class="col-md-8">
+							<div class="card-body">
+								<h5 class="card-title" href="https://www.totoprayogo.com/#">傳統藝術中心 <span>10:00 12/23</span></h5>
+								<p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+									additional content. This content is a little bit longer.</p>
+								<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
 							</div>
 						</div>
 					</div>
-				</li>
-				<li>
-					<div class="card mb-3" style="max-width: 800px;">
-						<div class="row no-gutters">
-							<div class="col-md-4">
-								<img src="..." class="card-img" alt="...">
-							</div>
-							<div class="col-md-8">
-								<div class="card-body">
-									<h5 class="card-title" href="https://www.totoprayogo.com/#">傳統藝術中心 <span>10:00 12/23</span></h5>
-									<p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-										additional content. This content is a little bit longer.</p>
-									<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-								</div>
+				</div>
+			</li>
+			<li>
+				<div class="card mb-3" style="max-width: 800px;">
+					<div class="row no-gutters">
+						<div class="col-md-4">
+							<img src="..." class="card-img" alt="...">
+						</div>
+						<div class="col-md-8">
+							<div class="card-body">
+								<h5 class="card-title" href="https://www.totoprayogo.com/#">傳統藝術中心 <span>10:00 12/23</span></h5>
+								<p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+									additional content. This content is a little bit longer.</p>
+								<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
 							</div>
 						</div>
 					</div>
-				</li>
-				<li>
+				</div>
+			</li>
+			<li>
 
-					<div class="card mb-3" style="max-width: 800px;">
-						<div class="row no-gutters">
-							<div class="col-md-4">
-								<img src="..." class="card-img" alt="...">
-							</div>
-							<div class="col-md-8">
-								<div class="card-body">
-									<h5 class="card-title" href="https://www.totoprayogo.com/#">傳統藝術中心 <span>10:00 12/23</span></h5>
-									<p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-										additional content. This content is a little bit longer.</p>
-									<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-								</div>
+				<div class="card mb-3" style="max-width: 800px;">
+					<div class="row no-gutters">
+						<div class="col-md-4">
+							<img src="..." class="card-img" alt="...">
+						</div>
+						<div class="col-md-8">
+							<div class="card-body">
+								<h5 class="card-title" href="https://www.totoprayogo.com/#">傳統藝術中心 <span>10:00 12/23</span></h5>
+								<p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+									additional content. This content is a little bit longer.</p>
+								<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
 							</div>
 						</div>
 					</div>
-				</li>
-			</ul>
-		</div>
-    <!-- 地圖放置處 -->
-		<div class="col-6  mt-5 text-center">
-			<div class="mt-5 sticky-top" >
-				<img class="" src="https://picsum.photos/200" alt="Workplace" usemap="#workmap" width="300" height="300">
-				{{!-- <div id="app" class="container">
+				</div>
+			</li>
+		</ul>
+	</div>
+	<!-- 地圖放置處 -->
+	<div class="col-6  mt-5 text-center">
+		<div class="mt-5 sticky-top" id="map">
+
+			{{!-- <div id="app" class="container">
 					<div class="row">
 						<div class="col">
 							<div id="map " class="embed-responsive embed-responsive-16by9"></div>
@@ -78,121 +78,144 @@
 						</div>
 					</div>
 				</div> --}}
-			</div>
 		</div>
 	</div>
+</div>
 
 
+<script>
+	var map;
+	function initMap() {
+		map = new google.maps.Map(document.getElementById('map'), {
+			center: { lat: -34.397, lng: 150.644 },
+			zoom: 8
+		});
+	}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap" async defer></script>
+<script>
+	let items = document.querySelectorAll('#items-list > li')
 
-	<script>
-		let items = document.querySelectorAll('#items-list > li')
+	items.forEach(item => {
+		$(item).prop('draggable', true)
+		item.addEventListener('dragstart', dragStart)
+		item.addEventListener('drop', dropped)
+		item.addEventListener('dragenter', cancelDefault)
+		item.addEventListener('dragover', cancelDefault)
+	})
 
-		items.forEach(item => {
-			$(item).prop('draggable', true)
-			item.addEventListener('dragstart', dragStart)
-			item.addEventListener('drop', dropped)
-			item.addEventListener('dragenter', cancelDefault)
-			item.addEventListener('dragover', cancelDefault)
-		})
+	function dragStart(e) {
+		var index = $(e.target).index()
+		e.dataTransfer.setData('text/plain', index)
+	}
 
-		function dragStart(e) {
-			var index = $(e.target).index()
-			e.dataTransfer.setData('text/plain', index)
+	function dropped(e) {
+		cancelDefault(e)
+
+		// get new and old index
+		let oldIndex = e.dataTransfer.getData('text/plain')
+		let target = $(e.target)
+		let newIndex = target.index()
+
+		// remove dropped items at old place
+		let dropped = $(this).parent().children().eq(oldIndex).remove()
+
+		// insert the dropped items at new place
+		if (newIndex < oldIndex) {
+			target.before(dropped)
+		} else {
+			target.after(dropped)
 		}
+	}
 
-		function dropped(e) {
-			cancelDefault(e)
+	function cancelDefault(e) {
+		e.preventDefault()
+		e.stopPropagation()
+		return false
+	}
 
-			// get new and old index
-			let oldIndex = e.dataTransfer.getData('text/plain')
-			let target = $(e.target)
-			let newIndex = target.index()
+</script>
+<style>
+	/* Always set the map height explicitly to define the size of the div
+	       * element that contains the map. */
+	#map {
+		height: 100%;
+	}
 
-			// remove dropped items at old place
-			let dropped = $(this).parent().children().eq(oldIndex).remove()
+	/* Optional: Makes the sample page fill the window. */
+	html,
+	body {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+	}
+</style>
+<style>
+	ul.timeline {
+		list-style-type: none;
+		position: relative;
+	}
 
-			// insert the dropped items at new place
-			if (newIndex < oldIndex) {
-				target.before(dropped)
-			} else {
-				target.after(dropped)
-			}
-		}
+	ul.timeline:before {
+		content: ' ';
+		background: #d4d9df;
+		display: inline-block;
+		position: absolute;
+		left: 29px;
+		width: 2px;
+		height: 100%;
+		z-index: 200;
+	}
 
-		function cancelDefault(e) {
-			e.preventDefault()
-			e.stopPropagation()
-			return false
-		}
+	ul.timeline>li {
+		margin: 20px 0;
+		padding-left: 20px;
+	}
 
-	</script>
-	<style>
-		ul.timeline {
-			list-style-type: none;
-			position: relative;
-		}
+	ul.timeline>li:before {
+		content: ' ';
+		background: white;
+		display: inline-block;
+		position: absolute;
+		border-radius: 50%;
+		border: 3px solid #22c0e8;
+		left: 20px;
+		width: 20px;
+		height: 20px;
+		z-index: 400;
+	}
 
-		ul.timeline:before {
-			content: ' ';
-			background: #d4d9df;
-			display: inline-block;
-			position: absolute;
-			left: 29px;
-			width: 2px;
-			height: 100%;
-			z-index: 200;
-		}
-
-		ul.timeline>li {
-			margin: 20px 0;
-			padding-left: 20px;
-		}
-
-		ul.timeline>li:before {
-			content: ' ';
-			background: white;
-			display: inline-block;
-			position: absolute;
-			border-radius: 50%;
-			border: 3px solid #22c0e8;
-			left: 20px;
-			width: 20px;
-			height: 20px;
-			z-index: 400;
-		}
-
-		[draggable="true"] {
-			user-select: none;
-			-moz-user-select: none;
-			-webkit-user-select: none;
-			-ms-user-select: none;
-		}
+	[draggable="true"] {
+		user-select: none;
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+	}
 
 
-		[draggable="true"] {
-			user-select: none;
-			-moz-user-select: none;
-			-webkit-user-select: none;
-			-ms-user-select: none;
-		}
+	[draggable="true"] {
+		user-select: none;
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+	}
 
-		ul.moveable {
-			list-style: none;
-			margin: 0px;
+	ul.moveable {
+		list-style: none;
+		margin: 0px;
 
-			li {
-				list-style-image: none;
-				margin: 10px;
-				border: 1px solid #ccc;
-				padding: 4px;
-				border-radius: 4px;
-				color: #666;
-				cursor: move;
+		li {
+			list-style-image: none;
+			margin: 10px;
+			border: 1px solid #ccc;
+			padding: 4px;
+			border-radius: 4px;
+			color: #666;
+			cursor: move;
 
-				/* &:hover {
+			/* &:hover {
 			background-color: #eee;
 		} */
-			}
 		}
-
-	</style>
+	}
+</style>
