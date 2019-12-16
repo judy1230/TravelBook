@@ -99,7 +99,7 @@
 
 
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIrPF3ESAMOP0tphzblBhM-sKfVRZ2qZ4&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{process.env.API_KEY}}&callback=initMap" async defer></script>
 
 <script>
 	let items = document.querySelectorAll('#items-list > li')
@@ -199,12 +199,6 @@
 	}
 
 
-	[draggable="true"] {
-		user-select: none;
-		-moz-user-select: none;
-		-webkit-user-select: none;
-		-ms-user-select: none;
-	}
 
 	ul.moveable {
 		list-style: none;
