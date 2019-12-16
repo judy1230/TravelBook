@@ -1,4 +1,4 @@
 node_modules/
 test/
 .env
-/views/layout/gmap.handlebars
+views/layout/gmap.handlebars
