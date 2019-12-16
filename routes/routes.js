@@ -57,15 +57,15 @@ router.get('/daysTours/:tour_id', toursController.getDaysTour)
 //router.get('/admin/chart', adminController.getAdminChart)
 
 // //users sign up
-// router.get('/signup', userController.signUpPage)
-// router.post('/signup', userController.signUp)
-// // //users sing in
-// router.get('/signin', userController.signInPage)
-// router.post('/signin', passport.authenticate('local', {
-// 	failureRedirect: '/signin',
-// 	failureFlash: true
-// }), userController.signIn)
-// //users logout
-// router.get('/logout', userController.logout)
-//}
+router.get('/signup', userController.signUpPage)
+router.post('/signup', userController.signUp)
+// //users sing in
+router.get('/signin', userController.signInPage)
+router.post('/signin', passport.authenticate('local', {
+	failureRedirect: '/signin',
+	failureFlash: true
+}), userController.signIn)
+//users logout
+router.get('/logout', userController.logout)
+
 module.exports = router

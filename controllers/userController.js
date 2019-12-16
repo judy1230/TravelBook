@@ -9,6 +9,7 @@ const Comment = db.Comment
 const Location = db.Location
 const helpersreq = require('../_helpers')
 
+
 let userController = {
 	signUpPage: (req, res) => {
 		return res.render('signup')
@@ -63,8 +64,23 @@ let userController = {
 	},
 
 	getDailyTour: (req, res) => {
-		return res.render('dailyTour')
+		//return res.render('dailyTour')
+		const googleMapsClient = require('@google/maps').createClient({
+			key: 'AIzaSyAbAkb-FhaJxIlX5sa2c_4f-p19gPLjwAU',
+			Promise: Promise
+		})
+		googleMapsClient.geocode({ address: '台北101' })
+			.asPromise()
+			.then((response) => {
+				console.log(response.json.results);
+				center = response.json.results[0].geometry.location
+				console.log("center",center)
+				res.render('dailyTour', { center:center })
 
+			})
+			.catch((err) => {
+				console.log(err);
+			})
 	},
 	getDaysTour: (req, res) => {
 		return res.render('daysTour')
