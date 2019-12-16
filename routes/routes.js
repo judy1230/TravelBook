@@ -37,6 +37,7 @@ router.get('/users/:tour_id/dailyTour', userController.getDailyTour)
 //router.get('/users/blog/:id', userController.getBlog)
 
 //restaurant, attraction, tour, blog display,
+
 router.get('/restaurants', toursController.getRestaurants)
 router.get('/attractions', toursController.getAttractions)
 router.get('/dailyTours', toursController.getDailyTours)
@@ -47,6 +48,7 @@ router.get('/attractions/:attraction_id', toursController.getAttraction)
 router.get('/dailyTours/:tour_id', toursController.getDailyTour)
 router.get('/daysTours/:tour_id', toursController.getDaysTour)
 //router.get('/blog/:tour_id', toursController.getBlog)
+
 
 //SHARE
 //router.get('/users/:id/share', userController.getShare)
