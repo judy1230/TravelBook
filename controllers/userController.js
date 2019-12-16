@@ -74,10 +74,10 @@ let userController = {
 	},
 
 
-	getFavoritedItem: (req, res) => {
-		return res.render('FavoirtedItem')
+	getComponent: (req, res) => {
+		return res.render('Component')
 	},
-	postFavoritedItem: (req, res) => {
+	postComponent: (req, res) => {
 		return res.redirect('/users/:id/tourEdit')
 	},
 	getBlogEdit: (req, res) => {

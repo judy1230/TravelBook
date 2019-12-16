@@ -1,3 +1,68 @@
-<p>index</p>
+<section class="home_bg p-5"  id="home">
+	<div class="overlay"></div>
+	<div class="container_table">
+		<div class="container_table_cell">
+			<h2 class=" mt-5">想去台北旅遊?</h2>
+			<div class="social_icons">
+				<a href="/tours"><i class="far fa-clipboard" aria-hidden="true"></i></a>
+				<a href="/restaurants"><i class="fas fa-utensils" aria-hidden="true"></i></a>
+				<a href="/attractions"><i class="fas fa-camera-retro" aria-hidden="true"></i></a>
+				<a href="/gifts"><i class="fas fa-gifts" aria-hidden="true"></i></a>
+			</div>
+		</div>
+	</div>
+</section>
 
 
+<style>
+	/* ============================ Homepage blackground img==========================*/
+	.home_bg {
+		background-image: url(https://www.travel.taipei/image/64610/1024x768);
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		width: 100%;
+		height: 600px;
+	}
+
+	.overlay {
+		background: rgba(0, 0, 0, 0.3);
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	.container_table {
+		display: table;
+		width: 100%;
+		height: 100%;
+		position: relative;
+	}
+
+	.container_table_cell {
+		display: table-cell;
+		text-align: center;
+		vertical-align: middle;
+	}
+
+	.container_table_cell h2 {
+		color: #fff;
+		text-transform: capitalize;
+		font-size: 48px;
+		letter-spacing: 4px;
+		font-weight: lighter;
+	}
+
+	.social_icons a {
+		color: #fff;
+		display: inline-block;
+		width: 30px;
+		height: 40px;
+		line-height: 40px;
+		font-size: 24px;
+		margin: 10px;
+
+	}
+</style>
