@@ -64,23 +64,58 @@ let userController = {
 	},
 
 	getDailyTour: (req, res) => {
-		//return res.render('dailyTour')
+		startMin = new Date().getMinutes()
+		startHour = new Date().getHours()
+		console.log('startMins', startMin)
+		console.log('startHours', startHour)
 		const googleMapsClient = require('@google/maps').createClient({
 			key: process.env.API_KEY,
 			Promise: Promise
 		})
-		googleMapsClient.geocode({ address: '台北101' })
-			.asPromise()
+		// googleMapsClient.geocode({
+		// 	address:'台北火車站'
+		//  }).asPromise()
+		// 	 .then((response) => {
+		// 		console.log(response.json.results);
+		// 		center = response.json.results[0].geometry.location
+		// 		 console.log("center", center)
+		// 	})
+		// 	.catch((err) => {
+		// 		console.log(err);
+		// 	})
+		googleMapsClient.directions({
+			origin: { lat: 25.033976, lng:121.5645389 },
+			destination: { lat: 25.0478142, lng: 121.5169488 }
+		}).asPromise()
 			.then((response) => {
-				console.log(response.json.results);
-				center = response.json.results[0].geometry.location
-				console.log("center",center)
-				res.render('dailyTour', { center:center,  })
+				duration = response.json.routes[0].legs[0].duration
+				distance = response.json.routes[0].legs[0].distance
+				console.log('duration', typeof(duration.text))
+				endMin = Math.floor(startMin + (duration.value / 60))
+				console.log('endMin', endMin)
+				let diff = 0
+				if (endMin > 60) {
+					endMin = endMin - 60
+					diff=1
+				}
+				endHour = startHour + diff
+				console.log('endMin', endMin)
+				console.log('endHour', endHour)
+				// endHour = Math.floor(end/1000/60/60)
+				// endMin = Math.floor(((end - endHour )* 1000 * 60 * 60)/1000/60)
+				// console.log('hour', endHour)
+				// console.log('min', endMin)
 
+				//center = response.json.results[0].geometry.location
+				//console.log("center", center)
+				res.render('dailyTour', { duration: duration.text, distance: distance.text, endMin, endHour, startHour, startMin })
 			})
 			.catch((err) => {
 				console.log(err);
 			})
+
+
+
 	},
 	getDaysTour: (req, res) => {
 		return res.render('daysTour')

@@ -10,7 +10,7 @@
 		<ul class="moveable timeline" id="items-list">
 			<li>
 				<a>現在位置</a>
-				<a class="float-right">09:00 12/23</a>
+				<a class="float-right">{{startHour}}: {{startMin}} 12/23</a>
 			</li>
 			<li>
 				<div class="card mb-3" style="max-width: 800px;">
@@ -20,7 +20,7 @@
 						</div>
 						<div class="col-md-8">
 							<div class="card-body">
-								<h5 class="card-title" href="https://www.totoprayogo.com/#">傳統藝術中心 <span>10:00 12/23</span></h5>
+								<h6 class="card-title" href="https://www.totoprayogo.com/#">傳統藝術中心 {{duration}} <span style="font-size: 18px;"> {{hour}} : {{min}} 12/23 </span></h6>
 								<p class="card-text">This is a wider card with supporting text below as a natural lead-in to
 									additional content. This content is a little bit longer.</p>
 								<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
@@ -67,10 +67,9 @@
 		</ul>
 	</div>
 	<!-- 地圖放置處 -->
-	<div class="col-6  mt-5 text-center">
+	<div class="col-6  mt-5 text-center w-250 h-250">
 		<div class="mt-5 sticky-top" id="map"
-    ref="googleMap"
-    class="google-map">
+    class="embed-responsive embed-responsive-16by9">
 
 			{{!-- <div id="app" class="container">
 					<div class="row">
@@ -90,16 +89,13 @@
   let map;
 	function initMap() {
 		map = new google.maps.Map(document.getElementById('map'), {
-			center: { lat: 25.033976, lng: 121.5645389 },
-			zoom: 12
+			center: {{center}},
+			zoom: 15
 		});
 
 	}
-	initMap()
-
-
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key={{process.env.API_KEY}}&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIrPF3ESAMOP0tphzblBhM-sKfVRZ2qZ4&callback=initMap"  async defer></script>
 
 <script>
 	let items = document.querySelectorAll('#items-list > li')
