@@ -84,19 +84,19 @@ let userController = {
 		// 		console.log(err);
 		// 	})
 		googleMapsClient.directions({
-			origin: { lat: 25.033976, lng:121.5645389 },
+			origin: { lat: 25.033976, lng: 121.5645389 },
 			destination: { lat: 25.0478142, lng: 121.5169488 }
 		}).asPromise()
 			.then((response) => {
 				duration = response.json.routes[0].legs[0].duration
 				distance = response.json.routes[0].legs[0].distance
-				console.log('duration', typeof(duration.text))
+				console.log('duration', typeof (duration.text))
 				endMin = Math.floor(startMin + (duration.value / 60))
 				console.log('endMin', endMin)
 				let diff = 0
 				if (endMin > 60) {
 					endMin = endMin - 60
-					diff=1
+					diff = 1
 				}
 				endHour = startHour + diff
 				console.log('endMin', endMin)
