@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
 const Attraction = db.Attraction
+const Restaurant = db.Restaurant
+const User = db.User
 const Tour = db.Tour
 const Blog = db.Blog
 const Favorite = db.Favorite
@@ -64,25 +66,15 @@ let userController = {
 	},
 
 	getDailyTour: (req, res) => {
+		let Location1 = "台北火車站"
+		let Location2 = "台北101"
+		date = `${new Date().getMonth() + 1} /  ${new Date().getDate()}`
 		startMin = new Date().getMinutes()
 		startHour = new Date().getHours()
-		console.log('startMins', startMin)
-		console.log('startHours', startHour)
 		const googleMapsClient = require('@google/maps').createClient({
 			key: process.env.API_KEY,
 			Promise: Promise
 		})
-		// googleMapsClient.geocode({
-		// 	address:'台北火車站'
-		//  }).asPromise()
-		// 	 .then((response) => {
-		// 		console.log(response.json.results);
-		// 		center = response.json.results[0].geometry.location
-		// 		 console.log("center", center)
-		// 	})
-		// 	.catch((err) => {
-		// 		console.log(err);
-		// 	})
 		googleMapsClient.directions({
 			origin: { lat: 25.033976, lng: 121.5645389 },
 			destination: { lat: 25.0478142, lng: 121.5169488 }
@@ -90,7 +82,7 @@ let userController = {
 			.then((response) => {
 				duration = response.json.routes[0].legs[0].duration
 				distance = response.json.routes[0].legs[0].distance
-				console.log('duration', typeof (duration.text))
+				//console.log('duration', typeof (duration.text))
 				endMin = Math.floor(startMin + (duration.value / 60))
 				console.log('endMin', endMin)
 				let diff = 0
@@ -101,14 +93,7 @@ let userController = {
 				endHour = startHour + diff
 				console.log('endMin', endMin)
 				console.log('endHour', endHour)
-				// endHour = Math.floor(end/1000/60/60)
-				// endMin = Math.floor(((end - endHour )* 1000 * 60 * 60)/1000/60)
-				// console.log('hour', endHour)
-				// console.log('min', endMin)
-
-				//center = response.json.results[0].geometry.location
-				//console.log("center", center)
-				res.render('dailyTour', { duration: duration.text, distance: distance.text, endMin, endHour, startHour, startMin })
+				res.render('dailyTour', { date, Location1, Location2, duration: duration.text, distance: distance.text, endMin, endHour, startHour, startMin })
 			})
 			.catch((err) => {
 				console.log(err);
@@ -125,10 +110,73 @@ let userController = {
 	},
 
 
-	getComponent: (req, res) => {
-		return res.render('Component')
+	getFavorite: async (req, res) => {
+		try {
+			let favoriteArray = []
+			const googleMapsClient = require('@google/maps').createClient({
+				key: process.env.API_KEY,
+				Promise: Promise
+			})
+
+			user = await User.findByPk('2', {
+				include: [
+					{ model: Restaurant, as: 'FavoritedRestaurants'},
+					{ model: Attraction, as: 'FavoritedAttractions'},
+				]
+			}).then(user => {
+				//console.log('user.FavoritedRestaurants.Restaurants', user.FavoritedRestaurants)
+				favoriteArray.push(...user.FavoritedRestaurants)
+				favoriteArray.push(...user.FavoritedAttractions)
+				//console.log('favoriteArray', favoriteArray)
+
+				favoriteArray.map(r => ({
+					...r.dataValues,
+					duration: googleMapsClient.geocode({
+						address: r.dataValues.address
+					}).asPromise()
+						.then((response) => {
+							center = response.json.results[0].geometry.location
+							console.log('center', center)
+							googleMapsClient.directions({
+								origin: { lat: 25.033976, lng: 121.5645389 },
+								destination: center
+							}).asPromise()
+								.then((response) => {
+									console.log('response.json.routes[0].legs[0].duration', response.json.routes[0].legs[0].duration)
+									return response.json.routes[0].legs[0].duration
+								})
+								.catch((err) => {
+									console.log(err);
+								})
+						})
+				}))
+				console.log('favoriteArray152', favoriteArray)
+				return res.render('favorite', {
+					restaurants: user.FavoritedRestaurants,
+					attractions: user.FavoritedAttractions,
+					duration: favoriteArray.duration.text
+				})
+			})
+		} catch (err) { console.log(err)}
 	},
 	postComponent: (req, res) => {
+		const googleMapsClient = require('@google/maps').createClient({
+			key: process.env.API_KEY,
+			Promise: Promise
+		})
+		googleMapsClient.geocode({
+			address: ''
+		}).asPromise()
+			.then((response) => {
+				console.log(response.json.results);
+				center = response.json.results[0].geometry.location
+				console.log("center", center)
+				console.log("typeof(center.lat)", typeof (center.lat))
+			})
+			.catch((err) => {
+				console.log(err);
+			})
+		return res.render('Component')
 		return res.redirect('/users/:id/tourEdit')
 	},
 	getBlogEdit: (req, res) => {

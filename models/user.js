@@ -1,7 +1,12 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    //id: DataTypes.INTEGER,
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
     name: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
@@ -19,42 +24,42 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsToMany(models.Tour, {
       through: models.Favorite,
       foreignKey: 'UserId',
-      as: 'FavoritedTour'
+      as: 'FavoritedTours'
     })
     User.belongsToMany(models.Attraction, {
       through: models.Favorite,
       foreignKey: 'UserId',
-      as: 'FavoritedAttraction'
+      as: 'FavoritedAttractions'
     })
     User.belongsToMany(models.Restaurant, {
       through: models.Favorite,
       foreignKey: 'UserId',
-      as: 'FavoritedRestaurant'
+      as: 'FavoritedRestaurants'
     })
     User.belongsToMany(models.Blog, {
       through: models.Favorite,
       foreignKey: 'UserId',
-      as: 'FavoritedBlog'
+      as: 'FavoritedBlogs'
     })
     User.belongsToMany(models.Restaurant, {
       through: models.Like,
       foreignKey: 'UserId',
-      as: 'LikedRestaurant'
+      as: 'LikedRestaurants'
     })
     User.belongsToMany(models.Blog, {
       through: models.Like,
       foreignKey: 'UserId',
-      as: 'LikedBlog'
+      as: 'LikedBlogs'
     })
     User.belongsToMany(models.Tour, {
       through: models.Like,
       foreignKey: 'UserId',
-      as: 'LikedTour'
+      as: 'LikedTours'
     })
     User.belongsToMany(models.Attraction, {
       through: models.Like,
       foreignKey: 'UserId',
-      as: 'LikedAttraction'
+      as: 'LikedAttractions'
     })
     User.belongsToMany(models.Restaurant, {
       through: models.Component,
@@ -64,7 +69,7 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsToMany(models.Attraction, {
       through: models.Favorite,
       foreignKey: 'UserId',
-      as: 'ComponentAttraction'
+      as: 'ComponentAttractions'
     })
   };
   return User;

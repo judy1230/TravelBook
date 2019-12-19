@@ -17,6 +17,12 @@ module.exports = {
       AttractionId: {
         type: Sequelize.INTEGER
       },
+      Lat: {
+        type: Sequelize.STRING
+      },
+      Lng: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -35,6 +35,9 @@ module.exports = {
       likedCount: {
         type: Sequelize.TEXT
       },
+      componentCount: {
+        type: Sequelize.TEXT
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

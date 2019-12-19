@@ -44,6 +44,7 @@ module.exports = {
           LocationId: Math.floor(Math.random() * 5) + 1,
           favoritedCount: Math.floor(Math.random() * 20) + 1,
           likedCount: Math.floor(Math.random() * 20) + 1,
+          componentCount: Math.floor(Math.random() * 20) + 1,
           createdAt: new Date(),
           updatedAt: new Date(),
         })
@@ -60,6 +61,7 @@ module.exports = {
           LocationId: Math.floor(Math.random() * 5) + 1,
           favoritedCount: Math.floor(Math.random() * 20) + 1,
           likedCount: Math.floor(Math.random() * 20) + 1,
+          componentCount: Math.floor(Math.random() * 20) + 1,
           createdAt: new Date(),
           updatedAt: new Date(),
         })
@@ -116,6 +118,7 @@ module.exports = {
           RestaurantId: Math.floor(Math.random() * 10) + 1,
           AttractionId: Math.floor(Math.random() * 10) + 1,
           TourId: Math.floor(Math.random() * 3) + 1,
+          BlogId: Math.floor(Math.random() * 3) + 1,
           createdAt: new Date(),
           updatedAt: new Date(),
         })
@@ -127,10 +130,23 @@ module.exports = {
           RestaurantId: Math.floor(Math.random() * 10) + 1,
           AttractionId: Math.floor(Math.random() * 10) + 1,
           TourId: Math.floor(Math.random() * 3) + 1,
+          BlogId: Math.floor(Math.random() * 3) + 1,
           createdAt: new Date(),
           updatedAt: new Date(),
         })
       ), {});
+    // return queryInterface.bulkInsert('Components',
+    //   Array.from({ length: 3 }).map(d =>
+    //     ({
+    //       UserId: Math.floor(Math.random() * 3) + 1,
+    //       RestaurantId: Math.floor(Math.random() * 10) + 1,
+    //       AttractionId: Math.floor(Math.random() * 10) + 1,
+    //       Lat: 25.0478142,
+    //       Lng: 121.5169488,
+    //       createdAt: new Date(),
+    //       updatedAt: new Date(),
+    //     })
+    //   ), {});
   },
 
   down: (queryInterface, Sequelize) => {
@@ -143,6 +159,7 @@ module.exports = {
     queryInterface.bulkDelete('Comment', null, {});
     queryInterface.bulkDelete('Favorites', null, {});
     return queryInterface.bulkDelete('Likes', null, {});
+    //return queryInterface.bulkDelete('Components', null, {});
   }
 };
 
