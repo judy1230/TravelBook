@@ -108,8 +108,6 @@ let userController = {
 	getBlog: (req, res) => {
 		return res.render('blog')
 	},
-
-
 	getFavorite: async (req, res) => {
 		try {
 			let favoriteArray = []
@@ -120,16 +118,16 @@ let userController = {
 
 			user = await User.findByPk('2', {
 				include: [
-					{ model: Restaurant, as: 'FavoritedRestaurants'},
-					{ model: Attraction, as: 'FavoritedAttractions'},
+					{ model: Restaurant, as: 'FavoritedRestaurants' },
+					{ model: Attraction, as: 'FavoritedAttractions' },
 				]
 			}).then(user => {
-				//console.log('user.FavoritedRestaurants.Restaurants', user.FavoritedRestaurants)
 				favoriteArray.push(...user.FavoritedRestaurants)
 				favoriteArray.push(...user.FavoritedAttractions)
-				//console.log('favoriteArray', favoriteArray)
 
-				favoriteArray.map(r => ({
+			})
+
+				favoriteArray = await favoriteArray.map(r => ({
 					...r.dataValues,
 					duration: googleMapsClient.geocode({
 						address: r.dataValues.address
@@ -143,21 +141,22 @@ let userController = {
 							}).asPromise()
 								.then((response) => {
 									console.log('response.json.routes[0].legs[0].duration', response.json.routes[0].legs[0].duration)
-									return response.json.routes[0].legs[0].duration
+									return response.json.routes[0].legs[0].duration.text
 								})
 								.catch((err) => {
 									console.log(err);
 								})
 						})
 				}))
+			  console.log('user', user)
 				console.log('favoriteArray152', favoriteArray)
 				return res.render('favorite', {
 					restaurants: user.FavoritedRestaurants,
 					attractions: user.FavoritedAttractions,
-					duration: favoriteArray.duration.text
+					duration: favoriteArray.duration
 				})
-			})
-		} catch (err) { console.log(err)}
+
+		} catch (err) { console.log(err) }
 	},
 	postComponent: (req, res) => {
 		const googleMapsClient = require('@google/maps').createClient({
