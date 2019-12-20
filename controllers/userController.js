@@ -66,39 +66,64 @@ let userController = {
 		return res.redirect('/tours/blog/:tour_id')
 	},
 
-	getDailyTour: (req, res) => {
-		let Location1 = "台北101"
-		let Location2 = "陽明山"
-		date = `${new Date().getMonth() + 1} /  ${new Date().getDate()}`
-		startMin = new Date().getMinutes()
-		startHour = new Date().getHours()
-		const googleMapsClient = require('@google/maps').createClient({
-			key: process.env.API_KEY,
-			Promise: Promise
-		})
-		googleMapsClient.directions({
-			origin: Location1,//{ lat: 25.033976, lng: 121.5645389 },
-			destination: Location2//{ lat: 25.0478142, lng: 121.5169488 }
-		}).asPromise()
-			.then((response) => {
-				duration = response.json.routes[0].legs[0].duration
-				distance = response.json.routes[0].legs[0].distance
-				console.log('duration', duration.text)
-				endMin = Math.floor(startMin + (duration.value / 60))
-				console.log('endMin', endMin)
-				let diff = 0
-				if (endMin > 60) {
-					endMin = endMin - 60
-					diff = 1
-				}
-				endHour = startHour + diff
-				console.log('endMin', endMin)
-				console.log('endHour', endHour)
-				res.render('dailyTour', { date, Location1, Location2, duration: duration.text, distance: distance.text, endMin, endHour, startHour, startMin })
-			})
-			.catch((err) => {
-				console.log(err);
-			})
+	getDailyTour: async (req, res) => {
+		try {
+			data =[]
+			componentArray = await User.findByPk('2', {
+					include: [
+						{ model: Restaurant, as: 'ComponentRestaurants' },
+						{ model: Attraction, as: 'ComponentAttractions' },
+					]
+				}).then(user => {
+					data.push(...user.ComponentRestaurants)
+					data.push(...user.ComponentAttractions)
+					data.sort((a, b) => b.createdAt - a.createdAt)
+					return ({ data })
+				})
+			for (let j = 0; j < componentArray.data.length; j++) {
+
+				 data.push(componentArray.data[j].name)
+				//console.log('data', data)
+			}
+			console.log('data', data)
+			for (let i = 0; i < data.length; i++) {
+				let Location1 = data[i]
+				let Location2 = data[i+1]
+				date = `${new Date().getMonth() + 1} /  ${new Date().getDate()}`
+				startMin = new Date().getMinutes()
+				startHour = new Date().getHours()
+				const googleMapsClient = require('@google/maps').createClient({
+					key: process.env.API_KEY,
+					Promise: Promise
+				})
+				googleMapsClient.directions({
+					origin: Location1,//{ lat: 25.033976, lng: 121.5645389 },
+					destination: Location2//{ lat: 25.0478142, lng: 121.5169488 }
+				}).asPromise()
+					.then((response) => {
+						duration = response.json.routes[0].legs[0].duration
+						distance = response.json.routes[0].legs[0].distance
+						console.log('duration', duration.text)
+						endMin = Math.floor(startMin + (duration.value / 60))
+						console.log('endMin', endMin)
+						let diff = 0
+						if (endMin > 60) {
+							endMin = endMin - 60
+							diff = 1
+						}
+						endHour = startHour + diff
+						console.log('endMin', endMin)
+						console.log('endHour', endHour)
+						res.render('dailyTour', { date, Location1, Location2, duration: duration.text, distance: distance.text, endMin, endHour, startHour, startMin })
+					})
+					.catch((err) => {
+						console.log(err);
+					})
+
+			}
+
+
+		} catch (err) { console.log(err) }
 
 
 
@@ -120,8 +145,6 @@ let userController = {
 				  { model: Attraction, as: 'ComponentAttractions' },
 				]
 			}).then(user => {
-				//req.user = User.findByPk('2')
-				//console.log('user.ComponentAttractions', user.ComponentAttractions)
 				const Restaurants = user.FavoritedRestaurants.map(r => ({
 					...r.dataValues,
 					isSelected: user.ComponentRestaurants.map(d => d.id).includes(r.id) ? true : false
@@ -129,11 +152,10 @@ let userController = {
 				const Attractions = user.FavoritedAttractions.map(r => ({
 					...r.dataValues,
 					isSelected: user.ComponentAttractions.map(d => d.id).includes(r.id) ? true : false
-					// isSelected: user.ComponentAttractions ? user.ComponentAttractions.map(d => d.id).includes(r.id) : true
 				}))
 				return { Restaurants , Attractions}
 			})
-			console.log('favoriteArray.Attractions', favoriteArray.Attractions)
+			//console.log('favoriteArray.Attractions', favoriteArray.Attractions)
 			return res.render('favorite', {
 				attractions: favoriteArray.Attractions,
 				restaurants: favoriteArray.Restaurants,
@@ -145,8 +167,7 @@ let userController = {
 		return Component.create({
 			UserId: '2',//req.user.id
 			RestaurantId: req.params.rest_id,
-		})
-			.then((component) => {
+		}).then((component) => {
 				return res.redirect('back')
 			})
 	},
@@ -157,7 +178,6 @@ let userController = {
 				RestaurantId: req.params.rest_id
 			}
 		}).then((component) => {
-			console.log('component', component)
 			component.destroy()
 			return res.redirect('back')
 		})
@@ -167,8 +187,7 @@ let userController = {
 		return Component.create({
 			UserId: '2',//req.user.id
 			AttractionId: req.params.attraction_id,
-		})
-			.then((component) => {
+		}).then((component) => {
 				return res.redirect('back')
 			})
 	},
@@ -179,31 +198,11 @@ let userController = {
 				AttractionId: req.params.attraction_id
 			}
 		}).then((component) => {
-			console.log('component', component)
 			component.destroy()
 			return res.redirect('back')
 		})
 
 	},
-		// const googleMapsClient = require('@google/maps').createClient({
-		// 	key: process.env.API_KEY,
-		// 	Promise: Promise
-		// })
-		// googleMapsClient.geocode({
-		// 	address: ''
-		// }).asPromise()
-		// 	.then((response) => {
-		// 		console.log(response.json.results);
-		// 		center = response.json.results[0].geometry.location
-		// 		console.log("center", center)
-		// 		console.log("typeof(center.lat)", typeof (center.lat))
-		// 	})
-		// 	.catch((err) => {
-		// 		console.log(err);
-		// 	})
-		// return res.render('Component')
-		// return res.redirect('/users/:id/tourEdit')
-	//},
 	getBlogEdit: (req, res) => {
 		return res.render('blogEdit')
 	},
