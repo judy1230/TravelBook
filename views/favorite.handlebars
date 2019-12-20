@@ -1,5 +1,5 @@
 <div class="container row m-auto p-5">
-	<form action="/users/:id/component" method="POST" style="width: 100%;">
+	{{!-- <form action="/users/:id/component" method="POST" style="width: 100%;"> --}}
 
 		<div class="container row border border-info p-3 text-center">
 			<label class="p-3 mr-2" style="font-size: 3em;"><i class="fas fa-camera-retro"></i></label>
@@ -14,28 +14,43 @@
 						<div class="card-body">
 							<h8 class="card-title" href="/attractions/:attraction_id">{{this.name}} <small> {{../duration}}</small>
 							</h8>
-							<p class="card-text">{{this.opening_hours}} </p>
+							<p class="card-text">open: {{this.opening_hours}} </p>
+							{{#if this.isSelected }}
+							<form action="/users/{{this.id}}/attraction/component?_method=DELETE" method="POST" class="ml-3 "><button type="submit"
+									class="btn btn-outline-danger btn-sm">刪除</button></form>
+							{{else}}
+							<form action="/users/{{this.id}}/attraction/component" method="POST" class="ml-2"><button type="submit"
+									class="btn btn-outline-info btn-sm">加入</button>
+							</form>
+							{{/if}}
 						</div>
 					</div>
 				</div>
 			</div>
 			{{/each}}
 		</div>
-		<div class="container row border-left border-right border-bottom border-info p-3 text-center">
+		<div class="container row border border-info p-3 text-center">
 			<label class="p-3 mr-2" style="font-size: 3em;"><i class="fas fa-utensils"></i></label>
 			{{#each restaurants}}
-			<input type="hidden" name="attractionId" value="{{this.id}}" />
-
 			<div class="card mb-3" style="width: 200px; height: 120px;">
 				<div class="row no-gutters">
 					<div class="col-md-4">
 						<img src="{{this.image}}" class="card-img rounded" alt="">
+						<input type="hidden" name="attractionId" value="{{this.id}}" />
 					</div>
 					<div class="col-md-8">
 						<div class="card-body">
-							<h8 class="card-title" href="/restaurants/:restaurant_id">{{this.name}} <small> {{this.duration}}</small>
+							<h8 class="card-title" href="/restaurants/:restaurant_id">{{this.name}} <small> {{../duration}}</small>
 							</h8>
-							<p class="card-text">{{this.opening_hours}} </p>
+							<p class="card-text">open: {{this.opening_hours}} </p>
+							{{#if this.isSelected }}
+							<form action="/users/{{this.id}}/restaurant/component?_method=DELETE" method="POST" class="ml-3 "><button type="submit"
+									class="btn btn-outline-danger btn-sm">刪除</button></form>
+							{{else}}
+							<form action="/users/{{this.id}}/restaurant/component" method="POST" class="ml-2"><button type="submit"
+									class="btn btn-outline-info btn-sm">加入</button>
+							</form>
+							{{/if}}
 						</div>
 					</div>
 				</div>
@@ -43,13 +58,9 @@
 			{{/each}}
 		</div>
 
-
-
-
-
-		<div class="container p-3 text-right">
+		{{!-- <div class="container p-3 text-right">
 			<button class="btn btn-lg btn-primary" type="submit">Submit</button>
-		</div>
+		</div> --}}
 
-	</form>
+	{{!-- </form> --}}
 </div>

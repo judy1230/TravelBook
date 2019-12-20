@@ -3,6 +3,7 @@ const db = require('../models')
 const Attraction = db.Attraction
 const Restaurant = db.Restaurant
 const User = db.User
+const Component = db.Component
 const Tour = db.Tour
 const Blog = db.Blog
 const Favorite = db.Favorite
@@ -108,78 +109,101 @@ let userController = {
 	getBlog: (req, res) => {
 		return res.render('blog')
 	},
-	getFavorite: (req, res) => {
+	getFavorite: async(req, res) => {
+		try {
 			let favoriteArray = []
-			const googleMapsClient = require('@google/maps').createClient({
-				key: process.env.API_KEY,
-				Promise: Promise
-			})
-
-			return  User.findByPk('2', {
+			favoriteArray = await User.findByPk('2', {
 				include: [
 					{ model: Restaurant, as: 'FavoritedRestaurants' },
 					{ model: Attraction, as: 'FavoritedAttractions' },
+					{ model: Restaurant, as: 'ComponentRestaurants' },
+				  { model: Attraction, as: 'ComponentAttractions' },
 				]
 			}).then(user => {
-				favoriteArray.push(...user.FavoritedRestaurants)
-				favoriteArray.push(...user.FavoritedAttractions)
-				favoriteArray = favoriteArray.map(r => ({
+				//req.user = User.findByPk('2')
+				//console.log('user.ComponentAttractions', user.ComponentAttractions)
+				const Restaurants = user.FavoritedRestaurants.map(r => ({
 					...r.dataValues,
-					duration: googleMapsClient.geocode({
-						address: r.dataValues.address
-					}).asPromise()
-						.then((response) => {
-							center = response.json.results[0].geometry.location
-							console.log('center', center)
-							googleMapsClient.directions({
-								origin: { lat: 25.033976, lng: 121.5645389 },
-								destination: center
-							}).asPromise()
-								.then((response) => {
-									console.log('response.json.routes[0].legs[0].duration', response.json.routes[0].legs[0].duration)
-									return response.json.routes[0].legs[0].duration.text
-
-								})
-								.catch((err) => {
-									console.log(err);
-								})
-						})
+					isSelected: user.ComponentRestaurants.map(d => d.id).includes(r.id) ? true : false
 				}))
-				//console.log('user', user)
-				console.log('favoriteArray152', favoriteArray)
-				return res.render('favorite', {
-					//restaurants: favoriteArray,
-					attractions: user.FavoritedAttractions,
-					restaurants: user.FavoritedRestaurants,
-					duration: favoriteArray.duration
-				})
+				const Attractions = user.FavoritedAttractions.map(r => ({
+					...r.dataValues,
+					isSelected: user.ComponentAttractions.map(d => d.id).includes(r.id) ? true : false
+					// isSelected: user.ComponentAttractions ? user.ComponentAttractions.map(d => d.id).includes(r.id) : true
+				}))
+				return { Restaurants , Attractions}
 			})
-
-
-
-
+			console.log('favoriteArray.Attractions', favoriteArray.Attractions)
+			return res.render('favorite', {
+				attractions: favoriteArray.Attractions,
+				restaurants: favoriteArray.Restaurants,
+			})
+		} catch (err) { console.log(err) }
 
 	},
-	postComponent: (req, res) => {
-		const googleMapsClient = require('@google/maps').createClient({
-			key: process.env.API_KEY,
-			Promise: Promise
+	addRestComponent: (req, res) => {
+		return Component.create({
+			UserId: '2',//req.user.id
+			RestaurantId: req.params.rest_id,
 		})
-		googleMapsClient.geocode({
-			address: ''
-		}).asPromise()
-			.then((response) => {
-				console.log(response.json.results);
-				center = response.json.results[0].geometry.location
-				console.log("center", center)
-				console.log("typeof(center.lat)", typeof (center.lat))
+			.then((component) => {
+				return res.redirect('back')
 			})
-			.catch((err) => {
-				console.log(err);
-			})
-		return res.render('Component')
-		return res.redirect('/users/:id/tourEdit')
 	},
+	removeRestComponent: (req, res) => {
+		return Component.findOne({
+			where: {
+				UserId: '2',//req.user.id
+				RestaurantId: req.params.rest_id
+			}
+		}).then((component) => {
+			console.log('component', component)
+			component.destroy()
+			return res.redirect('back')
+		})
+
+	},
+	addAttractionComponent: (req, res) => {
+		return Component.create({
+			UserId: '2',//req.user.id
+			AttractionId: req.params.attraction_id,
+		})
+			.then((component) => {
+				return res.redirect('back')
+			})
+	},
+	removeAttractionComponent: (req, res) => {
+		return Component.findOne({
+			where: {
+				UserId: '2',//req.user.id
+				AttractionId: req.params.attraction_id
+			}
+		}).then((component) => {
+			console.log('component', component)
+			component.destroy()
+			return res.redirect('back')
+		})
+
+	},
+		// const googleMapsClient = require('@google/maps').createClient({
+		// 	key: process.env.API_KEY,
+		// 	Promise: Promise
+		// })
+		// googleMapsClient.geocode({
+		// 	address: ''
+		// }).asPromise()
+		// 	.then((response) => {
+		// 		console.log(response.json.results);
+		// 		center = response.json.results[0].geometry.location
+		// 		console.log("center", center)
+		// 		console.log("typeof(center.lat)", typeof (center.lat))
+		// 	})
+		// 	.catch((err) => {
+		// 		console.log(err);
+		// 	})
+		// return res.render('Component')
+		// return res.redirect('/users/:id/tourEdit')
+	//},
 	getBlogEdit: (req, res) => {
 		return res.render('blogEdit')
 	},
