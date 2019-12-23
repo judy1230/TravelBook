@@ -4,28 +4,16 @@
 
 
 <div class="container mt-5 mb-5 p-5 row">
+
 	<div class="col-6 ml-5">
 		<h4>Today's Tour</h4>
 		<ul class="moveable timeline" id="items-list">
+
 			<li>
-				<a>現在位置 {{startHour}}: {{startMin}}</a>
-				<span class="float-right"> {{date}}</span>
+				<a>{{origin}}  {{startHourInit}} : {{startMinInit}}</a>
+				<span class="float-right"> {{../date}}</span>
 			</li>
-			<li>
-				<div class="card mb-3" style="max-width: 800px;">
-					<div class="row no-gutters">
-						<div class="col-md-4">
-							<img src="http://lorempixel.com/640/480" class="card-img" alt="">
-						</div>
-						<div class="col-md-8">
-							<div class="card-body">
-								<h6 class="card-title" href="#">{{Location1}}  {{endHour}} : {{endMin}} </h6>
-								<p class="card-text"style="font-size: 14px;"> 行駛時間: {{duration}}</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</li>
+			{{#each array1}}
 			<li>
 				<div class="card mb-3" style="max-width: 800px;">
 					<div class="row no-gutters">
@@ -34,13 +22,14 @@
 						</div>
 						<div class="col-md-8">
 							<div class="card-body">
-								<h6 class="card-title" href="#">{{Location2}} <span>{{endHour}} : {{endMin}}</span></h6>
-								<p class="card-text" style="font-size: 14px;"> 行駛時間: {{duration}} </p>
+								<h6 class="card-title" href="#">{{this.destination}}  {{this.end}} </h6>
+								<p class="card-text"style="font-size: 14px;"> 行駛時間: {{this.duration}}</p>
 							</div>
 						</div>
 					</div>
 				</div>
 			</li>
+		{{/each}}
 		</ul>
 	</div>
 	<!-- 地圖放置處 -->
@@ -48,7 +37,7 @@
 	<div class="col-4 ml-5 mt-5 text-center sticky-top">
 		<div class=" sticky-top" id="map">
 		<iframe width="450" height="300" frameborder="0" style="border:0"
-			src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyDH04Hz8mvKNeGQyRigEXcQqo-Pyh9gRpE&origin={{Location1}}&waypoints=台北101|國父紀念館&destination={{Location2}}">>
+			src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyDH04Hz8mvKNeGQyRigEXcQqo-Pyh9gRpE&origin={{origin}}&destination={{destination}}">>
 		</iframe>
 		</div>
 	</div>

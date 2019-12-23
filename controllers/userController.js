@@ -68,7 +68,11 @@ let userController = {
 
 	getDailyTour: async (req, res) => {
 		try {
-			data =[]
+			data = []
+			googleMapsClient = require('@google/maps').createClient({
+				key: process.env.API_KEY,
+				Promise: Promise
+			})
 			componentArray = await User.findByPk('2', {
 					include: [
 						{ model: Restaurant, as: 'ComponentRestaurants' },
@@ -80,53 +84,58 @@ let userController = {
 					data.sort((a, b) => b.createdAt - a.createdAt)
 					return ({ data })
 				})
-			for (let j = 0; j < componentArray.data.length; j++) {
+			data = componentArray.data.map(d => d.name)
+			datainit = data[0]
 
-				 data.push(componentArray.data[j].name)
-				//console.log('data', data)
-			}
-			console.log('data', data)
-			for (let i = 0; i < data.length; i++) {
-				let Location1 = data[i]
-				let Location2 = data[i+1]
-				date = `${new Date().getMonth() + 1} /  ${new Date().getDate()}`
-				startMin = new Date().getMinutes()
-				startHour = new Date().getHours()
-				const googleMapsClient = require('@google/maps').createClient({
-					key: process.env.API_KEY,
-					Promise: Promise
-				})
-				googleMapsClient.directions({
-					origin: Location1,//{ lat: 25.033976, lng: 121.5645389 },
-					destination: Location2//{ lat: 25.0478142, lng: 121.5169488 }
+			date = `${new Date().getMonth() + 1} /  ${new Date().getDate()}`
+			array1 = []
+			startMinInit = new Date().getMinutes()
+			startHourInit = new Date().getHours()
+
+			for (let i = 0; i < data.length-1; i++) {
+				let location1 = data[i]
+				let location2 = data[i + 1]
+				if (location1 != data[0]) {
+					startMin = endMin
+					startHour = endHour
+				} else {
+					startMin = startMinInit
+					startHour = startHourInit
+				}
+				duration =
+				await googleMapsClient.directions({
+					origin: location1,
+					destination: location2
 				}).asPromise()
 					.then((response) => {
-						duration = response.json.routes[0].legs[0].duration
-						distance = response.json.routes[0].legs[0].distance
-						console.log('duration', duration.text)
-						endMin = Math.floor(startMin + (duration.value / 60))
-						console.log('endMin', endMin)
-						let diff = 0
-						if (endMin > 60) {
-							endMin = endMin - 60
-							diff = 1
-						}
-						endHour = startHour + diff
-						console.log('endMin', endMin)
-						console.log('endHour', endHour)
-						res.render('dailyTour', { date, Location1, Location2, duration: duration.text, distance: distance.text, endMin, endHour, startHour, startMin })
+					  return response.json.routes[0].legs[0].duration
 					})
 					.catch((err) => {
 						console.log(err);
 					})
-
+				endMin = Math.floor(startMin + (duration.value / 60))
+				let diff = 0
+				if (endMin > 60) {
+					endMin = endMin - 60
+					diff = 1
+				}
+				endHour = startHour + diff
+        array1.push({
+					origin: location1,
+					destination: location2,
+					duration: duration.text,
+					end: `${endHour}: ${endMin}`
+				})
 			}
-
-
+			return res.render('dailyTour', {
+				origin: data[0],
+				destination: data[data.length-1],
+				array1,
+				date,
+				startMinInit,
+				startHourInit
+			})
 		} catch (err) { console.log(err) }
-
-
-
 	},
 	getDaysTour: (req, res) => {
 		return res.render('daysTour')
