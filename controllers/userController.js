@@ -78,7 +78,7 @@ let userController = {
 						{ model: Restaurant, as: 'ComponentRestaurants' },
 						{ model: Attraction, as: 'ComponentAttractions' },
 					]
-				}).then(user => {
+			}).then(user => {
 					data.push(...user.ComponentRestaurants)
 					data.push(...user.ComponentAttractions)
 					data.sort((a, b) => b.createdAt - a.createdAt)
@@ -127,7 +127,9 @@ let userController = {
 					end: `${endHour}: ${endMin}`
 				})
 			}
+			console.log('array1', array1)
 			return res.render('dailyTour', {
+				API_KEY: process.env.API_KEY,
 				origin: data[0],
 				destination: data[data.length-1],
 				array1,
@@ -154,17 +156,21 @@ let userController = {
 				  { model: Attraction, as: 'ComponentAttractions' },
 				]
 			}).then(user => {
+				console.log('user', user.FavoritedRestaurants)
 				const Restaurants = user.FavoritedRestaurants.map(r => ({
 					...r.dataValues,
-					isSelected: user.ComponentRestaurants.map(d => d.id).includes(r.id) ? true : false
+					isSelected: user.ComponentRestaurants.map(d => d.id).includes(r.id) ? true : false,
+					opening_hours: r.opening_hours.substring(0, 20)
 				}))
 				const Attractions = user.FavoritedAttractions.map(r => ({
 					...r.dataValues,
-					isSelected: user.ComponentAttractions.map(d => d.id).includes(r.id) ? true : false
+					isSelected: user.ComponentAttractions.map(d => d.id).includes(r.id) ? true : false,
+					opening_hours: r.opening_hours.substring(0, 20)
 				}))
 				return { Restaurants , Attractions}
 			})
-			//console.log('favoriteArray.Attractions', favoriteArray.Attractions)
+			console.log('favoriteArray.Attractions', favoriteArray.Attractions)
+			console.log('favoriteArray.Restaurants', favoriteArray.Restaurants)
 			return res.render('favorite', {
 				attractions: favoriteArray.Attractions,
 				restaurants: favoriteArray.Restaurants,

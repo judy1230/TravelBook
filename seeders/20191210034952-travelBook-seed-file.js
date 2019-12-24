@@ -1,8 +1,10 @@
 'use strict';
 const bcrypt = require('bcrypt-nodejs')
 const faker = require('faker')
-
+const attractions = require('../seeders/attraction_temp.json')
+const restaurants = require('../seeders/restaurant_temp.json')
 module.exports = {
+
   up: (queryInterface, Sequelize) => {
     queryInterface.bulkInsert('Users', [{
       email: 'root@example.com',
@@ -33,14 +35,14 @@ module.exports = {
         })
       ), {});
     queryInterface.bulkInsert('Restaurants',
-      Array.from({ length: 10 }).map(d =>
+      restaurants.map((item) =>
         ({
-          name: faker.name.findName(),
-          phone: faker.phone.phoneNumber(),
-          address: faker.address.streetAddress(),
-          opening_hours: '08:00',
-          image: faker.image.imageUrl(),
-          introduction: faker.lorem.text(),
+          name: item.name,
+          phone: item.phone,
+          address: item.address,
+          opening_hours: item.opening_hours,
+          image: item.image,
+          introduction: item.introduction,
           LocationId: Math.floor(Math.random() * 5) + 1,
           favoritedCount: Math.floor(Math.random() * 20) + 1,
           likedCount: Math.floor(Math.random() * 20) + 1,
@@ -50,22 +52,22 @@ module.exports = {
         })
       ), {});
     queryInterface.bulkInsert('Attractions',
-      Array.from({ length: 10 }).map(d =>
-        ({
-          name: faker.name.findName(),
-          phone: faker.phone.phoneNumber(),
-          address: faker.address.streetAddress(),
-          opening_hours: '08:00',
-          image: faker.image.imageUrl(),
-          introduction: faker.lorem.text(),
-          LocationId: Math.floor(Math.random() * 5) + 1,
-          favoritedCount: Math.floor(Math.random() * 20) + 1,
-          likedCount: Math.floor(Math.random() * 20) + 1,
-          componentCount: Math.floor(Math.random() * 20) + 1,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        })
-      ), {});
+      attractions.map((item) =>
+      ({
+        name: item.name,
+        phone: item.phone,
+        address: item.address,
+        opening_hours: item.opening_hours,
+        image: item.image,
+        introduction: item.introduction,
+        LocationId: Math.floor(Math.random() * 5) + 1,
+        favoritedCount: Math.floor(Math.random() * 20) + 1,
+        likedCount: Math.floor(Math.random() * 20) + 1,
+        componentCount: Math.floor(Math.random() * 20) + 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      })
+      )  , {});
     queryInterface.bulkInsert('Tours',
       Array.from({ length: 3 }).map(d =>
         ({
@@ -122,7 +124,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         })
-      ), {});
+        ), {});
     return queryInterface.bulkInsert('Likes',
       Array.from({ length: 3 }).map(d =>
         ({
@@ -135,18 +137,7 @@ module.exports = {
           updatedAt: new Date(),
         })
       ), {});
-    // return queryInterface.bulkInsert('Components',
-    //   Array.from({ length: 3 }).map(d =>
-    //     ({
-    //       UserId: Math.floor(Math.random() * 3) + 1,
-    //       RestaurantId: Math.floor(Math.random() * 10) + 1,
-    //       AttractionId: Math.floor(Math.random() * 10) + 1,
-    //       Lat: 25.0478142,
-    //       Lng: 121.5169488,
-    //       createdAt: new Date(),
-    //       updatedAt: new Date(),
-    //     })
-    //   ), {});
+
   },
 
   down: (queryInterface, Sequelize) => {
