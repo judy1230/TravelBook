@@ -29,9 +29,6 @@ module.exports = {
       tag: {
         type: Sequelize.STRING
       },
-      favoritedCount: {
-        type: Sequelize.TEXT
-      },
       likedCount: {
         type: Sequelize.TEXT
       },

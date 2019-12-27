@@ -3,11 +3,6 @@
 
 
 		<ul class="nav">
-			{{!-- <li class="nav-item">
-				<a class="nav-link {{#ifCond '' categoryId}}{{/ifCond}}" href="?categoryId=" style="font-size: 24px; color: black;">全部</a>
-			</li> --}}
-			{{!-- {{#each categories}} --}}
-			{{!-- 寫程式時記得把active加進去 --}}
 			<li class="nav-item">
 				<a class="nav-link " href="restaurants">
 					<i class="fas fa-utensils"  style="font-size: 36px; color: black;"></i></a>
@@ -17,10 +12,10 @@
 					<i class="fas fa-camera-retro"  style="font-size: 36px; color: lightblue;"></i></a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link " href="/shoppings">
+				<a class="nav-link " href="/shops">
 					<i class="fas fa-gifts" style="font-size: 36px; color:  lightblue;"></i></a>
 			</li>
-			{{!-- {{/each}} --}}
+
 		</ul>
 
 
@@ -33,28 +28,18 @@
 				<div class="card-body text-center m-auto">
 					<p class="card-text  mb-2">
 						<a href="/restaurants/{{this.id}}">
-							{{this.name}} 餐廳
+							{{this.name}}
 						</a>
 					</p>
-					<p class="card-text mb-2" >{{this.opening_hours}}open: 0800</p>
-					<p>{{this.introduction}}</p>
-					{{!-- <div class="card-text row ">
-						{{#if this.isFavorited }}
-						<form action="/favorite/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
-								class="btn btn-danger " >移除收藏</button></form>
-						{{else}}
-						<form action="/favorite/{{this.id}}" method="POST"><button type="submit" class="btn btn-outline-success btn-sm ">加到收藏</button>
-						</form>
-						{{/if}}
-						{{#if this.isLiked }}
-						<form action="/like/{{this.id}}?_method=DELETE" method="POST" class="ml-2"><button type="submit"
-								class="btn btn-danger btn-sm">Dislike</button></form>
-						{{else}}
-						<form action="/like/{{this.id}}" method="POST" class="ml-2"><button type="submit"
-								class="btn btn-outline-success btn-sm">Like</button></form>
-						{{/if}}
-					</div> --}}
-
+					<p class="card-text mb-2"style="font-size: 12px;" >{{this.opening_hours}}</p>
+					<p style="font-size: 12px;">{{this.introduction}}</p>
+					{{#if isFavorited }}
+					<form action="/favorite/{{restaurant.id}}?_method=DELETE" method="POST" style="display: contents;"><button type="submit"
+							class="btn btn-outline-info btn-sm mt-4 ml-4">移除規劃</button></form>
+					{{else}}
+					<form action="/favorite/{{restaurant.id}}" method="POST" style="display: contents;"><button type="submit"
+							class="btn btn-info btn-sm mt-4 ml-4">加入規劃</button></form>
+					{{/if}}
 				</div>
 			</div>
 		</div>
@@ -74,7 +59,7 @@
 			<li class="page-item active"><a class="page-link" href="#">{{this}}</a></li>
 			{{else}}
 			<li class="page-item"><a class="page-link"
-					href="/restaurants?page={{this}}&categoryId={{../categoryId}}">{{this}}</a></li>
+					href="/restaurants?page={{this}}">{{this}}</a></li>
 			{{/ifCond}}
 			{{/each}}
 			<a class="page-link" href="/restaurants?page={{next}}" aria-label="Next">

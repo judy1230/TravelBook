@@ -8,36 +8,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     },
     UserId: DataTypes.INTEGER,
-    RestaurantId:
-    {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      },
-    TourId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    BlogId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    AttractionId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    ShoppingId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
+    RestaurantId: DataTypes.INTEGER,
+    AttractionId: DataTypes.INTEGER,
+    ShopId: DataTypes.INTEGER
   }, {});
   Favorite.associate = function(models) {
     // associations can be defined here
     Favorite.belongsTo(models.User)
-    Favorite.belongsTo(models.Tour)
     Favorite.belongsTo(models.Restaurant)
     Favorite.belongsTo(models.Attraction)
-    Favorite.belongsTo(models.Shopping)
-    Favorite.belongsTo(models.Blog)
+    Favorite.belongsTo(models.Shop)
   };
   return Favorite;
 };

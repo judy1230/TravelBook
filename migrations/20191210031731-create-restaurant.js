@@ -30,7 +30,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       viewCounts: {
-        type: Sequelize.TEXT
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

@@ -17,6 +17,9 @@ module.exports = {
       AttractionId: {
         type: Sequelize.INTEGER
       },
+      ShopId: {
+        type: Sequelize.INTEGER
+      },
       Lat: {
         type: Sequelize.STRING
       },

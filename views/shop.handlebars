@@ -1,22 +1,22 @@
 <div class="container row p-5 m-auto">
 	<div class="col-md-7 ">
 		<a class="mb-5 mr-5" style="font-size: 3em;"><i class="fas fa-utensils"></i></a>
-		<img class="img-responsive center-block rounded " src="{{attraction.image}}"
+		<img class="img-responsive center-block rounded " src="{{shop.image}}"
 			style="width: 350px;margin-bottom: 25px;">
 	</div>
 	<div class="col-md-5 ">
 		<div class="well">
-			<h5>{{attraction.name}} </h5>
-			<span><i class="fas fa-car-alt"></i>{{attraction.duration}}</span>
+			<h5>{{shop.name}} </h5>
+			<span><i class="fas fa-car-alt"></i>{{shop.duration}}</span>
 			<ul class="list-unstyled">
-				<li><strong>Opening Hour:</strong> {{attraction.opening_hours}}</li>
-				<li><strong>Tel:</strong> {{attraction.phone}} </li>
-				<li><strong>Address:</strong> {{attraction.address}} </li>
-				<li class="far fa-grin-beam" style="color: purple;font-size: 20px"><strong> {{attraction.viewCounts}}</strong>
+				<li><strong>Opening Hour:</strong> {{shop.opening_hours}}</li>
+				<li><strong>Tel:</strong> {{shop.phone}} </li>
+				<li><strong>Address:</strong> {{shop.address}} </li>
+				<li class="far fa-grin-beam" style="color: purple;font-size: 20px"><strong> {{shop.viewCounts}}</strong>
 				</li>
 			</ul>
 		</div>
-		<p>{{attraction.description}} </p>
+		<p>{{shop.description}} </p>
 	</div>
 
 	<hr>
@@ -25,7 +25,7 @@
 
 	<div class="container p-5">
 		<h6>所有評論：</h6>
-		{{#each attraction.Comments}}
+		{{#each shop.Comments}}
 		{{#if ../user.isAdmin}}
 		<form action="/comments/{{this.id}}?_method=DELETE" method="POST" style="float: right;">
 			<button type="submit" class="btn btn-danger">Delete</button>
@@ -46,7 +46,7 @@
 				<textarea class="form-control" id="text" name="text" rows="3"></textarea>
 			</div>
 			<div class="text-right">
-				<input type="hidden" name="attractionId" value="{{attraction.id}}" />
+				<input type="hidden" name="shopId" value="{{shop.id}}" />
 				<button type="submit" class="btn btn-primary">Submit</button>
 				<a href="javascript:history.back()">回上一頁</a>
 			</div>

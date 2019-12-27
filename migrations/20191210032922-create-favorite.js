@@ -15,15 +15,11 @@ module.exports = {
         allowNull: true,
         type: Sequelize.INTEGER
       },
-      TourId: {
-        allowNull: true,
-        type: Sequelize.INTEGER
-      },
       AttractionId: {
         allowNull: true,
         type: Sequelize.INTEGER
       },
-      BlogId: {
+      ShopId: {
         allowNull: true,
         type: Sequelize.INTEGER
       },

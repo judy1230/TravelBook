@@ -21,11 +21,6 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.Like)
     User.hasMany(models.Favorite)
     User.hasMany(models.Component)
-    User.belongsToMany(models.Tour, {
-      through: models.Favorite,
-      foreignKey: 'UserId',
-      as: 'FavoritedTours'
-    })
     User.belongsToMany(models.Attraction, {
       through: models.Favorite,
       foreignKey: 'UserId',
@@ -36,15 +31,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'UserId',
       as: 'FavoritedRestaurants'
     })
-    User.belongsToMany(models.Shopping, {
+    User.belongsToMany(models.Shop, {
       through: models.Favorite,
       foreignKey: 'UserId',
-      as: 'FavoritedShoppings'
-    })
-    User.belongsToMany(models.Blog, {
-      through: models.Favorite,
-      foreignKey: 'UserId',
-      as: 'FavoritedBlogs'
+      as: 'FavoritedShops'
     })
     User.belongsToMany(models.Restaurant, {
       through: models.Like,
@@ -66,10 +56,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'UserId',
       as: 'LikedAttractions'
     })
-    User.belongsToMany(models.Shopping, {
+    User.belongsToMany(models.Shop, {
       through: models.Like,
       foreignKey: 'UserId',
-      as: 'LikedShoppings'
+      as: 'LikedShops'
     })
     User.belongsToMany(models.Restaurant, {
       through: models.Component,
@@ -77,14 +67,14 @@ module.exports = (sequelize, DataTypes) => {
       as: 'ComponentRestaurants'
     })
     User.belongsToMany(models.Attraction, {
-      through: models.Favorite,
+      through: models.Component,
       foreignKey: 'UserId',
       as: 'ComponentAttractions'
     })
-    User.belongsToMany(models.Shopping, {
-      through: models.Favorite,
+    User.belongsToMany(models.Shop, {
+      through: models.Component,
       foreignKey: 'UserId',
-      as: 'ComponentShoppings'
+      as: 'ComponentShops'
     })
   };
   return User;

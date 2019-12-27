@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    ShoppingId: {
+    ShopId: {
       type: DataTypes.INTEGER,
       allowNull: true,
     }
@@ -33,11 +33,11 @@ module.exports = (sequelize, DataTypes) => {
   Comment.associate = function(models) {
     // associations can be defined here
     Comment.belongsTo(models.Restaurant)
-    Comment.belongsTo(models.Tour)
     Comment.belongsTo(models.Attraction)
-    Comment.belongsTo(models.Shopping)
+    Comment.belongsTo(models.Shop)
     Comment.belongsTo(models.User)
     Comment.belongsTo(models.Blog)
+    Comment.belongsTo(models.Tour)
   };
   return Comment;
 };

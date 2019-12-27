@@ -17,47 +17,23 @@
 			</ul>
 		</div>
 		<p>{{restaurant.description}} </p>
-		{{!-- <div class="row float-left"> --}}
-			{{!-- <a href="/restaurants/{{restaurant.id}}/dashboard"><button type="submit"
-							class="btn btn-info mt-4 ml-4">Dashboard</button></a> --}}
-			{{!-- {{#if isFavorited }}
+		<div class="row float-left"> --}}
+			<a href="/restaurants/{{restaurant.id}}/dashboard"><button type="submit"
+							class="btn btn-info mt-4 ml-4">Dashboard</button></a>
+			 {{#if isFavorited }}
 			<form action="/favorite/{{restaurant.id}}?_method=DELETE" method="POST" style="display: contents;"><button
-					type="submit" class="btn btn-outline-info btn-sm mt-4 ml-4">移除收藏</button></form>
+					type="submit" class="btn btn-outline-info btn-sm mt-4 ml-4">移除規劃</button></form>
 			{{else}}
 			<form action="/favorite/{{restaurant.id}}" method="POST" style="display: contents;"><button type="submit"
-					class="btn btn-info btn-sm mt-4 ml-4">加入收藏</button></form>
+					class="btn btn-info btn-sm mt-4 ml-4">加入規劃</button></form>
 			{{/if}}
-			{{#if this.isLiked }}
-			<form action="/like/{{restaurant.id}}?_method=DELETE" method="POST"><button type="submit"
-					class="btn btn-danger btn-sm mt-4 ml-4">Dislike</button></form>
-			{{else}}
-			<form action="/like/{{restaurant.id}}" method="POST"><button type="submit"
-					class="btn btn-outline-info btn-sm mt-4 ml-4">Like</button></form>
-			{{/if}} --}}
-		{{!-- </div> --}}
+		</div>
 
 	</div>
 
 	<hr>
 	<br />
 	<br />
-	{{!-- <div class="container row m-auto p-3"></div>
-	<div class="container row border border-info p-3 text-center">
-		<input type="hidden" name="attractionId" value="{{attraction.id}}" />
-		<div class="card mb-3" style="width: 200px; height: 120px;">
-			<div class="row no-gutters">
-				<div class="col-md-4">
-					<img src="..." class="card-img rounded" alt="...">
-				</div>
-				<div class="col-md-8">
-					<div class="card-body">
-						<h8 class="card-title" href="https://www.totoprayogo.com/#">傳統藝術中心 <small> 15 mins</small></h8>
-						<small class="card-text">open: 08:00 </small>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div> --}}
 	<div class="container p-5">
 		<h6>所有評論：</h6>
 		{{#each restaurant.Comments}}

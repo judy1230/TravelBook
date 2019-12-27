@@ -3,14 +3,14 @@ const db = require('../models')
 const User = db.User
 const Restaurant = db.Restaurant
 const Attraction = db.Attraction
-const Shopping = db.Shopping
+const Shop = db.Shop
 const Favorite = db.Favorite
 const Tour = db.Tour
 const Blog = db.Blog
 const Like = db.Like
 const Comment = db.Comment
 const Location = db.Location
-const pageLimit = 10
+const pageLimit = 4
 // const Followship = db.Followship
 const helpersreq = require('../_helpers.js')
 
@@ -66,7 +66,7 @@ const toursController = {
 				//clean up restaurant data
 				const data = result.rows.map(r => ({
 					...r.dataValues,
-					introduction: r.dataValues.introduction.substring(0, 10)
+					introduction: r.dataValues.introduction.substring(0, 20)
 				}))
 				//return { data, page, pages, totalPage, prev, next }
 				console.log('data', data)
@@ -81,11 +81,11 @@ const toursController = {
 
 	},
 	getRestaurant: (req, res) => {
-		console.log('req.params.id', req.params.id)
+		req.user = User.findByPk('2')
 		return Restaurant.findByPk(req.params.restaurant_id, {
 			include: [
 				//Category,
-				//{ model: User, as: 'FavoritedUsers' },
+				{ model: User, as: 'FavoritedUsers' },
 				//{ model: User, as: 'LikedUsers' },
 				{ model: Comment, include: [User] }
 			]
@@ -95,11 +95,11 @@ const toursController = {
 			restaurant.update({
 				viewCounts: totalViewCounts
 			})
-			//const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(req.user.id)
+			const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes('2')
 			//const isLiked = restaurant.LikedUsers.map(d => d.id).includes(req.user.id)
 			return res.render('restaurant', {
 				restaurant,
-				//isFavorited: isFavorited,
+				isFavorited: isFavorited,
 				//isLiked: isLiked
 			})
 		})
@@ -136,12 +136,26 @@ const toursController = {
 
 	},
 	getAttraction: (req, res) => {
-		return res.render('attraction')
+		return Attraction.findByPk(req.params.attraction_id, {
+			include: [
+				{ model: Comment, include: [User] }
+			]
+		}).then(attraction => {
+
+			totalViewCounts = parseInt(attraction.viewCounts) + 1
+			attraction.update({
+				viewCounts: totalViewCounts
+			})
+			return res.render('attraction', {
+				attraction
+			})
+		})
+
 	},
-	getShoppings: (req, res) => {
+	getShops: (req, res) => {
 		let offset = 0
 		let whereQuery = {}
-		return Shopping.findAndCountAll({
+		return Shop.findAndCountAll({
 			order: [
 				['updatedAt', 'DESC']
 			],
@@ -160,8 +174,8 @@ const toursController = {
 				}))
 				//return { data, page, pages, totalPage, prev, next }
 				console.log('data', data)
-				return res.render('shopping', {
-					shoppings: data,
+				return res.render('shops', {
+					shops: data,
 					page: page,
 					totalPage: totalPage,
 					prev: prev,
@@ -170,8 +184,21 @@ const toursController = {
 			})
 
 	},
-	getShopping: (req, res) => {
+	getShop: (req, res) => {
+		return Shop.findByPk(req.params.shop_id, {
+			include: [
+				{ model: Comment, include: [User] }
+			]
+		}).then(shop => {
 
+			totalViewCounts = parseInt(shop.viewCounts) + 1
+			shop.update({
+				viewCounts: totalViewCounts
+			})
+			return res.render('shop', {
+				shop
+			})
+		})
 	},
 
 }

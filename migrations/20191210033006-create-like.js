@@ -23,6 +23,10 @@ module.exports = {
         allowNull: true,
         type: Sequelize.INTEGER
       },
+      ShopId: {
+        allowNull: true,
+        type: Sequelize.INTEGER
+      },
       BlogId: {
         allowNull: true,
         type: Sequelize.INTEGER

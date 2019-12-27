@@ -27,10 +27,10 @@ module.exports = {
         type: Sequelize.TEXT
       },
       LocationId: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       viewCounts: {
-        type: Sequelize.TEXT
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

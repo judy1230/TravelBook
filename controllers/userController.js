@@ -74,7 +74,7 @@ let userController = {
 				key: process.env.API_KEY,
 				Promise: Promise
 			})
-			componentArray = await User.findByPk('2', {
+			componentArray = await User.findByPk('1', {
 					include: [
 						{ model: Restaurant, as: 'ComponentRestaurants' },
 						{ model: Attraction, as: 'ComponentAttractions' },
@@ -153,7 +153,7 @@ let userController = {
 				Promise: Promise
 			})
 			let favoriteArray = []
-			favoriteArray = await User.findByPk('2', {
+			favoriteArray = await User.findByPk('1', {
 				include: [
 					{ model: Restaurant, as: 'FavoritedRestaurants' },
 					{ model: Attraction, as: 'FavoritedAttractions' },
@@ -185,7 +185,7 @@ let userController = {
 	},
 	addRestComponent: (req, res) => {
 		return Component.create({
-			UserId: '2',//req.user.id
+			UserId: '1',//req.user.id
 			RestaurantId: req.params.rest_id,
 		}).then((component) => {
 				return res.redirect('back')
@@ -194,7 +194,7 @@ let userController = {
 	removeRestComponent: (req, res) => {
 		return Component.findOne({
 			where: {
-				UserId: '2',//req.user.id
+				UserId: '1',//req.user.id
 				RestaurantId: req.params.rest_id
 			}
 		}).then((component) => {
@@ -205,7 +205,7 @@ let userController = {
 	},
 	addAttractionComponent: (req, res) => {
 		return Component.create({
-			UserId: '2',//req.user.id
+			UserId: '1',//req.user.id
 			AttractionId: req.params.attraction_id,
 		}).then((component) => {
 				return res.redirect('back')
@@ -214,7 +214,7 @@ let userController = {
 	removeAttractionComponent: (req, res) => {
 		return Component.findOne({
 			where: {
-				UserId: '2',//req.user.id
+				UserId: '1',//req.user.id
 				AttractionId: req.params.attraction_id
 			}
 		}).then((component) => {

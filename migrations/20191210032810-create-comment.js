@@ -30,7 +30,7 @@ module.exports = {
         allowNull: true,
         type: Sequelize.INTEGER
       },
-      ShoppingId: {
+      ShopId: {
         allowNull: true,
         type: Sequelize.INTEGER
       },
