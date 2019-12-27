@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     Location.hasMany(models.Restaurant)
     Location.hasMany(models.Attraction)
+    Location.hasMany(models.Shopping)
     Location.hasMany(models.Tour)
     Location.hasMany(models.Blog)
   };

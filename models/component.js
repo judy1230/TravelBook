@@ -8,16 +8,26 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     },
     UserId: DataTypes.INTEGER,
-    RestaurantId: DataTypes.INTEGER,
-    AttractionId: DataTypes.INTEGER,
-    lat: DataTypes.STRING,
-    Lng: DataTypes.STRING
+    RestaurantId:
+    {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    AttractionId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    ShoppingId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    }
   }, {});
   Component.associate = function(models) {
     // associations can be defined here
     Component.belongsTo(models.User)
     Component.belongsTo(models.Restaurant)
     Component.belongsTo(models.Attraction)
+    Component.belongsTo(models.Shopping)
   };
   return Component;
 };

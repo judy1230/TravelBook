@@ -9,36 +9,36 @@
 			{{!-- {{#each categories}} --}}
 			{{!-- 寫程式時記得把active加進去 --}}
 			<li class="nav-item">
-				<a class="nav-link {{#ifCond this.id ../categoryId}}{{/ifCond}}" href="?categoryId={{this.id}}">{{this.name}}
+				<a class="nav-link " href="restaurants">
 					<i class="fas fa-utensils"  style="font-size: 36px; color: black;"></i></a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link {{#ifCond this.id ../categoryId}}{{/ifCond}}" href="?categoryId={{this.id}}">{{this.name}}
-					<i class="fas fa-camera-retro"  style="font-size: 36px; color: black;"></i></a>
+				<a class="nav-link " href="/attractions">
+					<i class="fas fa-camera-retro"  style="font-size: 36px; color: lightblue;"></i></a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link {{#ifCond this.id ../categoryId}}{{/ifCond}}" href="?categoryId={{this.id}}">{{this.name}}
-					<i class="fas fa-gifts"  style="font-size: 36px; color: black;"></i></i></a>
+				<a class="nav-link " href="/shoppings">
+					<i class="fas fa-gifts" style="font-size: 36px; color:  lightblue;"></i></a>
 			</li>
 			{{!-- {{/each}} --}}
 		</ul>
 
 
 	<div class="row p-5">
-		{{!-- {{#each restaurants}} --}}
+		{{#each restaurants}}
 		<div class="col-md-3 ">
 			<div class="card shadow-sm">
-				<img class="card-img-top" src="{{this.image}}http://lorempixel.com/640/480" alt="Card image cap" width="200px"
+				<img class="card-img-top" src="{{this.image}}" alt="Card image cap" width="200px"
 					height="180px">
 				<div class="card-body text-center m-auto">
 					<p class="card-text  mb-2">
 						<a href="/restaurants/{{this.id}}">
 							{{this.name}} 餐廳
 						</a>
-						<span class="badge badge-secondary">{{this.Category.name}} 西式料理</span>
 					</p>
-					<p class="card-text mb-2" >{{this.description}}open: 0800</p>
-					<div class="card-text row ">
+					<p class="card-text mb-2" >{{this.opening_hours}}open: 0800</p>
+					<p>{{this.introduction}}</p>
+					{{!-- <div class="card-text row ">
 						{{#if this.isFavorited }}
 						<form action="/favorite/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
 								class="btn btn-danger " >移除收藏</button></form>
@@ -53,19 +53,19 @@
 						<form action="/like/{{this.id}}" method="POST" class="ml-2"><button type="submit"
 								class="btn btn-outline-success btn-sm">Like</button></form>
 						{{/if}}
-					</div>
+					</div> --}}
 
 				</div>
 			</div>
 		</div>
-		{{!-- {{/each}} --}}
+		{{/each}}
 	</div>
 	<br />
 	<br />
 	<nav aria-label="Page navigation example">
 		<ul class="pagination">
 			<li class="page-item">
-				<a class="page-link" href="/restaurants?page={{prev}}&categoryId={{categoryId}}" aria-label="Previous">
+				<a class="page-link" href="/restaurants?page={{prev}}" aria-label="Previous">
 					<span aria-hidden="true">&laquo;</span>
 				</a>
 			</li>
@@ -77,7 +77,7 @@
 					href="/restaurants?page={{this}}&categoryId={{../categoryId}}">{{this}}</a></li>
 			{{/ifCond}}
 			{{/each}}
-			<a class="page-link" href="/restaurants?page={{next}}&categoryId={{categoryId}}" aria-label="Next">
+			<a class="page-link" href="/restaurants?page={{next}}" aria-label="Next">
 				<span aria-hidden="true">&raquo;</span>
 			</a>
 			</li>

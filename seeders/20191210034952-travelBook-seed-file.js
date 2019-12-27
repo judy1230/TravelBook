@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt-nodejs')
 const faker = require('faker')
 const attractions = require('../seeders/attraction_temp.json')
 const restaurants = require('../seeders/restaurant_temp.json')
+const shoppings = require('../seeders/shopping_temp.json')
 module.exports = {
 
   up: (queryInterface, Sequelize) => {
@@ -67,39 +68,56 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       })
-      )  , {});
-    queryInterface.bulkInsert('Tours',
-      Array.from({ length: 3 }).map(d =>
+      ), {});
+    queryInterface.bulkInsert('Shoppings',
+      shoppings.map((item) =>
         ({
-          title: faker.name.findName(),
-          image: faker.image.imageUrl(),
-          UserId: Math.floor(Math.random() * 2) + 1,
+          name: item.name,
+          phone: item.phone,
+          address: item.address,
+          opening_hours: item.opening_hours,
+          image: item.image,
+          introduction: item.introduction,
           LocationId: Math.floor(Math.random() * 5) + 1,
-          description: faker.lorem.text(),
-          days: Math.floor(Math.random() * 2) + 1,
-          tag: faker.name.findName(),
           favoritedCount: Math.floor(Math.random() * 20) + 1,
           likedCount: Math.floor(Math.random() * 20) + 1,
+          componentCount: Math.floor(Math.random() * 20) + 1,
           createdAt: new Date(),
           updatedAt: new Date(),
         })
       ), {});
-    queryInterface.bulkInsert('Blogs',
-      Array.from({ length: 3 }).map(d =>
-        ({
-          title: faker.name.findName(),
-          image: faker.image.imageUrl(),
-          UserId: Math.floor(Math.random() * 2) + 1,
-          LocationId: Math.floor(Math.random() * 5) + 1,
-          TourId: Math.floor(Math.random() * 3) + 1,
-          content: faker.lorem.text(),
-          tag: faker.name.findName(),
-          favoritedCount: Math.floor(Math.random() * 20) + 1,
-          likedCount: Math.floor(Math.random() * 20) + 1,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        })
-      ), {});
+    // queryInterface.bulkInsert('Tours',
+    //   Array.from({ length: 3 }).map(d =>
+    //     ({
+    //       title: faker.name.findName(),
+    //       image: faker.image.imageUrl(),
+    //       UserId: Math.floor(Math.random() * 2) + 1,
+    //       LocationId: Math.floor(Math.random() * 5) + 1,
+    //       description: faker.lorem.text(),
+    //       days: Math.floor(Math.random() * 2) + 1,
+    //       tag: faker.name.findName(),
+    //       favoritedCount: Math.floor(Math.random() * 20) + 1,
+    //       likedCount: Math.floor(Math.random() * 20) + 1,
+    //       createdAt: new Date(),
+    //       updatedAt: new Date(),
+    //     })
+    //   ), {});
+    // queryInterface.bulkInsert('Blogs',
+    //   Array.from({ length: 3 }).map(d =>
+    //     ({
+    //       title: faker.name.findName(),
+    //       image: faker.image.imageUrl(),
+    //       UserId: Math.floor(Math.random() * 2) + 1,
+    //       LocationId: Math.floor(Math.random() * 5) + 1,
+    //       TourId: Math.floor(Math.random() * 3) + 1,
+    //       content: faker.lorem.text(),
+    //       tag: faker.name.findName(),
+    //       favoritedCount: Math.floor(Math.random() * 20) + 1,
+    //       likedCount: Math.floor(Math.random() * 20) + 1,
+    //       createdAt: new Date(),
+    //       updatedAt: new Date(),
+    //     })
+    //   ), {});
     queryInterface.bulkInsert('Comments',
       Array.from({ length: 5 }).map(d =>
         ({

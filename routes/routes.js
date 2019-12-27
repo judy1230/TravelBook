@@ -38,10 +38,12 @@ router.get('/users/:tour_id/dailyTour', userController.getDailyTour)
 //router.get('/users/:tour_id/blogEdit', userController.getBlogEdit)
 //router.post('/users/:tour_id/blogEdit', userController.postBlog)
 //router.get('/users/blog/:id', userController.getBlog)
-
+//router.get('/users/:id/profile', userController.getProfile)
+//router.post('/users/:id/profile', userController.postProfile)
 //restaurant, attraction, tour, blog display,
 router.get('/restaurants', toursController.getRestaurants)
 router.get('/attractions', toursController.getAttractions)
+router.get('/shoppings', toursController.getShoppings)
 router.get('/dailyTours', toursController.getDailyTours)
 router.get('/daysTours', toursController.getDaysTours)
 //router.get('/blog/:tour_id', toursController.getBlogs)

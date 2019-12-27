@@ -59,8 +59,6 @@ let userController = {
 	},
 	postTour: (req, res) => {
 		return res.redirect('/users/:tour_id/dailytour')
-		or
-		return res.redirect('/users/:tour_id/daystour')
 	},
 	postBlog: (req, res) => {
 		return res.redirect('/tours/blog/:tour_id')
@@ -69,6 +67,9 @@ let userController = {
 	getDailyTour: async (req, res) => {
 		try {
 			data = []
+			dataInit = '台北火車站'
+
+			console.log('data',data)
 			googleMapsClient = require('@google/maps').createClient({
 				key: process.env.API_KEY,
 				Promise: Promise
@@ -79,13 +80,13 @@ let userController = {
 						{ model: Attraction, as: 'ComponentAttractions' },
 					]
 			}).then(user => {
-					data.push(...user.ComponentRestaurants)
-					data.push(...user.ComponentAttractions)
+				data.push(...user.ComponentRestaurants)
+				data.push(...user.ComponentAttractions)
 					data.sort((a, b) => b.createdAt - a.createdAt)
 					return ({ data })
 				})
 			data = componentArray.data.map(d => d.name)
-			datainit = data[0]
+			data.splice(0, 0, dataInit)
 
 			date = `${new Date().getMonth() + 1} /  ${new Date().getDate()}`
 			array1 = []
@@ -127,7 +128,7 @@ let userController = {
 					end: `${endHour}: ${endMin}`
 				})
 			}
-			console.log('array1', array1)
+			//console.log('array1', array1)
 			return res.render('dailyTour', {
 				API_KEY: process.env.API_KEY,
 				origin: data[0],
@@ -147,6 +148,10 @@ let userController = {
 	},
 	getFavorite: async(req, res) => {
 		try {
+			googleMapsClient = require('@google/maps').createClient({
+				key: process.env.API_KEY,
+				Promise: Promise
+			})
 			let favoriteArray = []
 			favoriteArray = await User.findByPk('2', {
 				include: [
@@ -156,21 +161,21 @@ let userController = {
 				  { model: Attraction, as: 'ComponentAttractions' },
 				]
 			}).then(user => {
-				console.log('user', user.FavoritedRestaurants)
+				//console.log('user', user.FavoritedRestaurants)
 				const Restaurants = user.FavoritedRestaurants.map(r => ({
 					...r.dataValues,
 					isSelected: user.ComponentRestaurants.map(d => d.id).includes(r.id) ? true : false,
-					opening_hours: r.opening_hours.substring(0, 20)
+          opening_hours: r.opening_hours.substring(0, 20)
 				}))
 				const Attractions = user.FavoritedAttractions.map(r => ({
 					...r.dataValues,
 					isSelected: user.ComponentAttractions.map(d => d.id).includes(r.id) ? true : false,
 					opening_hours: r.opening_hours.substring(0, 20)
 				}))
-				return { Restaurants , Attractions}
+				return { Restaurants,  Attractions}
 			})
-			console.log('favoriteArray.Attractions', favoriteArray.Attractions)
-			console.log('favoriteArray.Restaurants', favoriteArray.Restaurants)
+			//console.log('favoriteArray.Attractions', favoriteArray.Attractions)
+			//console.log('favoriteArray.Restaurants', favoriteArray.Restaurants)
 			return res.render('favorite', {
 				attractions: favoriteArray.Attractions,
 				restaurants: favoriteArray.Restaurants,
