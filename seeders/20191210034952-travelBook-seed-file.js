@@ -45,9 +45,7 @@ module.exports = {
           image: item.image,
           introduction: item.introduction,
           LocationId: Math.floor(Math.random() * 5) + 1,
-          favoritedCount: Math.floor(Math.random() * 20) + 1,
-          likedCount: Math.floor(Math.random() * 20) + 1,
-          componentCount: Math.floor(Math.random() * 20) + 1,
+          viewCounts: Math.floor(Math.random() * 20) + 1,
           createdAt: new Date(),
           updatedAt: new Date(),
         })
@@ -62,9 +60,7 @@ module.exports = {
         image: item.image,
         introduction: item.introduction,
         LocationId: Math.floor(Math.random() * 5) + 1,
-        favoritedCount: Math.floor(Math.random() * 20) + 1,
-        likedCount: Math.floor(Math.random() * 20) + 1,
-        componentCount: Math.floor(Math.random() * 20) + 1,
+        viewCounts: Math.floor(Math.random() * 20) + 1,
         createdAt: new Date(),
         updatedAt: new Date(),
       })
@@ -79,9 +75,7 @@ module.exports = {
           image: item.image,
           introduction: item.introduction,
           LocationId: Math.floor(Math.random() * 5) + 1,
-          favoritedCount: Math.floor(Math.random() * 20) + 1,
-          likedCount: Math.floor(Math.random() * 20) + 1,
-          componentCount: Math.floor(Math.random() * 20) + 1,
+          viewCounts: Math.floor(Math.random() * 20) + 1,
           createdAt: new Date(),
           updatedAt: new Date(),
         })

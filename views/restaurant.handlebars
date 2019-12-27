@@ -2,24 +2,25 @@
 	<div class="col-md-7 ">
 		<a class="mb-5 mr-5"style="font-size: 3em;"><i class="fas fa-utensils"></i></a>
 		<img class="img-responsive center-block rounded "
-			src="{{restaurant.image}} https://live.staticflickr.com/6231/6304689783_6ef8b31138_z.jpg"
+			src="{{restaurant.image}}"
 			style="width: 350px;margin-bottom: 25px;">
 	</div>
 	<div class="col-md-5 ">
 		<div class="well">
-			<h5>{{restaurant.name}} 餐廳名稱</h5>
-			<span><i class="fas fa-car-alt"></i>: 25 mins</span>
+			<h5>{{restaurant.name}} </h5>
+			<span><i class="fas fa-car-alt"></i>{{restaurant.duration}}</span>
 			<ul class="list-unstyled">
-				<li><strong>Opening Hour:</strong> {{restaurant.opening_hours}} 08:00</li>
-				<li><strong>Tel:</strong> {{restaurant.tel}} 03-21221121</li>
-				<li><strong>Address:</strong> {{restaurant.address}} 光明市沒壞人路1段</li>
+				<li><strong>Opening Hour:</strong> {{restaurant.opening_hours}}</li>
+				<li><strong>Tel:</strong> {{restaurant.phone}} </li>
+				<li><strong>Address:</strong> {{restaurant.address}} </li>
+				<li class="far fa-grin-beam" style="color: purple;font-size: 20px"><strong> {{restaurant.viewCounts}}</strong></li>
 			</ul>
 		</div>
-		<p>{{restaurant.description}} 非常好吃的餐廳</p>
-		<div class="row float-left">
+		<p>{{restaurant.description}} </p>
+		{{!-- <div class="row float-left"> --}}
 			{{!-- <a href="/restaurants/{{restaurant.id}}/dashboard"><button type="submit"
 							class="btn btn-info mt-4 ml-4">Dashboard</button></a> --}}
-			{{#if isFavorited }}
+			{{!-- {{#if isFavorited }}
 			<form action="/favorite/{{restaurant.id}}?_method=DELETE" method="POST" style="display: contents;"><button
 					type="submit" class="btn btn-outline-info btn-sm mt-4 ml-4">移除收藏</button></form>
 			{{else}}
@@ -32,15 +33,15 @@
 			{{else}}
 			<form action="/like/{{restaurant.id}}" method="POST"><button type="submit"
 					class="btn btn-outline-info btn-sm mt-4 ml-4">Like</button></form>
-			{{/if}}
-		</div>
+			{{/if}} --}}
+		{{!-- </div> --}}
 
 	</div>
 
 	<hr>
 	<br />
 	<br />
-	<div class="container row m-auto p-3"></div>
+	{{!-- <div class="container row m-auto p-3"></div>
 	<div class="container row border border-info p-3 text-center">
 		<input type="hidden" name="attractionId" value="{{attraction.id}}" />
 		<div class="card mb-3" style="width: 200px; height: 120px;">
@@ -56,8 +57,8 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	{{!-- <div class="container p-5">
+	</div> --}}
+	<div class="container p-5">
 		<h6>所有評論：</h6>
 		{{#each restaurant.Comments}}
 		{{#if ../user.isAdmin}}
@@ -67,7 +68,7 @@
 		{{/if}}
 		<blockquote class="blockquote mb-0">
 			<h4><a href="/users/{{this.User.id}}">{{this.User.name}}</a></h4>
-			<p>{{this.text}}</p>
+			<p>{{this.comment}}</p>
 			<footer class="blockquote-footer">{{moment this.createdAt}}</footer>
 		</blockquote>
 		<hr />
@@ -82,9 +83,9 @@
 			<div class="text-right">
 				<input type="hidden" name="restaurantId" value="{{restaurant.id}}" />
 				<button type="submit" class="btn btn-primary">Submit</button>
-				<a href="javascript:history.back()">回上一頁</
+				<a href="javascript:history.back()">回上一頁</a>
 			</div>
 		</form>
-	</div> --}}
+	</div>
   </div>
 </div>

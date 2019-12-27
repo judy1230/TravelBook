@@ -29,13 +29,7 @@ module.exports = {
       LocationId: {
         type: Sequelize.STRING
       },
-      favoritedCount: {
-        type: Sequelize.TEXT
-      },
-      likedCount: {
-        type: Sequelize.TEXT
-      },
-      componentCount: {
+      viewCounts: {
         type: Sequelize.TEXT
       },
       createdAt: {

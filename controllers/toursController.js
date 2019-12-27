@@ -81,7 +81,29 @@ const toursController = {
 
 	},
 	getRestaurant: (req, res) => {
-		return res.render('restaurant')
+		console.log('req.params.id', req.params.id)
+		return Restaurant.findByPk(req.params.restaurant_id, {
+			include: [
+				//Category,
+				//{ model: User, as: 'FavoritedUsers' },
+				//{ model: User, as: 'LikedUsers' },
+				{ model: Comment, include: [User] }
+			]
+		}).then(restaurant => {
+			console.log('restaurant',restaurant)
+			totalViewCounts = parseInt(restaurant.viewCounts) + 1
+			restaurant.update({
+				viewCounts: totalViewCounts
+			})
+			//const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(req.user.id)
+			//const isLiked = restaurant.LikedUsers.map(d => d.id).includes(req.user.id)
+			return res.render('restaurant', {
+				restaurant,
+				//isFavorited: isFavorited,
+				//isLiked: isLiked
+			})
+		})
+
 	},
 	getAttractions: (req, res) => {
 		let offset = 0
@@ -119,7 +141,7 @@ const toursController = {
 	getShoppings: (req, res) => {
 		let offset = 0
 		let whereQuery = {}
-		return Shopping.findAll({
+		return Shopping.findAndCountAll({
 			order: [
 				['updatedAt', 'DESC']
 			],

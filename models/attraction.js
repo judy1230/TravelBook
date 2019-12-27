@@ -14,16 +14,14 @@ module.exports = (sequelize, DataTypes) => {
     image: DataTypes.STRING,
     introduction: DataTypes.TEXT,
     LocationId: DataTypes.INTEGER,
-    favoritedCount: DataTypes.STRING,
-    likedCount: DataTypes.STRING,
-    componentCount:DataTypes.STRING
+    viewCounts: DataTypes.STRING
   }, {});
   Attraction.associate = function(models) {
     // associations can be defined here
     Attraction.hasMany(models.Comment)
     Attraction.hasMany(models.Component)
-    Attraction.hasMany(models.Like)
     Attraction.hasMany(models.Favorite)
+    Attraction.hasMany(models.Like)
     Attraction.belongsTo(models.Location)
     Attraction.belongsToMany(models.User, {
       through: models.Favorite,
