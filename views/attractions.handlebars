@@ -28,24 +28,16 @@
 							{{this.name}}
 						</a>
 					</p>
-					<p class="card-text mb-2">{{this.opening_hours}}open: 0800</p>
+					<p class="card-text mb-2">{{this.opening_hours}}</p>
 					<p>{{this.introduction}}</p>
-					{{!-- <div class="card-text row ">
+					<div class="card-text row ">
 						{{#if this.isFavorited }}
-						<form action="/favorite/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
-								class="btn btn-danger " >移除收藏</button></form>
+						<form action="/attractions/{{this.id}}/favorite?_method=DELETE" method="POST"><button type="submit"	class="btn btn-outline-info btn-sm mt-4 ml-4" >移除收藏</button></form>
 						{{else}}
-						<form action="/favorite/{{this.id}}" method="POST"><button type="submit" class="btn btn-outline-success btn-sm ">加到收藏</button>
+						<form action="/attractions/{{this.id}}/favorite" method="POST"><button type="submit" class="btn btn btn-info btn-sm mt-4 ml-4 ">加到收藏</button>
 						</form>
 						{{/if}}
-						{{#if this.isLiked }}
-						<form action="/like/{{this.id}}?_method=DELETE" method="POST" class="ml-2"><button type="submit"
-								class="btn btn-danger btn-sm">Dislike</button></form>
-						{{else}}
-						<form action="/like/{{this.id}}" method="POST" class="ml-2"><button type="submit"
-								class="btn btn-outline-success btn-sm">Like</button></form>
-						{{/if}}
-					</div> --}}
+					</div>
 
 				</div>
 			</div>

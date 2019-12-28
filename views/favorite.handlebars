@@ -55,6 +55,34 @@
 			</div>
 			{{/each}}
 		</div>
+		<div class="container row border border-info p-3 text-center">
+			<label class="p-3 mr-2" style="font-size: 3em;"><i class="fas fa-utensils"></i></label>
+			{{#each shops}}
+			<div class="card mb-3 mr-2" style="width: 240px; height: 180px;">
+				<div class="row no-gutters">
+					<div class="col-md-5">
+						<img src="{{this.image}}" class="card-img rounded" style=" height: 180px;" alt="">
+						<input type="hidden" name="attractionId" value="{{this.id}}" />
+					</div>
+					<div class="col-md-7">
+						<div class="card-body">
+							<h8 class="card-title" href="/shops/:shop_id">{{this.name}} <small> {{../duration}}</small>
+							</h8>
+							<p class="card-text" style="font-size:14px;">open: {{this.opening_hours}} </p>
+							{{#if this.isSelected }}
+							<form action="/users/{{this.id}}/shop/component?_method=DELETE" method="POST" class="ml-3 "><button
+									type="submit" class="btn btn-outline-danger btn-sm">刪除</button></form>
+							{{else}}
+							<form action="/users/{{this.id}}/shop/component" method="POST" class="ml-2"><button type="submit"
+									class="btn btn-outline-info btn-sm">加入</button>
+							</form>
+							{{/if}}
+						</div>
+					</div>
+				</div>
+			</div>
+			{{/each}}
+		</div>
 	{{!-- <form action="/users/:tour_id/dailyTour" method="POST" style="width: 100%;"> --}}
 		{{!-- <div class="container p-3 text-right">
 			<button action="/users/1/dailyTour" class="btn btn-lg btn-primary" type="submit">Submit</button>

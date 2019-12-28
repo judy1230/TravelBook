@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
 const Attraction = db.Attraction
 const Restaurant = db.Restaurant
+const Shop = db.Shop
 const User = db.User
 const Component = db.Component
 const Tour = db.Tour
@@ -74,14 +75,16 @@ let userController = {
 				key: process.env.API_KEY,
 				Promise: Promise
 			})
-			componentArray = await User.findByPk('1', {
+			componentArray = await User.findByPk(req.user.id, {
 					include: [
 						{ model: Restaurant, as: 'ComponentRestaurants' },
-						{ model: Attraction, as: 'ComponentAttractions' },
+					  { model: Attraction, as: 'ComponentAttractions' },
+					  { model: Shop, as: 'ComponentShops' },
 					]
 			}).then(user => {
 				data.push(...user.ComponentRestaurants)
 				data.push(...user.ComponentAttractions)
+				data.push(...user.ComponentShops)
 					data.sort((a, b) => b.createdAt - a.createdAt)
 					return ({ data })
 				})
@@ -146,19 +149,21 @@ let userController = {
 	getBlog: (req, res) => {
 		return res.render('blog')
 	},
-	getFavorite: async(req, res) => {
+	getFavorites: async(req, res) => {
 		try {
 			googleMapsClient = require('@google/maps').createClient({
 				key: process.env.API_KEY,
 				Promise: Promise
 			})
 			let favoriteArray = []
-			favoriteArray = await User.findByPk('1', {
+			favoriteArray = await User.findByPk(req.user.id, {
 				include: [
 					{ model: Restaurant, as: 'FavoritedRestaurants' },
 					{ model: Attraction, as: 'FavoritedAttractions' },
+					{ model: Shop, as: 'FavoritedShops' },
 					{ model: Restaurant, as: 'ComponentRestaurants' },
-				  { model: Attraction, as: 'ComponentAttractions' },
+					{ model: Attraction, as: 'ComponentAttractions' },
+					{ model: Shop, as: 'ComponentShops' }
 				]
 			}).then(user => {
 				//console.log('user', user.FavoritedRestaurants)
@@ -172,20 +177,27 @@ let userController = {
 					isSelected: user.ComponentAttractions.map(d => d.id).includes(r.id) ? true : false,
 					opening_hours: r.opening_hours.substring(0, 20)
 				}))
-				return { Restaurants,  Attractions}
+				const Shops = user.FavoritedShops.map(r => ({
+					...r.dataValues,
+					isSelected: user.ComponentShops.map(d => d.id).includes(r.id) ? true : false,
+					opening_hours: r.opening_hours.substring(0, 20)
+				}))
+				return { Restaurants,  Attractions, Shops}
 			})
-			//console.log('favoriteArray.Attractions', favoriteArray.Attractions)
-			//console.log('favoriteArray.Restaurants', favoriteArray.Restaurants)
+			console.log('favoriteArray.Attractions', favoriteArray.Attractions)
+			console.log('favoriteArray.Restaurants', favoriteArray.Restaurants)
+			console.log('favoriteArray.Shops', favoriteArray.Shops)
 			return res.render('favorite', {
 				attractions: favoriteArray.Attractions,
 				restaurants: favoriteArray.Restaurants,
+				shops: favoriteArray.Shops,
 			})
 		} catch (err) { console.log(err) }
 
 	},
 	addRestComponent: (req, res) => {
 		return Component.create({
-			UserId: '1',//req.user.id
+			UserId: req.user.id,
 			RestaurantId: req.params.rest_id,
 		}).then((component) => {
 				return res.redirect('back')
@@ -194,7 +206,7 @@ let userController = {
 	removeRestComponent: (req, res) => {
 		return Component.findOne({
 			where: {
-				UserId: '1',//req.user.id
+				UserId: req.user.id,
 				RestaurantId: req.params.rest_id
 			}
 		}).then((component) => {
@@ -205,7 +217,7 @@ let userController = {
 	},
 	addAttractionComponent: (req, res) => {
 		return Component.create({
-			UserId: '1',//req.user.id
+			UserId: req.user.id,
 			AttractionId: req.params.attraction_id,
 		}).then((component) => {
 				return res.redirect('back')
@@ -214,8 +226,28 @@ let userController = {
 	removeAttractionComponent: (req, res) => {
 		return Component.findOne({
 			where: {
-				UserId: '1',//req.user.id
+				UserId: req.user.id,
 				AttractionId: req.params.attraction_id
+			}
+		}).then((component) => {
+			component.destroy()
+			return res.redirect('back')
+		})
+
+	},
+	addShopComponent: (req, res) => {
+		return Component.create({
+			UserId: req.user.id,
+			ShopId: req.params.shop_id,
+		}).then((component) => {
+			return res.redirect('back')
+		})
+	},
+	removeShopComponent: (req, res) => {
+		return Component.findOne({
+			where: {
+				UserId: req.user.id,
+				ShopId: req.params.shop_id
 			}
 		}).then((component) => {
 			component.destroy()

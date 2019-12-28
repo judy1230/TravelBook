@@ -45,7 +45,7 @@ const toursController = {
 		return res.redirect('/tours/blog/:tour_id')
 	},
 	getRestaurants: (req, res) => {
-		console.log('req.user',req.user)
+		//console.log('req.user',req.user)
 		let offset = 0
 		let whereQuery = {}
 		return Restaurant.findAndCountAll({
@@ -85,16 +85,14 @@ const toursController = {
 	},
 	getRestaurant: (req, res) => {
 		req.user = User.findByPk('1')
-		console.log('req.user.id', req.user.id)
+		//console.log('req.user.id', req.user.id)
 		return Restaurant.findByPk(req.params.restaurant_id, {
 			include: [
-				//Category,
 				{ model: User, as: 'FavoritedUsers' },
-				//{ model: User, as: 'LikedUsers' },
 				{ model: Comment, include: [User] }
 			]
 		}).then(restaurant => {
-			console.log('restaurant',restaurant)
+			//console.log('restaurant',restaurant)
 			totalViewCounts = parseInt(restaurant.viewCounts) + 1
 			restaurant.update({
 				viewCounts: totalViewCounts
@@ -116,6 +114,9 @@ const toursController = {
 			order: [
 				['updatedAt', 'DESC']
 			],
+			include: [
+				{ model: User, as: 'FavoritedUsers' },
+			],
 			where: whereQuery, offset: offset, limit: pageLimit
 		})
 			.then(result => {
@@ -127,8 +128,10 @@ const toursController = {
 				//clean up restaurant data
 				const data = result.rows.map(r => ({
 					...r.dataValues,
-					introduction: r.dataValues.introduction.substring(0, 10)
+					introduction: r.dataValues.introduction.substring(0, 10),
+					isFavorited: r.dataValues.FavoritedUsers.map(d => d.id).includes(req.user.id)
 				}))
+				console.log('data',data)
 				return res.render('attractions', {
 					attractions: data,
 					page: page,
@@ -163,6 +166,9 @@ const toursController = {
 			order: [
 				['updatedAt', 'DESC']
 			],
+			include: [
+				{ model: User, as: 'FavoritedUsers' },
+			],
 			where: whereQuery, offset: offset, limit: pageLimit
 		})
 			.then(result => {
@@ -174,7 +180,8 @@ const toursController = {
 				//clean up restaurant data
 				const data = result.rows.map(r => ({
 					...r.dataValues,
-					introduction: r.dataValues.introduction.substring(0, 10)
+					introduction: r.dataValues.introduction.substring(0, 10),
+					isFavorited: r.dataValues.FavoritedUsers.map(d => d.id).includes(req.user.id)
 				}))
 				//return { data, page, pages, totalPage, prev, next }
 				console.log('data', data)
@@ -213,15 +220,53 @@ const toursController = {
 		})
 	},
 	removeFavoriteRest: (req, res) => {
-		console.log('//////////////helllo remove////////')
+		console.log('//////////////helllo remove restaurant////////')
 		return Favorite.findOne({
-			UserId: req.user.id,//req.user.id
+			UserId: req.user.id,
 			RestaurantId: req.params.rest_id,
 		}).then((favorite) => {
 			favorite.destroy()
 			return res.redirect('back')
 		})
-	}
+	},
+	addFavoriteAttraction: (req, res) => {
+		console.log('//////////////helllo add attraction////////')
+		return Favorite.create({
+			UserId: req.user.id,
+			AttractionId: req.params.attraction_id,
+		}).then((favorite) => {
+			return res.redirect('back')
+		})
+	},
+	removeFavoriteAttraction: (req, res) => {
+		console.log('//////////////helllo remove attraction////////')
+		return Favorite.findOne({
+			UserId: req.user.id,//req.user.id
+			AttractionId: req.params.attraction_id,
+		}).then((favorite) => {
+			favorite.destroy()
+			return res.redirect('back')
+		})
+	},
+	addFavoriteShop: (req, res) => {
+		console.log('//////////////helllo add shop////////')
+		return Favorite.create({
+			UserId: req.user.id,
+			ShopId: req.params.shop_id,
+		}).then((favorite) => {
+			return res.redirect('back')
+		})
+	},
+	removeFavoriteShop: (req, res) => {
+		console.log('//////////////helllo remove shop////////')
+		return Favorite.findOne({
+			UserId: req.user.id,//req.user.id
+			ShopId: req.params.shop_id,
+		}).then((favorite) => {
+			favorite.destroy()
+			return res.redirect('back')
+		})
+	},
 
 }
 
