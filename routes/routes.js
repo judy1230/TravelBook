@@ -10,15 +10,15 @@ const passport = require('../config/passport')
 const helpersreq = require('../_helpers')
 
 const authenticated = (req, res, next) => {
-	console.log(req.user)
-	if (helpersreq.ensureAuthenticated(req)) {
+	//console.log(req.user)
+	if (req.isAuthenticated()) {
 		return next()
 	}
 	res.redirect('/signin')
 }
 const authenticatedAdmin = (req, res, next) => {
-	if (helpersreq.ensureAuthenticated(req)) {
-		if (helpersreq.getUser(req).role ==='admin') { return next() }
+	if (req.isAuthenticated()) {
+		if (req.user.role ==='admin') { return next() }
 		return res.redirect('/')
 	}
 	res.redirect('/signin')
@@ -50,7 +50,8 @@ router.get('/daysTours', toursController.getDaysTours)
 router.get('/restaurants/:restaurant_id', toursController.getRestaurant)
 router.get('/attractions/:attraction_id', toursController.getAttraction)
 router.get('/shops/:shop_id', toursController.getShop)
-//router.post('/favorite/:restaurant_id', toursController.addFavoriteRest)
+router.post('/favorite/:rest_id', authenticated, toursController.addFavoriteRest)
+router.delete('/favorite/:rest_id', authenticated, toursController.removeFavoriteRest)
 //router.post('/favorite/:attraction_id', toursController.addFavoriteAttraction)
 //router.post('/favorite/:shopping_id', toursController.addFavoriteShopping)
 router.get('/dailyTours/:tour_id', toursController.getDailyTour)

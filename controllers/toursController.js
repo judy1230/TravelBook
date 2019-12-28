@@ -45,6 +45,7 @@ const toursController = {
 		return res.redirect('/tours/blog/:tour_id')
 	},
 	getRestaurants: (req, res) => {
+		console.log('req.user',req.user)
 		let offset = 0
 		let whereQuery = {}
 		return Restaurant.findAndCountAll({
@@ -52,12 +53,13 @@ const toursController = {
 				['updatedAt', 'DESC']
 			],
 			include: [
-				//{ model: User, as: 'FavoritedUsers' },
+				{ model: User, as: 'FavoritedUsers' },
 				Comment
 			],
 			where: whereQuery, offset: offset, limit: pageLimit
 		})
 			.then(result => {
+				//console.log('result', result.Favorites)
 				let page = Number(req.query.page) || 1
 				let pages = Math.ceil(result.count / pageLimit)
 				let totalPage = Array.from({ length: pages }).map((item, index) => index + 1)
@@ -66,7 +68,8 @@ const toursController = {
 				//clean up restaurant data
 				const data = result.rows.map(r => ({
 					...r.dataValues,
-					introduction: r.dataValues.introduction.substring(0, 20)
+					introduction: r.dataValues.introduction.substring(0, 20),
+					isFavorited : r.dataValues.FavoritedUsers.map(d => d.id).includes(req.user.id)
 				}))
 				//return { data, page, pages, totalPage, prev, next }
 				console.log('data', data)
@@ -81,7 +84,8 @@ const toursController = {
 
 	},
 	getRestaurant: (req, res) => {
-		req.user = User.findByPk('2')
+		req.user = User.findByPk('1')
+		console.log('req.user.id', req.user.id)
 		return Restaurant.findByPk(req.params.restaurant_id, {
 			include: [
 				//Category,
@@ -95,7 +99,7 @@ const toursController = {
 			restaurant.update({
 				viewCounts: totalViewCounts
 			})
-			const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes('2')
+			const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(req.user.id)
 			//const isLiked = restaurant.LikedUsers.map(d => d.id).includes(req.user.id)
 			return res.render('restaurant', {
 				restaurant,
@@ -200,6 +204,24 @@ const toursController = {
 			})
 		})
 	},
+	addFavoriteRest: (req, res) => {
+		return Favorite.create({
+			UserId: req.user.id,
+			RestaurantId: req.params.rest_id,
+		}).then((favorite) => {
+			return res.redirect('back')
+		})
+	},
+	removeFavoriteRest: (req, res) => {
+		console.log('//////////////helllo remove////////')
+		return Favorite.findOne({
+			UserId: req.user.id,//req.user.id
+			RestaurantId: req.params.rest_id,
+		}).then((favorite) => {
+			favorite.destroy()
+			return res.redirect('back')
+		})
+	}
 
 }
 

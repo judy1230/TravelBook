@@ -33,11 +33,11 @@
 					</p>
 					<p class="card-text mb-2"style="font-size: 12px;" >{{this.opening_hours}}</p>
 					<p style="font-size: 12px;">{{this.introduction}}</p>
-					{{#if isFavorited }}
-					<form action="/favorite/{{restaurant.id}}?_method=DELETE" method="POST" style="display: contents;"><button type="submit"
+					{{#if this.isFavorited }}
+					<form action="/favorite/{{this.id}}?_method=DELETE" method="POST" style="display: contents;"><button type="submit"
 							class="btn btn-outline-info btn-sm mt-4 ml-4">移除規劃</button></form>
 					{{else}}
-					<form action="/favorite/{{restaurant.id}}" method="POST" style="display: contents;"><button type="submit"
+					<form action="/favorite/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
 							class="btn btn-info btn-sm mt-4 ml-4">加入規劃</button></form>
 					{{/if}}
 				</div>

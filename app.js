@@ -35,7 +35,7 @@ app.use((req, res, next) => {
 	console.log(req.method, req.path)
 	res.locals.success_msg = req.flash('success_msg')
 	res.locals.error_msg = req.flash('error_msg')
-	res.locals.user = helpersreq.getUser(req)
+	res.locals.user = req.user
 	next()
 })
 
