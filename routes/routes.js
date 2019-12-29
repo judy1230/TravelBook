@@ -18,7 +18,7 @@ const authenticated = (req, res, next) => {
 }
 const authenticatedAdmin = (req, res, next) => {
 	if (helpersreq.ensureAuthenticated(req)) {
-		if (helpersreq.getUser(req).role ==='admin') { return next() }
+		if (helpersreq.getUser(req).role === 'admin') { return next() }
 		return res.redirect('/')
 	}
 	res.redirect('/signin')
@@ -31,6 +31,7 @@ router.post('/users/:id/tourEdit', userController.postTour)
 router.get('/users/:id/component', userController.getComponent)
 router.post('/users/:id/component', userController.postComponent)
 router.get('/users/:tour_id/dailyTour', userController.getDailyTour)
+router.get('/users/:id/profile', userController.getprofile)
 //router.get('/users/:tour_id/daysTour', userController.getDaysTour)
 //router.get('/users/:tour_id/blogEdit', userController.getBlogEdit)
 //router.post('/users/:tour_id/blogEdit', userController.postBlog)

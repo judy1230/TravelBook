@@ -1,0 +1,114 @@
+<hr>
+<blockquote>
+  <div class="container p-3">
+    <h1 class="p-3">會員資料</h1>
+
+    <div class="row m-4">
+      <div class="col-md-6 p-3 text-center border border-dark">
+        <img class="img-responsive center-block" src="{{profile.image}}"
+          style="width: 75%;height: 75%; margin-bottom: 25px;" alt="avatar">
+      </div>
+      <div class="col-md-6 p-5">
+        <p class="" style="font-size: 30px;">{{profile.name}}王大呆</p>
+        {{!-- <p>{{profile.email}}</p> --}}
+        <div class="row">
+          <div class="col-sm-2 ">
+            <i class="fas fa-heart" style="font-size: 40px;"></i>
+            <p class="m-2">1</p>
+          </div>
+          <div class="col-sm-2 ">
+            <i class="far fa-thumbs-up" style="font-size: 40px;"></i>
+            <p class="m-2">1</p>
+          </div>
+          <div class="col-sm-2 ">
+            <i class="far fa-file-alt" style="font-size: 40px;"></i>
+            <p class="m-2">1</p>
+          </div>
+        </div>
+        {{!-- <p class="">{{profile.CommentsRest.length}}喜愛</p>
+              <p class="">{{profile.FavoritedRestaurants.length}}讚</p>
+              <p class="">{{profile.Followings.length}}行程</p>
+              <p class="">{{profile.Followers.length}}文章</p> --}}
+        {{#ifCond profile.id user.id }}
+        <a href="/users/{{profile.id}}/edit"><button type="submit" class="btn btn-primary">edit</button></a>
+        {{else}}
+        {{#if this.isFollowed }}
+        <form action="/following/{{profile.id}}?_method=DELETE" method="POST" style="display: contents;"><button
+            type="submit" class="btn btn-danger">取消追蹤</button></form>
+        {{else}}
+        <form action="/following/{{profile.id}}" method="POST" style="display: contents;"><button type="submit"
+            class="btn btn-primary">追蹤</button></form>
+        {{/if}}
+        {{/ifCond}}
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+  <div class="row p-5">
+    <div class="container border border-dark">
+      <div class="col-left">
+        <h3>熱門文章</h3>
+        <p>1234</p>
+      </div>
+    </div>
+    <div class="container border border-dark">
+      <div class="col-right">
+        <h3>最新留言</h3>
+        <p>1234</p>
+      </div>
+    </div>
+  </div>
+
+  <blockquote class="blockquote p-5">
+    <div class="row">
+      {{#if profile.CommentsRest}}
+      <div class='col-6'>
+        <p class="">{{profile.CommentsRest.length}}個已評論的餐廳</p>
+        {{#each profile.CommentsRest }}
+        <a href="/restaurants/{{this.Restaurant.id}}"><img class="img-responsive center-block mr-3"
+            src="{{this.Restaurant.image}}" style="width:70px;margin-bottom: 25px;"></a>
+        {{/each}}
+        {{/if}}
+      </div>
+
+      <div class="col-6">
+        {{#if profile.FavoritedRestaurants}}
+        <p class="">{{profile.FavoritedRestaurants.length}}個收藏的餐廳</p>
+        {{#each profile.FavoritedRestaurants }}
+        <a href="/restaurants/{{this.id}}"><img class="img-responsive center-block mr-3" src="{{this.image}}"
+            style="width:70px;margin-bottom: 25px;"></a>
+        {{/each}}
+        {{/if}}
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        {{#if profile.Followings}}
+        <p class=""><span>{{profile.Followings.length}}</span> followings(追蹤者)</p>
+        {{#each profile.Followings}}
+        <a href="/users/top/{{this.id}}"><img class="img-responsive center-block mr-3" src="{{this.image}}"
+            style="width:70px;margin-bottom: 25px;"></a>
+        {{/each}}
+        {{/if}}
+      </div>
+      <div class="col-6">
+        {{#if profile.Followers}}
+        <p class="">{{profile.Followers.length}} followers(追隨者)</p>
+        {{#each profile.Followers}}
+        <a href="/users/top/{{this.id}}"><img class="img-responsive center-block mr-3" src="{{this.image}}"
+            style="width:70px;margin-bottom: 25px;"></a>
+        {{/each}}
+        {{/if}}
+      </div>
+
+    </div>
+  </blockquote>
+
+
+  <hr />

@@ -38,6 +38,7 @@ let userController = {
 			})
 		}
 	},
+
 	signInPage: (req, res) => {
 		return res.render('signin')
 	},
@@ -60,6 +61,10 @@ let userController = {
 	},
 	postBlog: (req, res) => {
 		return res.redirect('/tours/blog/:tour_id')
+	},
+
+	getprofile: (req, res) => {
+		return res.render('profile')
 	},
 
 	getDailyTour: (req, res) => {
