@@ -45,7 +45,6 @@ const toursController = {
 		return res.redirect('/tours/blog/:tour_id')
 	},
 	getRestaurants: (req, res) => {
-		//console.log('req.user',req.user)
 		let offset = 0
 		let whereQuery = {}
 		return Restaurant.findAndCountAll({
