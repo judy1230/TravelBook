@@ -23,32 +23,26 @@
 	<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-info">
 		<a class="navbar-brand font-italic" href="/">TravelBook</a>
 		<div class="navbar-collapse offcanvas-collapse navbar-text" id="navbarsExampleDefault">
-			<ul class="container text-right">
-				<a class="fas fa-clipboard-check mr-3" href="/users/2/dailyTour"></a>
-				<a class="fas fa-business-time mr-3" href="/users/2/favorite"></a>
-				<a class="fas fa-briefcase mr-3" href="#"></a>
-				<a class="fas fa-portrait mr-3" href="#"></a>
-				<a class="fas fa-share-alt mr-3" href="#"></a>
-				<a class="fas fa-toggle-on mr-3" href="#"></a>
-			</ul>
-			<div>
-				{{#ifCond localUser.role 'admin'}}
-				<a href="/admin/tweets" style="color: white;margin-right: 10px;">Admin 後台</a>
-				{{/ifCond}}
-				{{#if user}}
-				<span style="color: white;margin-right: 10px;">Hi, {{user.name}}</span>
-				<a href="/users/{{user.id}}" style="color: white;margin-right: 10px;">Profile</a>
-				<a href="/logout"><button class="btn btn-outline-success my-2 my-sm-0">LogOut</button></a>
-				{{/if}}
-			</div>
+				<ul class="container text-right">
+					{{#ifCond localUser.role 'admin'}}
+					<a href="/admin/" style="color: white;margin-right: 10px;">Admin 後台</a>
+					{{/ifCond}}
+					{{#if user}}
+					<span style="color: white;margin-right: 10px;">Hi, {{user.name}}</span>
+					{{/if}}
+					<a class="fas fa-clipboard-check mr-3" href="/users/2/dailyTour" title="行程"></a>
+					<a class="fas fa-briefcase mr-3" href="/users/2/favorite" title="收藏包"></a>
+					<a class="fas fa-portrait mr-3" href="/users/{{user.id}}" title="個人資料"></a>
+					<a class="fas fa-toggle-on mr-3" href="/logout" title="LogOut"></a>
+
+				</ul>
 		</div>
 	</nav>
 	<main role="main">
 		<div class="album py-5 bg-light">
-			{{{body}}}
-			{{!-- <div class="container">
+
 				{{{body}}}
-			</div> --}}
+
 		</div>
 	</main>
 </body>

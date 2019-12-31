@@ -9,18 +9,22 @@
 						<input type="hidden" name="attractionId" value="{{this.id}}" />
 					</div>
 					<div class="col-md-7">
-						<div class="card-body">
-							<h8 class="card-title" href="/attractions/:attraction_id">{{this.name}} <small> {{this.duration}}</small>
-							</h8>
-							{{!-- <p class="card-text" style="font-size:14px;">open: {{this.opening_hours}} </p> --}}
-							{{#if this.isSelected }}
-							<form action="/users/{{this.id}}/attraction/component?_method=DELETE" method="POST" class="ml-3 "><button type="submit"
-									class="btn btn-outline-danger btn-sm">刪除</button></form>
-							{{else}}
-							<form action="/users/{{this.id}}/attraction/component" method="POST" class="ml-2"><button type="submit"
-									class="btn btn-outline-info btn-sm">加入</button>
-							</form>
-							{{/if}}
+						<form action="/attractions/{{this.id}}/favorite?_method=DELETE" method="POST"><button type="submit"class="btn close btn-sm"><span aria-hidden="true">×</span></button>
+						</form>
+						<div class="card-body row m-auto">
+							<h8 class="card-title" href="/attractions/{{this.id}}">{{this.name}}</h8>
+							<h8><i class="fas fa-car" style="color:deepskyblue"></i> {{this.duration}}</h8>
+							<div class="container mt-3">
+								{{#if this.isSelected }}
+								<form action="/users/{{this.id}}/attraction/component?_method=DELETE" method="POST" class="ml-3 "><button type="submit"
+										class="btn btn-outline-danger btn-sm">刪除</button></form>
+								{{else}}
+								<form action="/users/{{this.id}}/attraction/component" method="POST" class="ml-2"><button type="submit"
+										class="btn btn-outline-info btn-sm">加入</button>
+								</form>
+								{{/if}}
+							</div>
+
 						</div>
 					</div>
 				</div>
@@ -30,27 +34,27 @@
 		<div class="container row p-3 text-center">
 			<label class="p-3 mr-2" style="font-size: 3em;"><i class="fas fa-utensils"></i></label>
 			{{#each restaurants}}
-
 			<div class="card mb-3 mr-2" style="width: 240px; height: 180px;">
 				<div class="row no-gutters">
 					<div class="col-md-5">
-
 						<img src="{{this.image}}" class="card-img rounded" style=" height: 180px;"alt="">
-						<input type="hidden" name="attractionId" value="{{this.id}}" />
+						<input type="hidden" name="restaurantId" value="{{this.id}}" />
 					</div>
 					<div class="col-md-7">
-						<div class="card-body">
-							<h8 class="card-title" href="/restaurants/:restaurant_id">{{this.name}} <small> {{this.duration}}</small>
-							</h8>
-
-							{{#if this.isSelected }}
-							<form action="/users/{{this.id}}/restaurant/component?_method=DELETE" method="POST" class="ml-3 "><button type="submit"
-									class="btn btn-outline-danger btn-sm">刪除</button></form>
-							{{else}}
-							<form action="/users/{{this.id}}/restaurant/component" method="POST" class="ml-2 "><button type="submit"
-									class="btn btn-outline-info btn-sm">加入</button>
-							</form>
-							{{/if}}
+						<form action="/restaurants/{{this.id}}/favorite?_method=DELETE" method="POST" style="display: contents;"><button type="submit" class="btn close btn-sm"><span aria-hidden="true">×</span></button></form>
+						<div class="card-body row m-auto">
+							<h8 class="card-title" href="/restaurants/{{this.id}}">{{this.name}}</h8>
+							<h8><i class="fas fa-car" style="color:deepskyblue"></i> {{this.duration}}</h8>
+								<div class="container mt-3">
+									{{#if this.isSelected }}
+									<form action="/users/{{this.id}}/restaurant/component?_method=DELETE" method="POST" class="ml-3 "><button type="submit"
+											class="btn btn-outline-danger btn-sm">刪除</button></form>
+									{{else}}
+									<form action="/users/{{this.id}}/restaurant/component" method="POST" class="ml-2 "><button type="submit"
+											class="btn btn-outline-info btn-sm">加入</button>
+									</form>
+									{{/if}}
+								</div>
 						</div>
 					</div>
 				</div>
@@ -58,27 +62,33 @@
 			{{/each}}
 		</div>
 		<div class="container row p-3 text-center">
-			<label class="p-3 mr-2" style="font-size: 3em;"><i class="fas fa-utensils"></i></label>
+			<label class="p-3 mr-2" style="font-size: 3em;"><i class="fas fa-gifts"></i></label>
 			{{#each shops}}
 			<div class="card mb-3 mr-2" style="width: 240px; height: 180px;">
 				<div class="row no-gutters">
 					<div class="col-md-5">
 						<img src="{{this.image}}" class="card-img rounded" style=" height: 180px;" alt="">
-						<input type="hidden" name="attractionId" value="{{this.id}}" />
+						<input type="hidden" name="shopId" value="{{this.id}}" />
 					</div>
 					<div class="col-md-7">
-						<div class="card-body">
-							<h8 class="card-title" href="/shops/:shop_id">{{this.name}} <small> {{this.duration}}</small>
-							</h8>
-							{{!-- <p class="card-text" style="font-size:14px;">open: {{this.opening_hours}} </p> --}}
-							{{#if this.isSelected }}
-							<form action="/users/{{this.id}}/shop/component?_method=DELETE" method="POST" class="ml-3 "><button
-									type="submit" class="btn btn-outline-danger btn-sm">刪除</button></form>
-							{{else}}
-							<form action="/users/{{this.id}}/shop/component" method="POST" class="ml-2"><button type="submit"
-									class="btn btn-outline-info btn-sm">加入</button>
-							</form>
-							{{/if}}
+            <form  action="/shops/{{this.id}}/favorite?_method=DELETE" method="POST"><button type="submit"	class="btn close btn-sm "><span aria-hidden="true">×</span></button>
+            </form>
+						<div class="card-body row m-auto">
+							<h8 class="card-title" href="/shops/{{this.id}}">{{this.name}}</h8>
+							<h8><i class="fas fa-car" style="color:deepskyblue"></i> {{this.duration}}</h8>
+							<div class="container mt-5">
+								{{#if this.isSelected }}
+								<form action="/users/{{this.id}}/shop/component?_method=DELETE" method="POST" class="ml-3 "><button type="submit"
+										class="btn btn-outline-danger btn-sm">刪除</button></form>
+								{{else}}
+								<form action="/users/{{this.id}}/shop/component" method="POST" class="ml-2"><button type="submit"
+										class="btn btn-outline-info btn-sm">加入</button>
+								</form>
+								{{/if}}
+							</div>
+
+
+
 						</div>
 					</div>
 				</div>
@@ -91,3 +101,4 @@
 		</div> --}}
 	{{!-- <form> --}}
 </div>
+

@@ -32,8 +32,8 @@
 					<p>{{this.introduction}}</p>
 					<div class="card-text row ">
 						{{#if this.isFavorited }}
-						<form action="/shops/{{this.id}}/favorite?_method=DELETE" method="POST"><button type="submit"
-								class="btn btn-outline-info btn-sm mt-4 ml-4" >移除收藏</button></form>
+						<form action="/shops/{{this.id}}/favorite?_method=DELETE" method="POST"><button type="submit"class="btn btn-outline-info btn-sm mt-4 ml-4" >移除收藏</button>
+						</form>
 						{{else}}
 						<form action="/shops/{{this.id}}/favorite" method="POST"><button type="submit" class="btn btn btn-info btn-sm mt-4 ml-4">加到收藏</button>
 						</form>

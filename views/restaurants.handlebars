@@ -34,7 +34,7 @@
 					<p class="card-text mb-2"style="font-size: 12px;" >{{this.opening_hours}}</p>
 					<p style="font-size: 12px;">{{this.introduction}}</p>
 					{{#if this.isFavorited }}
-					<form action="restaurants/{{this.id}}/favorite?_method=DELETE" method="POST" style="display: contents;"><button type="submit"
+					<form action="/restaurants/{{this.id}}/favorite?_method=DELETE" method="POST" style="display: contents;"><button type="submit"
 							class="btn btn-outline-info btn-sm mt-4 ml-4">移除收藏</button></form>
 					{{else}}
 					<form action="restaurants/{{this.id}}/favorite" method="POST" style="display: contents;"><button type="submit"

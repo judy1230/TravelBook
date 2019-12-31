@@ -240,7 +240,7 @@ const toursController = {
 	removeFavoriteAttraction: (req, res) => {
 		console.log('//////////////helllo remove attraction////////')
 		return Favorite.findOne({
-			UserId: req.user.id,//req.user.id
+			UserId: req.user.id,
 			AttractionId: req.params.attraction_id,
 		}).then((favorite) => {
 			favorite.destroy()
@@ -259,7 +259,7 @@ const toursController = {
 	removeFavoriteShop: (req, res) => {
 		console.log('//////////////helllo remove shop////////')
 		return Favorite.findOne({
-			UserId: req.user.id,//req.user.id
+			UserId: req.user.id,
 			ShopId: req.params.shop_id,
 		}).then((favorite) => {
 			favorite.destroy()

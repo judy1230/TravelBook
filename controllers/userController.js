@@ -69,8 +69,6 @@ let userController = {
 		try {
 			data = []
 			dataInit = '台北火車站'
-
-			console.log('data', data)
 			googleMapsClient = require('@google/maps').createClient({
 				key: process.env.API_KEY,
 				Promise: Promise
@@ -89,6 +87,7 @@ let userController = {
 				return ({ data })
 			})
 			data = componentArray.data.map(d => d.name)
+			dataImage = componentArray.data.map(d => d.image)
 			data.splice(0, 0, dataInit)
 
 			date = `${new Date().getMonth() + 1} /  ${new Date().getDate()}`
@@ -106,8 +105,7 @@ let userController = {
 					startMin = startMinInit
 					startHour = startHourInit
 				}
-				duration =
-					await googleMapsClient.directions({
+				duration = await googleMapsClient.directions({
 						origin: location1,
 						destination: location2
 					}).asPromise()
@@ -124,11 +122,13 @@ let userController = {
 					diff = 1
 				}
 				endHour = startHour + diff
+				image = dataImage[i]
 				array1.push({
 					origin: location1,
 					destination: location2,
 					duration: duration.text,
-					end: `${endHour}: ${endMin}`
+					end: `${endHour}: ${endMin}`,
+          image: image
 				})
 			}
 			//console.log('array1', array1)
@@ -183,7 +183,7 @@ let userController = {
 					.catch((err) => {
 						console.log(err);
 					})
-				console.log('duration', duration)
+				//console.log('duration', duration)
 				Restaurants[i].duration = duration
 			}
 			const Attractions = user.FavoritedAttractions.map(r => ({
