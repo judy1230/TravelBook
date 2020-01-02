@@ -14,18 +14,17 @@
 						<div class=" card-body">
               <div class="container row">
 								<a class="" style="font-size:16px;" href="/attractions/{{this.id}}">{{this.name}}</a>
-								<span class="">
+								<h8><i class="fas fa-car" style="color:deepskyblue"></i> {{this.duration}}</h8>
 									{{#if this.isSelected }}
 									<form action="/users/{{this.id}}/attraction/component?_method=DELETE" method="POST" class=" "><button type="submit"
-											class="btn close btn-sm" style="font-size:16px;color:red;"><i class="fas fa-fire-alt"></i></button></form>
+											class="btn close btn-sm" style="font-size:16px;color:red;" title="移除規劃"><i class="fas fa-minus-circle"></i></button></form>
 									{{else}}
 									<form action="/users/{{this.id}}/attraction/component" method="POST" class=""><button type="submit"
-											class="btn close btn-sm" style="font-size:16px; color:grey;"><i class="fas fa-fire"></i></button>
+											class="btn close btn-sm" style="font-size:16px; color:grey;" title="加入規劃"><i class="fas fa-calendar-plus"></i></button>
 									</form>
 									{{/if}}
 								</span>
 							</div>
-							<small><i class="fas fa-car card-subtitle mb-2 " style="color:deepskyblue"></i> {{this.duration}}</small>
 						</div>
 					</div>
 				</div>
@@ -44,15 +43,15 @@
 					<div class="col-md-7">
 						<form action="/restaurants/{{this.id}}/favorite?_method=DELETE" method="POST" style="display: contents;"><button type="submit" class="btn close btn-sm"><span aria-hidden="true">×</span></button></form>
 						<div class="card-body row m-auto">
-							<h8 class="card-title" href="/restaurants/{{this.id}}">{{this.name}}</h8>
+							<a class="card-title" href="/restaurants/{{this.id}}">{{this.name}}</a>
 							<h8><i class="fas fa-car" style="color:deepskyblue"></i> {{this.duration}}</h8>
 								<div class="container mt-3">
 									{{#if this.isSelected }}
 									<form action="/users/{{this.id}}/restaurant/component?_method=DELETE" method="POST" class="ml-3 "><button type="submit"
-											class="btn btn-outline-danger btn-sm">刪除</button></form>
+											class="btn close btn-sm" style="font-size:16px;color:red;" title="移除規劃"><i class="fas fa-minus-circle"></i></button></form>
 									{{else}}
 									<form action="/users/{{this.id}}/restaurant/component" method="POST" class="ml-2 "><button type="submit"
-											class="btn btn-outline-info btn-sm">加入</button>
+											class="btn close btn-sm" style="font-size:16px; color:grey;" title="加入規劃"><i class="fas fa-calendar-plus"></i></button>
 									</form>
 									{{/if}}
 								</div>
@@ -75,21 +74,18 @@
             <form  action="/shops/{{this.id}}/favorite?_method=DELETE" method="POST"><button type="submit"	class="btn close btn-sm "><span aria-hidden="true">×</span></button>
             </form>
 						<div class="card-body row m-auto">
-							<h8 class="card-title" href="/shops/{{this.id}}">{{this.name}}</h8>
+							<a class="card-title" href="/shops/{{this.id}}">{{this.name}}</a>
 							<h8><i class="fas fa-car" style="color:deepskyblue"></i> {{this.duration}}</h8>
 							<div class="container mt-5">
 								{{#if this.isSelected }}
-								<form action="/users/{{this.id}}/shop/component?_method=DELETE" method="POST" class="ml-3 "><button type="submit"
-										class="btn btn-outline-danger btn-sm">刪除</button></form>
+								<form action="/users/{{this.id}}/shop/component?_method=DELETE" method="POST" class="ml-3"><button type="submit"
+										class="btn close btn-sm"style="font-size:16px;color:red;" title="移除規劃"><i class="fas fa-minus-circle"></i></button></form>
 								{{else}}
 								<form action="/users/{{this.id}}/shop/component" method="POST" class="ml-2"><button type="submit"
-										class="btn btn-outline-info btn-sm">加入</button>
+										class="btn close btn-sm"style="font-size:16px;color:grey;" title="加入規劃"><i class="fas fa-calendar-plus"></i></button>
 								</form>
 								{{/if}}
 							</div>
-
-
-
 						</div>
 					</div>
 				</div>
