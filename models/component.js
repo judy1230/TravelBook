@@ -20,13 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     ShopId: {
       type: DataTypes.INTEGER,
       allowNull: true,
-    },
-    Lat: {
-      type: DataTypes.STRING
-    },
-    Lng: {
-      type: DataTypes.STRING
-    },
+    }
   }, {});
   Component.associate = function(models) {
     // associations can be defined here

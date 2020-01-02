@@ -2,29 +2,30 @@
 		<div class="container row p-3 text-center">
 			<label class="p-3 mr-2" style="font-size: 3em;"><i class="fas fa-camera-retro"></i></label>
 			{{#each attractions}}
-			<div class="card mb-4 mr-2" style="width: 240px; height: 180px;">
+			<div class="card mb-4 mr-2" style="width: 260px; height: 140px;">
 				<div class="row no-gutters">
 					<div class="col-md-5">
-						<img src="{{this.image}}" class="card-img rounded"style=" height: 180px;" alt="">
+						<img src="{{this.image}}" class="card-img rounded"style=" height: 140px;" alt="">
 						<input type="hidden" name="attractionId" value="{{this.id}}" />
 					</div>
 					<div class="col-md-7">
 						<form action="/attractions/{{this.id}}/favorite?_method=DELETE" method="POST"><button type="submit"class="btn close btn-sm"><span aria-hidden="true">×</span></button>
 						</form>
-						<div class="card-body row m-auto">
-							<h8 class="card-title" href="/attractions/{{this.id}}">{{this.name}}</h8>
-							<h8><i class="fas fa-car" style="color:deepskyblue"></i> {{this.duration}}</h8>
-							<div class="container mt-3">
-								{{#if this.isSelected }}
-								<form action="/users/{{this.id}}/attraction/component?_method=DELETE" method="POST" class="ml-3 "><button type="submit"
-										class="btn btn-outline-danger btn-sm">刪除</button></form>
-								{{else}}
-								<form action="/users/{{this.id}}/attraction/component" method="POST" class="ml-2"><button type="submit"
-										class="btn btn-outline-info btn-sm">加入</button>
-								</form>
-								{{/if}}
+						<div class=" card-body">
+              <div class="container row">
+								<a class="" style="font-size:16px;" href="/attractions/{{this.id}}">{{this.name}}</a>
+								<span class="">
+									{{#if this.isSelected }}
+									<form action="/users/{{this.id}}/attraction/component?_method=DELETE" method="POST" class=" "><button type="submit"
+											class="btn close btn-sm" style="font-size:16px;color:red;"><i class="fas fa-fire-alt"></i></button></form>
+									{{else}}
+									<form action="/users/{{this.id}}/attraction/component" method="POST" class=""><button type="submit"
+											class="btn close btn-sm" style="font-size:16px; color:grey;"><i class="fas fa-fire"></i></button>
+									</form>
+									{{/if}}
+								</span>
 							</div>
-
+							<small><i class="fas fa-car card-subtitle mb-2 " style="color:deepskyblue"></i> {{this.duration}}</small>
 						</div>
 					</div>
 				</div>

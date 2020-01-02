@@ -26,10 +26,16 @@ module.exports = {
       introduction: {
         type: Sequelize.TEXT
       },
-      LocationId: {
-        type: Sequelize.INTEGER
+      Location: {
+        type: Sequelize.STRING
       },
       viewCounts: {
+        type: Sequelize.STRING
+      },
+      stayTime: {
+        type: Sequelize.INTEGER
+      },
+      rating: {
         type: Sequelize.STRING
       },
       createdAt: {

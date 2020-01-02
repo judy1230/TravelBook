@@ -88,6 +88,7 @@ let userController = {
 			})
 			data = componentArray.data.map(d => d.name)
 			dataImage = componentArray.data.map(d => d.image)
+			dataStayTime = componentArray.data.map(d => d.stayTime)
 			data.splice(0, 0, dataInit)
 
 			date = `${new Date().getMonth() + 1} /  ${new Date().getDate()}`
@@ -99,8 +100,8 @@ let userController = {
 				let location1 = data[i]
 				let location2 = data[i + 1]
 				if (location1 != data[0]) {
-					startMin = endMin
-					startHour = endHour
+					startMin = leaveMin
+					startHour = leaveHour
 				} else {
 					startMin = startMinInit
 					startHour = startHourInit
@@ -116,18 +117,26 @@ let userController = {
 							console.log(err);
 						})
 				endMin = Math.floor(startMin + (duration.value / 60))
+				leaveMin = endMin + dataStayTime[i]
 				let diff = 0
 				if (endMin > 60) {
-					endMin = endMin - 60
-					diff = 1
+					diff = Math.floor(endMin / 60)
+					endMin %= 60
+				}
+				if (leaveMin > 60) {
+					diffLeave = parseInt(leaveMin / 60)
+					leaveMin %= 60
 				}
 				endHour = startHour + diff
+				leaveHour = startHour + diffLeave
 				image = dataImage[i]
 				array1.push({
 					origin: location1,
 					destination: location2,
 					duration: duration.text,
 					end: `${endHour}: ${endMin}`,
+					leaveEnd: `${leaveHour}: ${leaveMin}`,
+					stayTime: dataStayTime[i],
           image: image
 				})
 			}

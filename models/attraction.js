@@ -13,7 +13,9 @@ module.exports = (sequelize, DataTypes) => {
     opening_hours: DataTypes.STRING,
     image: DataTypes.STRING,
     introduction: DataTypes.TEXT,
-    LocationId: DataTypes.INTEGER,
+    stayTime: DataTypes.INTEGER,
+    rating: DataTypes.STRING,
+    Location: DataTypes.STRING,
     viewCounts: DataTypes.STRING
   }, {});
   Attraction.associate = function(models) {
@@ -22,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     Attraction.hasMany(models.Component)
     Attraction.hasMany(models.Favorite)
     Attraction.hasMany(models.Like)
-    Attraction.belongsTo(models.Location)
+    //Attraction.belongsTo(models.Location)
     Attraction.belongsToMany(models.User, {
       through: models.Favorite,
       foreignKey: 'AttractionId',

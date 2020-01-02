@@ -29,8 +29,14 @@ module.exports = {
       viewCounts: {
         type: Sequelize.STRING
       },
-      LocationId: {
+      stayTime: {
         type: Sequelize.INTEGER
+      },
+      rating: {
+        type: Sequelize.STRING
+      },
+      Location: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

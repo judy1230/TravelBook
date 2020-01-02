@@ -7,8 +7,10 @@ module.exports = (sequelize, DataTypes) => {
     opening_hours: DataTypes.STRING,
     image: DataTypes.STRING,
     introduction: DataTypes.TEXT,
+    stayTime: DataTypes.INTEGER,
+    rating: DataTypes.STRING,
     viewCounts: DataTypes.STRING,
-    LocationId: DataTypes.INTEGER
+    Location: DataTypes.STRING
   }, {});
   Shop.associate = function(models) {
     // associations can be defined here
@@ -16,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     Shop.hasMany(models.Component)
     Shop.hasMany(models.Favorite)
     Shop.hasMany(models.Like)
-    Shop.belongsTo(models.Location)
+    //Shop.belongsTo(models.Location)
     Shop.belongsToMany(models.User, {
       through: models.Favorite,
       foreignKey: 'ShopId',

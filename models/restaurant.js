@@ -13,8 +13,10 @@ module.exports = (sequelize, DataTypes) => {
     address: DataTypes.STRING,
     image: DataTypes.STRING,
     introduction: DataTypes.TEXT,
-    LocationId: DataTypes.INTEGER,
-    viewCounts: DataTypes.STRING
+    Location: DataTypes.STRING,
+    viewCounts: DataTypes.STRING,
+    stayTime: DataTypes.INTEGER,
+    rating: DataTypes.STRING,
   }, {});
   Restaurant.associate = function(models) {
     // associations can be defined here
@@ -22,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     Restaurant.hasMany(models.Component)
     Restaurant.hasMany(models.Favorite)
     Restaurant.hasMany(models.Like)
-    Restaurant.belongsTo(models.Location)
+    //Restaurant.belongsTo(models.Location)
     Restaurant.belongsToMany(models.User, {
       through: models.Favorite,
       foreignKey: 'RestaurantId',
