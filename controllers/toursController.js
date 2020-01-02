@@ -68,7 +68,8 @@ const toursController = {
 				const data = result.rows.map(r => ({
 					...r.dataValues,
 					introduction: r.dataValues.introduction.substring(0, 20),
-					isFavorited : r.dataValues.FavoritedUsers.map(d => d.id).includes(req.user.id)
+					isFavorited: r.dataValues.FavoritedUsers.map(d => d.id).includes(req.user.id),
+					ratingStars: (Math.round((r.rating / 5) * 100)) + '%'
 				}))
 				//return { data, page, pages, totalPage, prev, next }
 				console.log('data', data)
@@ -128,7 +129,8 @@ const toursController = {
 				const data = result.rows.map(r => ({
 					...r.dataValues,
 					introduction: r.dataValues.introduction.substring(0, 10),
-					isFavorited: r.dataValues.FavoritedUsers.map(d => d.id).includes(req.user.id)
+					isFavorited: r.dataValues.FavoritedUsers.map(d => d.id).includes(req.user.id),
+					ratingStars: (Math.round((r.rating / 5) * 100)) + '%'
 				}))
 				console.log('data',data)
 				return res.render('attractions', {
@@ -147,11 +149,11 @@ const toursController = {
 				{ model: Comment, include: [User] }
 			]
 		}).then(attraction => {
-
 			totalViewCounts = parseInt(attraction.viewCounts) + 1
 			attraction.update({
 				viewCounts: totalViewCounts
 			})
+			
 			return res.render('attraction', {
 				attraction
 			})
@@ -180,7 +182,8 @@ const toursController = {
 				const data = result.rows.map(r => ({
 					...r.dataValues,
 					introduction: r.dataValues.introduction.substring(0, 10),
-					isFavorited: r.dataValues.FavoritedUsers.map(d => d.id).includes(req.user.id)
+					isFavorited: r.dataValues.FavoritedUsers.map(d => d.id).includes(req.user.id),
+					ratingStars: (Math.round((r.rating / 5) * 100)) + '%'
 				}))
 				//return { data, page, pages, totalPage, prev, next }
 				console.log('data', data)

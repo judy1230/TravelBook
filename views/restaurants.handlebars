@@ -26,12 +26,16 @@
 				<img class="card-img-top" src="{{this.image}}" alt="Card image cap" width="200px"
 					height="180px">
 				<div class="card-body text-center m-auto">
-					<p class="card-text  mb-2">
+					<p class="card-text">
 						<a href="/restaurants/{{this.id}}">
 							{{this.name}}
 						</a>
 					</p>
-					<p class="card-text mb-2"style="font-size: 12px;" >{{this.opening_hours}}</p>
+					<div class="ratings">
+						<div class="empty_star">★★★★★</div>
+						<div class="full_star"style="width: {{this.ratingStars}};">★★★★★</div>
+					</div>
+					<p class="card-text mb-2"style="font-size: 12px;" > 營業時間: {{this.opening_hours}}</p>
 					<p style="font-size: 12px;">{{this.introduction}}</p>
 					{{#if this.isFavorited }}
 					<form action="/restaurants/{{this.id}}/favorite?_method=DELETE" method="POST" style="display: contents;"><button type="submit"
@@ -72,5 +76,27 @@
 
 </div>
 
+<style>
+.ratings {
+position: relative;
+vertical-align: middle;
+display: inline-block;
+color: #ddd; /*背景星星顏色*/
+overflow: hidden;
+font-size: 20px; /*調整字體大小可放大縮小星星*/
+text-shadow: 0px 1px 0 #999;
+}
+.full_star {
+ /*調整寬度可變更星等*/
+position: absolute;
+left: 0;
+top: 0;
+white-space: nowrap;
+overflow: hidden;
+color: #D56A16; /*前景星星顏色*/
+}
 
+
+
+</style>
 
