@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER
     },
+    category: DataTypes.STRING,
     name: DataTypes.STRING,
     phone: DataTypes.STRING,
     opening_hours: DataTypes.STRING,

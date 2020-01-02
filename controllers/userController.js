@@ -87,8 +87,10 @@ let userController = {
 				return ({ data })
 			})
 			data = componentArray.data.map(d => d.name)
+			dataId = componentArray.data.map(d => d.id)
 			dataImage = componentArray.data.map(d => d.image)
 			dataStayTime = componentArray.data.map(d => d.stayTime)
+			dataCategory = componentArray.data.map(d =>d.category)
 			data.splice(0, 0, dataInit)
 
 			date = `${new Date().getMonth() + 1} /  ${new Date().getDate()}`
@@ -133,7 +135,9 @@ let userController = {
 				array1.push({
 					origin: location1,
 					destination: location2,
+					id: dataId[i],
 					duration: duration.text,
+					category: dataCategory[i],
 					end: `${endHour}: ${endMin}`,
 					leaveEnd: `${leaveHour}: ${leaveMin}`,
 					stayTime: dataStayTime[i],

@@ -38,6 +38,7 @@ module.exports = {
     queryInterface.bulkInsert('Restaurants',
       restaurants.map((item) =>
         ({
+          category:'Restaurant',
           name: item.name,
           phone: item.phone,
           address: item.address,
@@ -45,7 +46,7 @@ module.exports = {
           image: item.image,
           introduction: item.introduction,
           stayTime: 90,
-          rating: ((Math.random() * 1) + (Math.floor(Math.random() * 5) + 1)).toFixed(1),
+          rating: ((Math.random() * 1) + (Math.floor(Math.random() * 4) + 1)).toFixed(1),
           Location: 'Taipei',
           viewCounts: Math.floor(Math.random() * 20) + 1,
           createdAt: new Date(),
@@ -55,6 +56,7 @@ module.exports = {
     queryInterface.bulkInsert('Attractions',
       attractions.map((item) =>
       ({
+        category: 'Attraction',
         name: item.name,
         phone: item.phone,
         address: item.address,
@@ -62,7 +64,7 @@ module.exports = {
         image: item.image,
         introduction: item.introduction,
         stayTime: 90,
-        rating: ((Math.random() * 1) + (Math.floor(Math.random() * 5) + 1)).toFixed(1),
+        rating: ((Math.random() * 1) + (Math.floor(Math.random() * 4) + 1)).toFixed(1),
         Location: 'Taipei',
         viewCounts: Math.floor(Math.random() * 20) + 1,
         createdAt: new Date(),
@@ -72,6 +74,7 @@ module.exports = {
     queryInterface.bulkInsert('Shops',
       shops.map((item) =>
         ({
+          category:'shop',
           name: item.name,
           phone: item.phone,
           address: item.address,
@@ -79,7 +82,7 @@ module.exports = {
           image: item.image,
           introduction: item.introduction,
           stayTime: 90,
-          rating: ((Math.random() * 1) + (Math.floor(Math.random() * 5)+1)).toFixed(1),
+          rating: ((Math.random() * 1) + (Math.floor(Math.random() * 4)+1)).toFixed(1),
           Location: 'Taipei',
           viewCounts: Math.floor(Math.random() * 20) + 1,
           createdAt: new Date(),

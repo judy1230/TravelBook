@@ -21,6 +21,9 @@
 							<img src="{{this.image}}" class="card-img" height="160px" width="160px"alt="">
 						</div>
 						<div class="col-md-6">
+							<form action="/users/{{this.id}}/{{this.category}}/component?_method=DELETE" method="POST"><button type="submit"
+									class="btn close btn-sm"><span aria-hidden="true">×</span></button>
+							</form>
 							<div class="card-body">
 								<h6 class="card-title" href="#">{{this.destination}} {{this.end}}</h6>
 								<h7 class="card-content" style="color:purple">stay: {{this.stayTime}} mins</h7>
