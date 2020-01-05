@@ -13,6 +13,9 @@ if (process.env.NODE_ENV !== 'production') {      // 如果不是 production 模
 const passport = require('./config/passport.js')
 const helpersreq = require('./_helpers')
 
+
+
+
 //setup handlebars
 app.engine('handlebars', handlebars({
 	defaultLayout: 'main',
@@ -47,7 +50,7 @@ app.listen(port, () => {
 })
 //把 passport 傳入routes
 require('./routes')(app, passport)
-app.use('/upload', express.static(__dirname + '/upload'))
+//app.use('/upload', express.static(__dirname + '/upload'))
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 

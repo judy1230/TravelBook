@@ -17,5 +17,11 @@ module.exports = {
 
 		return (arg1 === arg2) ? options.inverse(this): options.fn(this)
 	},
+	getInputDate: function (date, options) {
+		if (!date) { return '' }
+		const month = date.getMonth() === 11 ? 1 : date.getMonth() + 1
+		return `${date.getFullYear()}-${month.toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`
+	}
+
 }
 

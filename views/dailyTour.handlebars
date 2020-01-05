@@ -1,21 +1,22 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-
 <div class="container mt-5 mb-5 p-5 row">
 
-	<div class="col-6 ml-5">
+	<div class="tour-form col-6 ml-5">
 		<h4>Today's Tour</h4>
+		<form action="/users/{{user.id}}/tourEdit/?_method=PUT" method="POST" class="form-input">
 		<ul class="moveable timeline" id="items-list">
+			<li class="input-append row">
+				<input type="text" name="origin" value={{origin}} class="form-style text-center" style="width: 30%; margin-right:25px;"
+					placeholder={{origin}}>
+				<input type="text" name="date" class="form-style datepicker text-center" style="width:35%;" value="{{date}}" placeholder="日期: {{date}}">
+				<div class="input-group-addon">
+					<span class="glyphicon glyphicon-th"></span>
+				</div>
+				<span style="color:mediumblue; font-size:16px;margin-left:68px">{{startHourInit}} : {{startMinInit}}</span>
 
-			<li>
-				<a>{{origin}} {{startHourInit}} : {{startMinInit}}</a>
-				<span class="float-right"> {{../date}}</span>
 			</li>
 			{{#each array1}}
 			<li>
-				<div class="card mb-3" style="max-width: 300px;">
+				<div class="card mb-3" style="max-width: 500px;">
 					<div class="row no-gutters">
 						<div class="col-md-6">
 							<img src="{{this.image}}" class="card-img" height="160px" width="160px"alt="">
@@ -26,7 +27,9 @@
 							</form>
 							<div class="card-body">
 								<h6 class="card-title" href="#">{{this.destination}} {{this.end}}</h6>
-								<h7 class="card-content" style="color:purple">stay: {{this.stayTime}} mins</h7>
+								<label>停留時間:</label>
+								<input type="text" name="stayTime" value=" {{this.stayTime}}" class="form-style text-center" style="color:purple; width:25%;"><span>mins</span>
+
 								<p class="card-text" style="font-size: 14px;"><span><i class="fas fa-car" style="color:deepskyblue"></i></span> {{this.duration}}</p>
 							</div>
 						</div>
@@ -35,6 +38,10 @@
 			</li>
 			{{/each}}
 		</ul>
+		<div class="form-submit">
+			<input type="submit" name="submit" value="submit">
+		</div>
+		</form>
 	</div>
 	<!-- 地圖放置處 -->
 
@@ -47,7 +54,20 @@
 	</div>
 </div>
 
+
 <script>
+	$('.datepicker').datepicker({
+		clearBtn: true,
+		orientation: "auto right",
+		forceParse: false,
+		daysOfWeekHighlighted: "0,6",
+		todayHighlight: true
+	})
+
+</script>
+
+<script>
+
 
 	let items = document.querySelectorAll('#items-list > li')
 
@@ -78,7 +98,7 @@
 		// insert the dropped items at new place
 		if (newIndex < oldIndex) {
 			target.before(dropped)
-
+       ajax()
 		} else {
 			target.after(dropped)
 		}
@@ -153,4 +173,42 @@
 		} */
 		}
 	}
+	.tour-form input.form-style {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #333;
+  text-transform: capitalize;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  outline: none;
+}
+ .form-submit {
+  text-align: left;
+  padding: 0 15px;
+}
+
+ .form-submit input {
+  font-size: 16px;
+  text-transform: capitalize;
+  background-color: transparent;
+  border: 1px solid #000;
+  border-radius: 12px;
+  padding: 15px 60px;
+  margin-top: 16px;
+  margin-bottom: 14px;
+  cursor: pointer;
+  -webkit-transition: .4s linear;
+  -moz-transition: .4s linear;
+  -ms-transition: .4s linear;
+  -o-transition: .4s linear;
+  transition: .4s linear;
+	float:right;
+}
+
+ .form-submit input:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+
 </style>

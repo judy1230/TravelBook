@@ -25,9 +25,11 @@ const authenticatedAdmin = (req, res, next) => {
 }
 //index
 router.get('/', (req, res) => res.redirect('/tours'))
-router.get('/tours', authenticated,toursController.getTours)
-router.get('/users/:id/tourEdit', userController.tourEdit)
-router.post('/users/:id/tourEdit', userController.postTour)
+router.get('/tours', authenticated, toursController.getTours)
+
+router.get('/users/:id/tourEdit', authenticated, userController.tourEdit)
+router.post('/users/:id/tourEdit', authenticated, userController.postTour)
+
 router.get('/users/:id/favorite', authenticated,userController.getFavorites)
 router.post('/users/:rest_id/restaurant/component', authenticated,userController.addRestComponent)
 router.delete('/users/:rest_id/restaurant/component', authenticated,userController.removeRestComponent)
@@ -36,7 +38,7 @@ router.delete('/users/:attraction_id/attraction/component', authenticated, userC
 router.post('/users/:shop_id/shop/component', authenticated, userController.addShopComponent)
 router.delete('/users/:shop_id/shop/component', authenticated, userController.removeShopComponent)
 router.get('/users/:tour_id/dailyTour', authenticated,userController.getDailyTour)
-//router.get('/users/:tour_id/daysTour', userController.getDaysTour)
+router.get('/users/:tour_id/daysTour', userController.getDaysTour)
 //router.get('/users/:tour_id/blogEdit', userController.getBlogEdit)
 //router.post('/users/:tour_id/blogEdit', userController.postBlog)
 //router.get('/users/blog/:id', userController.getBlog)

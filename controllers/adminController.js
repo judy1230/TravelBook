@@ -20,7 +20,24 @@ const adminController = {
 	},
 	getAdminChart: (req, res) => {
 		res.render('/admin/admin chart')
-	}
+	},
+	// createRestaurant: (req, res) => {
+	// 	return Restaurant.create({
+	// 		UserId: req.user.id,
+	// 		category:'Restaurant',
+	// 		name: req.params.name,
+	// 		phone: res.params.phone,
+	// 		opening_hours: res.params.opening_hours,
+	// 		address: res.params.address,
+	// 		image: res.params.image,
+	// 		introduction: res.params.introduction,
+	// 		Location: res.params.Location,
+	// 		stayTime: res.params.stayTime,
+	// 		rating: res.params.rating
+	// 	}).then((component) => {
+	// 		return res.redirect('back')
+	// 	})
+	//},
 
 }
 module.exports = adminController

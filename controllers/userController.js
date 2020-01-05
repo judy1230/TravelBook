@@ -55,8 +55,90 @@ let userController = {
 		req.logout()
 		res.redirect('/signin')
 	},
-	tourEdit: (req, res) => {
-		return res.render('tourEdit')
+	tourEdit: async(req, res) => {
+		try {
+			googleMapsClient = require('@google/maps').createClient({
+				key: process.env.API_KEY,
+				Promise: Promise
+			})
+			let favoriteArray = []
+			user = await User.findByPk(req.user.id, {
+				include: [
+					{ model: Restaurant, as: 'FavoritedRestaurants' },
+					{ model: Attraction, as: 'FavoritedAttractions' },
+					{ model: Shop, as: 'FavoritedShops' },
+					{ model: Restaurant, as: 'ComponentRestaurants' },
+					{ model: Attraction, as: 'ComponentAttractions' },
+					{ model: Shop, as: 'ComponentShops' }
+				]
+			})
+			const Restaurants = await user.FavoritedRestaurants.map(r => ({
+				...r.dataValues,
+				isSelected: user.ComponentRestaurants.map(d => d.id).includes(r.id) ? true : false,
+			}))
+
+			locations = Restaurants.map(d => d.name)
+			for (i = 0; i < locations.length; i++) {
+				duration = await googleMapsClient.directions({
+					origin: '台北火車站',
+					destination: locations[i]
+				}).asPromise()
+					.then((response) => {
+						return response.json.routes[0].legs[0].duration.text
+					})
+					.catch((err) => {
+						console.log(err);
+					})
+				//console.log('duration', duration)
+				Restaurants[i].duration = duration
+			}
+			const Attractions = user.FavoritedAttractions.map(r => ({
+				...r.dataValues,
+				isSelected: user.ComponentAttractions.map(d => d.id).includes(r.id) ? true : false,
+				opening_hours: r.opening_hours.substring(0, 20)
+			}))
+			locations = Attractions.map(d => d.name)
+			for (i = 0; i < locations.length; i++) {
+				duration = await googleMapsClient.directions({
+					origin: '台北火車站',
+					destination: locations[i]
+				}).asPromise()
+					.then((response) => {
+						return response.json.routes[0].legs[0].duration.text
+					})
+					.catch((err) => {
+						console.log(err);
+					})
+				Attractions[i].duration = duration
+			}
+			const Shops = user.FavoritedShops.map(r => ({
+				...r.dataValues,
+				isSelected: user.ComponentShops.map(d => d.id).includes(r.id) ? true : false,
+				opening_hours: r.opening_hours.substring(0, 20)
+			}))
+			locations = Shops.map(d => d.name)
+			for (i = 0; i < locations.length; i++) {
+				duration = await googleMapsClient.directions({
+					origin: '台北火車站',
+					destination: locations[i]
+				}).asPromise()
+					.then((response) => {
+						return response.json.routes[0].legs[0].duration.text
+					})
+					.catch((err) => {
+						console.log(err);
+					})
+				Shops[i].duration = duration
+			}
+			favoriteArray.push(...Attractions)
+			favoriteArray.push(...Restaurants)
+			favoriteArray.push(...Shops)
+			console.log('favoriteArray', favoriteArray)
+
+			return res.render('tourEdit', {
+				favoriteArray
+			})
+		} catch (err) { console.log(err) }
 	},
 	postTour: (req, res) => {
 		return res.redirect('/users/:tour_id/dailytour')
@@ -93,7 +175,7 @@ let userController = {
 			dataCategory = componentArray.data.map(d =>d.category)
 			data.splice(0, 0, dataInit)
 
-			date = `${new Date().getMonth() + 1} /  ${new Date().getDate()}`
+			date = `${new Date().getMonth() + 1} /  ${new Date().getDate()} / ${new Date().getFullYear()}`
 			array1 = []
 			startMinInit = new Date().getMinutes()
 			startHourInit = new Date().getHours()
