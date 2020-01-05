@@ -1,26 +1,27 @@
 <hr>
 <blockquote>
   <div class="container ">
-    <i class="far fa-user m-3" style="font-size: 70px;">會員資料</i>
-    <div class="row m-4">
-      <div class="col-md-6 p-3 text-center border border-dark">
-        <img class="img-responsive center-block" src="{{profile.image}}"
+    {{!-- <i class="fas fa-user" style="font-size: 70px;">會員資料</i> --}}
+    <div class="row m-5">
+      <div class="col-md-6 p-4 text-center border border-dark">
+        <img class="img-responsive center-block" src="{{profile.avatar}}"
           style="width: 75%;height: 75%; margin-bottom: 25px;" alt="avatar">
       </div>
-      <div class="col-md-6 p-5">
-        <p class="" style="font-size: 30px;">{{profile.name}}王大呆</p>
+      <div class="col-md-6 ">
+        <div class="col align-self-start"></div>
+        <p class="" style="font-size: 40px;">{{profile.name}}王大呆</p>
         {{!-- <p>{{profile.email}}</p> --}}
-        <div class="row">
-          <div class="col-sm-2 ">
-            <i class="fas fa-heart text-danger" style="font-size: 40px;"></i>
+        <div class="row col-m-2 ">
+          <div class="col-sm-3 ">
+            <i class="fas fa-heart text-danger " style="font-size: 50px;"></i>
             <p class="m-2">1</p>
           </div>
-          <div class="col-sm-2 ">
-            <i class="far fa-thumbs-up text-primary" style="font-size: 40px;"></i>
+          <div class="col-sm-3 ">
+            <i class="far fa-thumbs-up text-primary" style="font-size: 50px;"></i>
             <p class="m-2">1</p>
           </div>
-          <div class="col-sm-2 ">
-            <i class="far fa-file-alt " style="font-size: 40px;"></i>
+          <div class="col-sm-3 ">
+            <i class="far fa-file-alt " style="font-size: 50px;"></i>
             <p class="m-2">1</p>
           </div>
         </div>
@@ -49,11 +50,11 @@
   <div class="container">
     <div class="row p-5">
       <div class="col-md-6 border border-dark">
-        <h3>熱門文章</h3>
+        <h3>熱門文章:</h3>
         <p>1234</p>
       </div>
       <div class="col-md-6 border border-dark">
-        <h3>最新留言</h3>
+        <h3>最新留言:</h3>
         <p>1234</p>
       </div>
     </div>
