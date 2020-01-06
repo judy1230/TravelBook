@@ -284,21 +284,21 @@ let userController = {
 					['id', 'ASC']
 				],
 			}).then(components => {
-        console.log('components', components[0].Attraction.dataValues.name)
+        //console.log('components', components[0].Attraction.dataValues.name)
 				data = components.map(d => d.Restaurant ? d.Restaurant.dataValues : d.Attraction ? d.Attraction.dataValues : d.Shop.dataValues)
-				console.log('data289', data)
+				//console.log('data289', data)
 
-				//return components.map(r => r.stayTime)
-				return data
+				//return
+				return { data: data, stayTime: components.map(r => r.stayTime)}
 				})
-			console.log('componentArray293', componentArray.data)
+			//console.log('componentArray293', componentArray)
 
 			data = componentArray.data.map(d => d.name)
 			dataId = componentArray.data.map(d => d.id)
 			dataImage = componentArray.data.map(d => d.image)
 
-			dataStayTime = stayTime.map(d => d ? d : 90)
-			console.log('dataStayTime', dataStayTime)
+			dataStayTime = componentArray.stayTime.map(d => d ? d : 90)
+			//console.log('dataStayTime', dataStayTime)
 			dataCategory = componentArray.data.map(d =>d.category)
 			data.splice(0, 0, origin)
 			date = `${new Date().getMonth() + 1} /  ${new Date().getDate()} / ${new Date().getFullYear()}`
@@ -352,7 +352,7 @@ let userController = {
           image: image
 				})
 			}
-			console.log('tourComponents', tourComponents)
+			//console.log('tourComponents', tourComponents)
 			return res.render('dailyTour', {
 				API_KEY: process.env.API_KEY,
 				origin: data[0],
