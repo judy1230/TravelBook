@@ -143,14 +143,17 @@ let userController = {
 	postTour: (req, res) => {
 		return res.redirect('/users/:tour_id/dailytour')
 	},
-	postBlog: (req, res) => {
-		return res.redirect('/tours/blog/:tour_id')
-	},
-
-	getDailyTour: async (req, res) => {
+	putTour: async(req, res) => {
+		console.log('///////////////////hello putTour///////////')
 		try {
 			data = []
-			dataInit = '台北火車站'
+			title = req.body.title
+			origin = req.body.origin
+			date = req.body.date
+			startHourInit = parseInt(req.body.startHourInit)
+			startMinInit = parseInt(req.body.startMinInit)
+			stayTime = parseInt(req.body.stayTime)
+			tourComponents = []
 			googleMapsClient = require('@google/maps').createClient({
 				key: process.env.API_KEY,
 				Promise: Promise
@@ -168,15 +171,138 @@ let userController = {
 				data.sort((a, b) => b.createdAt - a.createdAt)
 				return ({ data })
 			})
+			// Component.findByPk(req.params.id)
+			// 	.then((component) => {
+			// 		component.update({
+			// 			stayTime: req.body.stayTime
+			// 		})
+			// 	})
+			console.log('componentArray', componentArray)
+
 			data = componentArray.data.map(d => d.name)
 			dataId = componentArray.data.map(d => d.id)
 			dataImage = componentArray.data.map(d => d.image)
 			dataStayTime = componentArray.data.map(d => d.stayTime)
-			dataCategory = componentArray.data.map(d =>d.category)
-			data.splice(0, 0, dataInit)
+			dataCategory = componentArray.data.map(d => d.category)
+			data.splice(0, 0, origin)
+      console.log('data',data)
+			for (let i = 0; i < data.length - 1; i++) {
+				let location1 = data[i]
+				let location2 = data[i + 1]
+				if (location1 != data[0]) {
+					startMin = leaveMin
+					startHour = leaveHour
+				} else {
+					startMin = startMinInit
+					startHour = startHourInit
+				}
+				duration = await googleMapsClient.directions({
+					origin: location1,
+					destination: location2
+				}).asPromise()
+					.then((response) => {
+						return response.json.routes[0].legs[0].duration
+					})
+					.catch((err) => {
+						console.log(err);
+					})
+				endMin = Math.floor(startMin + (duration.value / 60))
+				leaveMin = endMin + dataStayTime[i]
+				let diff = 0
+				if (endMin > 60) {
+					diff = Math.floor(endMin / 60)
+					endMin %= 60
+				}
+				if (leaveMin > 60) {
+					diffLeave = parseInt(leaveMin / 60)
+					leaveMin %= 60
+				}
+				endHour = startHour + diff
+				leaveHour = startHour + diffLeave
+				image = dataImage[i]
+				tourComponents.push({
+					origin:location1,
+					destination: location2,
+					id: dataId[i],
+					duration: duration.text,
+					category: dataCategory[i],
+					end: `${endHour}: ${endMin}`,
+					leaveEnd: `${leaveHour}: ${leaveMin}`,
+					stayTime: dataStayTime[i],
+					image: image
+				})
+			}
+			console.log('tourComponents', tourComponents)
+			return res.render('dailyTour', {
+				API_KEY: process.env.API_KEY,
+				title,
+				origin,
+				destination: data[data.length - 1],
+				tourComponents,
+				date,
+				startMinInit,
+				startHourInit
+			})
+		} catch (err) { console.log(err) }
 
+	},
+	postBlog: (req, res) => {
+		return res.redirect('/tours/blog/:tour_id')
+	},
+
+	getDailyTour: async (req, res) => {
+		try {
+			data = []
+			origin = '台北火車站'
+			googleMapsClient = require('@google/maps').createClient({
+				key: process.env.API_KEY,
+				Promise: Promise
+			})
+			// componentArray = await User.findByPk(req.user.id, {
+			// 	include: [
+			// 		{ model: Restaurant, as: 'ComponentRestaurants' },
+			// 		{ model: Attraction, as: 'ComponentAttractions' },
+			// 		{ model: Shop, as: 'ComponentShops' },
+			// 	]
+			// }).then(user => {
+			// 	data.push(...user.ComponentRestaurants)
+			// 	data.push(...user.ComponentAttractions)
+			// 	data.push(...user.ComponentShops)
+			// 	data.sort((a, b) => b.createdAt - b.createdAt)
+			// 	return ({ data })
+			// })
+			componentArray  = await Component.findAll({
+				where: {
+					UserId: req.user.id
+				},
+				include: [
+					Restaurant,
+					Attraction,
+					Shop
+				],
+				order: [
+					['id', 'ASC']
+				],
+			}).then(components => {
+        console.log('components', components[0].Attraction.dataValues.name)
+				data = components.map(d => d.Restaurant ? d.Restaurant.dataValues : d.Attraction ? d.Attraction.dataValues : d.Shop.dataValues)
+				console.log('data289', data)
+
+				//return components.map(r => r.stayTime)
+				return data
+				})
+			console.log('componentArray293', componentArray.data)
+
+			data = componentArray.data.map(d => d.name)
+			dataId = componentArray.data.map(d => d.id)
+			dataImage = componentArray.data.map(d => d.image)
+
+			dataStayTime = stayTime.map(d => d ? d : 90)
+			console.log('dataStayTime', dataStayTime)
+			dataCategory = componentArray.data.map(d =>d.category)
+			data.splice(0, 0, origin)
 			date = `${new Date().getMonth() + 1} /  ${new Date().getDate()} / ${new Date().getFullYear()}`
-			array1 = []
+			tourComponents = []
 			startMinInit = new Date().getMinutes()
 			startHourInit = new Date().getHours()
 
@@ -214,7 +340,7 @@ let userController = {
 				endHour = startHour + diff
 				leaveHour = startHour + diffLeave
 				image = dataImage[i]
-				array1.push({
+				tourComponents.push({
 					origin: location1,
 					destination: location2,
 					id: dataId[i],
@@ -226,12 +352,12 @@ let userController = {
           image: image
 				})
 			}
-			//console.log('array1', array1)
+			console.log('tourComponents', tourComponents)
 			return res.render('dailyTour', {
 				API_KEY: process.env.API_KEY,
 				origin: data[0],
 				destination: data[data.length - 1],
-				array1,
+				tourComponents,
 				date,
 				startMinInit,
 				startHourInit
@@ -331,7 +457,7 @@ let userController = {
 	addRestComponent: (req, res) => {
 		return Component.create({
 			UserId: req.user.id,
-			RestaurantId: req.params.rest_id,
+			RestaurantId:req.params.rest_id
 		}).then((component) => {
 			return res.redirect('back')
 		})
@@ -346,7 +472,21 @@ let userController = {
 			component.destroy()
 			return res.redirect('back')
 		})
-
+	},
+	putRestComponent: (req, res) => {
+		console.log('///////////hello put rest////////')
+		return Component.findOne({
+			where: {
+				UserId: req.user.id,
+				RestaurantId: req.params.rest_id
+			}
+		}).then((component) => {
+			console.log('component', component)
+			component.update({
+				stayTime: req.body.stayTime
+			})
+			return res.redirect('back')
+		})
 	},
 	addAttractionComponent: (req, res) => {
 		return Component.create({
@@ -368,6 +508,21 @@ let userController = {
 		})
 
 	},
+	putAttractionComponent: (req, res) => {
+		console.log('///////////hello put attraction////////')
+		return Component.findOne({
+			where: {
+				UserId: req.user.id,
+				AttractionId: req.params.attraction_id
+			}
+		}).then((component) => {
+			console.log('component', component)
+			component.update({
+				stayTime: req.body.stayTime
+			})
+			return res.redirect('back')
+		})
+	},
 	addShopComponent: (req, res) => {
 		return Component.create({
 			UserId: req.user.id,
@@ -387,6 +542,21 @@ let userController = {
 			return res.redirect('back')
 		})
 
+	},
+	putShopComponent: (req, res) => {
+		console.log('///////////hello put shop////////')
+		return Component.findOne({
+			where: {
+				UserId: req.user.id,
+				ShopId: req.params.shop_id
+			}
+		}).then((component) => {
+			console.log('component', component)
+			component.update({
+				stayTime: req.body.stayTime
+			})
+			return res.redirect('back')
+		})
 	},
 	getBlogEdit: (req, res) => {
 		return res.render('blogEdit')

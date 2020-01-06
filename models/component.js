@@ -20,6 +20,9 @@ module.exports = (sequelize, DataTypes) => {
     ShopId: {
       type: DataTypes.INTEGER,
       allowNull: true,
+    },
+    stayTime: {
+      type: DataTypes.INTEGER
     }
   }, {});
   Component.associate = function(models) {

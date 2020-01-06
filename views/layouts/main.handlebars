@@ -30,8 +30,8 @@
 </head>
 
 <body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js">
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdnjs.com/libraries/bodymovin" type="text/javascript"></script>
 
 	{{!-- Navbar --}}
 	<nav class="navbar navbar-expand-sm fixed-top navbar-dark bg-info">
@@ -48,7 +48,7 @@
 				<a class="fas fa-clipboard-check mr-3" href="/users/{{user.id}}/tourEdit" title="行程規劃"></a>
 				<a class="fas fa-clipboard-check mr-3" href="/users/{{user.id}}/dailyTour" title="行程規劃"></a>
 				<a class="fas fa-briefcase mr-3" href="/users/{{user.id}}/favorite" title="收藏包"></a>
-				<a class="fas fa-portrait mr-3" href="/users/{{user.id}}" title="個人資料"></a>
+				<a class="fas fa-portrait mr-3" href="/users/{{user.id}}/profile" title="個人資料"></a>
 				<a class="fas fa-toggle-on mr-3" href="/logout" title="LogOut"></a>
 
 			</ul>

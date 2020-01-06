@@ -67,6 +67,7 @@ const toursController = {
 				//clean up restaurant data
 				const data = result.rows.map(r => ({
 					...r.dataValues,
+					name: r.dataValues.name.substring(0, 10),
 					introduction: r.dataValues.introduction.substring(0, 20),
 					isFavorited: r.dataValues.FavoritedUsers.map(d => d.id).includes(req.user.id),
 					ratingStars: (Math.round((r.rating / 5) * 100)) + '%'
@@ -153,7 +154,7 @@ const toursController = {
 			attraction.update({
 				viewCounts: totalViewCounts
 			})
-			
+
 			return res.render('attraction', {
 				attraction
 			})

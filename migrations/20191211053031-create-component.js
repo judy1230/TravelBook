@@ -20,6 +20,9 @@ module.exports = {
       ShopId: {
         type: Sequelize.INTEGER
       },
+      stayTime: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

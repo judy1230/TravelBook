@@ -1,20 +1,19 @@
-<div class="container mt-5 mb-5 p-5 row">
 
-	<div class="tour-form col-6 ml-5">
-		<h4>Today's Tour</h4>
-		<form action="/users/{{user.id}}/tourEdit/?_method=PUT" method="POST" class="form-input">
+<div class="home_bg mt-4 mb-5 p-5 row">
+	<form action="/users/{{user.id}}/dailyTour/{{tour.id}}?_method=PUT" method="POST" class="form-input col-6"style="width:50%;">
+	<div class="tour-form ml-5">
+		<input type="text" name="title" value="{{title}}"class="text-center" style="width: 30%; margin-right:25px;"	placeholder="Today's Tour">
 		<ul class="moveable timeline" id="items-list">
 			<li class="input-append row">
-				<input type="text" name="origin" value={{origin}} class="form-style text-center" style="width: 30%; margin-right:25px;"
-					placeholder={{origin}}>
-				<input type="text" name="date" class="form-style datepicker text-center" style="width:35%;" value="{{date}}" placeholder="日期: {{date}}">
-				<div class="input-group-addon">
-					<span class="glyphicon glyphicon-th"></span>
-				</div>
-				<span style="color:mediumblue; font-size:16px;margin-left:68px">{{startHourInit}} : {{startMinInit}}</span>
-
+				<input type="text" name="origin" value="{{origin}}"class="form-style text-center" style="width: 30%; margin-right:25px;"placeholder={{origin}}>
+				<input type="text" name="date" class="form-style datepicker text-center" style="width:35%; " value="{{date}}" placeholder="日期: {{date}}">
+				<input type="text" name="startHourInit" class="time form-style text-center" style="color:mediumblue; font-size:16px;width:10%; margin-left:20px;" value="{{startHourInit}} " placeholder="{{startHourInit}}">
+				<span> : </span>
+				<input type="text" name="startMinInit" class="time form-style text-center"
+					style="color:mediumblue; font-size:16px;width:10%; margin-left:10px;" value=" {{startMinInit}}"
+					placeholder="{{startMinInit}}">
 			</li>
-			{{#each array1}}
+			{{#each tourComponents}}
 			<li>
 				<div class="card mb-3" style="max-width: 500px;">
 					<div class="row no-gutters">
@@ -28,7 +27,13 @@
 							<div class="card-body">
 								<h6 class="card-title" href="#">{{this.destination}} {{this.end}}</h6>
 								<label>停留時間:</label>
-								<input type="text" name="stayTime" value=" {{this.stayTime}}" class="form-style text-center" style="color:purple; width:25%;"><span>mins</span>
+
+								  <form action="/users/{{this.id}}/{{this.category}}/component?_method=PUT" method="POST">
+											<input type="text" name="stayTime" value=" {{this.stayTime}}" class="form-style text-center"
+												style="color:purple; width:25%;"><span>mins</span>
+												<button type="submit" class="btn btn-outline-info btn-sm">修改時間</button>
+									</form>
+
 
 								<p class="card-text" style="font-size: 14px;"><span><i class="fas fa-car" style="color:deepskyblue"></i></span> {{this.duration}}</p>
 							</div>
@@ -38,11 +43,11 @@
 			</li>
 			{{/each}}
 		</ul>
-		<div class="form-submit">
-			<input type="submit" name="submit" value="submit">
+		<div class="form-submit out-line-close">
+			<input type="submit" name="submit" value="重新計算">
 		</div>
-		</form>
 	</div>
+		</form>
 	<!-- 地圖放置處 -->
 
 	<div class="col-4 ml-5 mt-5 text-center sticky-top">
@@ -52,6 +57,7 @@
 			</iframe>
 		</div>
 	</div>
+
 </div>
 
 
@@ -66,7 +72,7 @@
 
 </script>
 
-<script>
+{{!-- <script>
 
 
 	let items = document.querySelectorAll('#items-list > li')
@@ -109,9 +115,19 @@
 		e.stopPropagation()
 		return false
 	}
-</script>
+
+</script> --}}
 
 <style>
+	.home_bg {
+  background-image: url(https://www.crazyppt.com/wp-content/uploads/2018/10/1-1Q00G42157.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  }
+
 	ul.timeline {
 		list-style-type: none;
 		position: relative;
