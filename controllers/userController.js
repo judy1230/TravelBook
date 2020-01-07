@@ -158,26 +158,22 @@ let userController = {
 				key: process.env.API_KEY,
 				Promise: Promise
 			})
-			componentArray = await User.findByPk(req.user.id, {
+			componentArray = await Component.findAll({
+				where: {
+					UserId: req.user.id
+				},
 				include: [
-					{ model: Restaurant, as: 'ComponentRestaurants' },
-					{ model: Attraction, as: 'ComponentAttractions' },
-					{ model: Shop, as: 'ComponentShops' },
-				]
-			}).then(user => {
-				data.push(...user.ComponentRestaurants)
-				data.push(...user.ComponentAttractions)
-				data.push(...user.ComponentShops)
-				data.sort((a, b) => b.createdAt - a.createdAt)
-				return ({ data })
+					Restaurant,
+					Attraction,
+					Shop
+				],
+				order: [
+					['id', 'ASC']
+				],
+			}).then(components => {
+				data = components.map(d => d.Restaurant ? d.Restaurant.dataValues : d.Attraction ? d.Attraction.dataValues : d.Shop.dataValues)
+				return { data: data, stayTime: components.map(r => r.stayTime) }
 			})
-			// Component.findByPk(req.params.id)
-			// 	.then((component) => {
-			// 		component.update({
-			// 			stayTime: req.body.stayTime
-			// 		})
-			// 	})
-			console.log('componentArray', componentArray)
 
 			data = componentArray.data.map(d => d.name)
 			dataId = componentArray.data.map(d => d.id)
@@ -185,6 +181,7 @@ let userController = {
 			dataStayTime = componentArray.data.map(d => d.stayTime)
 			dataCategory = componentArray.data.map(d => d.category)
 			data.splice(0, 0, origin)
+			data.push(origin)
       console.log('data',data)
 			for (let i = 0; i < data.length - 1; i++) {
 				let location1 = data[i]
@@ -258,19 +255,6 @@ let userController = {
 				key: process.env.API_KEY,
 				Promise: Promise
 			})
-			// componentArray = await User.findByPk(req.user.id, {
-			// 	include: [
-			// 		{ model: Restaurant, as: 'ComponentRestaurants' },
-			// 		{ model: Attraction, as: 'ComponentAttractions' },
-			// 		{ model: Shop, as: 'ComponentShops' },
-			// 	]
-			// }).then(user => {
-			// 	data.push(...user.ComponentRestaurants)
-			// 	data.push(...user.ComponentAttractions)
-			// 	data.push(...user.ComponentShops)
-			// 	data.sort((a, b) => b.createdAt - b.createdAt)
-			// 	return ({ data })
-			// })
 			componentArray  = await Component.findAll({
 				where: {
 					UserId: req.user.id
@@ -284,14 +268,9 @@ let userController = {
 					['id', 'ASC']
 				],
 			}).then(components => {
-        //console.log('components', components[0].Attraction.dataValues.name)
 				data = components.map(d => d.Restaurant ? d.Restaurant.dataValues : d.Attraction ? d.Attraction.dataValues : d.Shop.dataValues)
-				//console.log('data289', data)
-
-				//return
 				return { data: data, stayTime: components.map(r => r.stayTime)}
 				})
-			//console.log('componentArray293', componentArray)
 
 			data = componentArray.data.map(d => d.name)
 			dataId = componentArray.data.map(d => d.id)
@@ -301,6 +280,7 @@ let userController = {
 			//console.log('dataStayTime', dataStayTime)
 			dataCategory = componentArray.data.map(d =>d.category)
 			data.splice(0, 0, origin)
+			data.push(origin)
 			date = `${new Date().getMonth() + 1} /  ${new Date().getDate()} / ${new Date().getFullYear()}`
 			tourComponents = []
 			startMinInit = new Date().getMinutes()
@@ -352,11 +332,18 @@ let userController = {
           image: image
 				})
 			}
-			//console.log('tourComponents', tourComponents)
+			destination = tourComponents[tourComponents.length - 1],
+			endLocation = tourComponents[tourComponents.length - 1].destination,
+			endDuration = tourComponents[tourComponents.length - 1].duration,
+			endTime = tourComponents[tourComponents.length - 1].end
+			tourComponents.pop()
 			return res.render('dailyTour', {
 				API_KEY: process.env.API_KEY,
-				origin: data[0],
-				destination: data[data.length - 1],
+				origin,
+				destination,
+				endLocation,
+				endDuration,
+				endTime,
 				tourComponents,
 				date,
 				startMinInit,
