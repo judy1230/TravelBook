@@ -229,12 +229,19 @@ let userController = {
 					image: image
 				})
 			}
-			console.log('tourComponents', tourComponents)
+			destination = tourComponents[tourComponents.length - 1],
+				endLocation = tourComponents[tourComponents.length - 1].destination,
+				endDuration = tourComponents[tourComponents.length - 1].duration,
+				endTime = tourComponents[tourComponents.length - 1].end
+			tourComponents.pop()
 			return res.render('dailyTour', {
 				API_KEY: process.env.API_KEY,
 				title,
 				origin,
-				destination: data[data.length - 1],
+				destination,
+				endLocation,
+				endDuration,
+				endTime,
 				tourComponents,
 				date,
 				startMinInit,
