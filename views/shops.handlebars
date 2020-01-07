@@ -20,33 +20,40 @@
 	<div class="row p-5">
 		{{#each shops}}
 		<div class="col-md-3">
-			<div class="card shadow-sm" style="width: 13rem; height: 22rem;">
+			<div class="card shadow-sm" style="width: 13rem; ">
 				<img class="card-img-top image-fluid " src="{{this.image}}" alt="Card image cap" width="200px" height="180px">
-				<div class="card-body text-center ">
-					<a class="card-title" href="/shops/{{this.id}}">{{this.name}}...</a>
-					<span class="ratings card-text">
+				<div class="card-body text-center">
+					<a class="card-title " href="/shops/{{this.id}}">{{this.name}}...</a>
+					<span class="text-center card-text" style="font-size: 14px;color:tomato;">{{this.status}}</span>
+					<div class="ratings card-text row">
 						<div class="empty_star">★★★★★</div>
 						<div class="full_star" style="width: {{this.ratingStars}};">★★★★★</div>
-					</span>
-					<span class="text-center ml-5 mr-5"style="font-size: 14px;color:tomato;">{{this.status}}</span>
-					<span class="text-center " style="font-size: 12px;">{{this.introduction}}...</span>
-					<span class="row m-auto">
-						{{#if this.isFavorited }}
-						<form action="/shops/{{this.id}}/favorite?_method=DELETE" method="POST" style="display: contents;">
-							<button type="submit" class="btn btn-outline-info btn-sm">移除收藏</button></form>
-						{{else}}
-						<form action="shops/{{this.id}}/favorite" method="POST" style="display: contents;"><button type="submit"
-								class="btn btn-info btn-sm ">加入收藏</button></form>
-						{{/if}}
+					</div>
+					<div class="container row">
+						<div class="col-3"></div>
+						<div class="col-3 text-right ml-4">
+							{{#if this.isFavorited }}
+							<form action="/shops/{{this.id}}/favorite?_method=DELETE" method="POST">
+								<button type="submit" class="btn close btn-sm"><i class="far fa-heart" style="color:red"></i></button>
+							</form>
+							{{else}}
+							<form action="shops/{{this.id}}/favorite" method="POST"><button type="submit" class="btn close btn-sm "><i
+										class="fas fa-heart" style="color:red"></i></button></form>
+							{{/if}}
+						</div>
 
-						{{#if this.isSelected }}
-						<form action="/shops/{{this.id}}/component?_method=DELETE" method="POST" style="display: contents;">
-							<button type="submit" class="btn btn-outline-success btn-sm ml-2">移除規劃</button></form>
-						{{else}}
-						<form action="/shops/{{this.id}}/component" method="POST" style="display: contents;"><button
-								type="submit" class="btn btn-success btn-sm ml-2">加入規劃</button></form>
-						{{/if}}
-					</span>
+						<div class="col-3 text-right">
+							{{#if this.isSelected }}
+							<form action="/shops/{{this.id}}/component?_method=DELETE" method="POST">
+								<button type="submit" class="btn close"><i class="far fa-calendar-minus"
+										style="color:green"></i></button></form>
+							{{else}}
+							<form action="/shops/{{this.id}}/component" method="POST" style="display: contents;"><button type="submit"
+									class="btn close btn-sm "><i class="fas fa-calendar-alt" style="color:green"></i></button></form>
+							{{/if}}
+						</div>
+						<div class="col-3"style="width:100%;"></div>
+					</div>
 
 				</div>
 			</div>
@@ -66,8 +73,7 @@
 			{{#ifCond this ../page}}
 			<li class="page-item active"><a class="page-link" href="#">{{this}}</a></li>
 			{{else}}
-			<li class="page-item"><a class="page-link"
-					href="/shops?page={{this}}">{{this}}</a></li>
+			<li class="page-item"><a class="page-link" href="/shops?page={{this}}">{{this}}</a></li>
 			{{/ifCond}}
 			{{/each}}
 			<a class="page-link" href="/shops?page={{next}}" aria-label="Next">
@@ -80,34 +86,39 @@
 
 </div>
 <style>
-  .home_bg {
-  background-image: url(https://www.crazyppt.com/wp-content/uploads/2018/10/1-1PRG01119.jpg);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  width: 100%;
-  height: 100%;
-}
+	.home_bg {
+		background-image: url(https://www.crazyppt.com/wp-content/uploads/2018/10/1-1PRG01119.jpg);
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		width: 100%;
+		height: 100%;
+	}
 
-.ratings {
-position: relative;
-vertical-align: middle;
-display: inline-block;
-color: #ddd; /*背景星星顏色*/
-overflow: hidden;
-font-size: 20px; /*調整字體大小可放大縮小星星*/
-text-shadow: 0px 1px 0 #999;
-}
-.full_star {
- /*調整寬度可變更星等*/
-position: absolute;
-left: 0;
-top: 0;
-white-space: nowrap;
-overflow: hidden;
-color:orange /*前景星星顏色*/
-}
-.shadow-sm{
-	background-color:papayawhip;
-}
+	.ratings {
+		position: relative;
+		vertical-align: middle;
+		display: inline-block;
+		color: #ddd;
+		/*背景星星顏色*/
+		overflow: hidden;
+		font-size: 20px;
+		/*調整字體大小可放大縮小星星*/
+		text-shadow: 0px 1px 0 #999;
+	}
+
+	.full_star {
+		/*調整寬度可變更星等*/
+		position: absolute;
+		left: 0;
+		top: 0;
+		white-space: nowrap;
+		overflow: hidden;
+		color: orange
+			/*前景星星顏色*/
+	}
+
+	.shadow-sm {
+		background-color: papayawhip;
+	}
 </style>
