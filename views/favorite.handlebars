@@ -3,9 +3,43 @@
 		<a class="" href="javascript:history.back()">回上一頁</a>
 	</div>
 		<div class="container row p-3 text-center">
-			<label class="p-3 mr-2" style="font-size: 3em;"><i class="fas fa-camera-retro"></i></label>
-			{{#each attractions}}
-			<div class="card mb-4 mr-2" style="width: 260px; height: 140px;">
+			{{#each favoriteArray}}
+				<div class="col-md-3">
+					<div class="card shadow-sm mt-3" style="width: 13rem;height: 22rem;">
+						<img class="card-img-top image-fluid " src="{{this.image}}" alt="Card image cap"width="200px" height="180px">
+						<div class="card-body text-center ">
+							<a href="/{{this.category}}s/{{this.id}}">{{this.name}}...</a>
+							<span class="" style="font-size: 20px;"><i class="fas fa-camera-retro"></i></span>
+							<div class="ratings">
+								<div class="empty_star">★★★★★</div>
+								<div class="full_star" style="width: {{this.ratingStars}};">★★★★★</div>
+							</div>
+							<span style="font-size: 12px;"> 營業時間: {{this.opening_hours}}</span>
+							<p style="font-size: 12px;">{{this.introduction}}...</p>
+							<span class="row m-auto">
+								{{#if this.isFavorited }}
+								<form action="/restaurants/{{this.id}}/favorite?_method=DELETE" method="POST" style="display: contents;"><button
+										type="submit" class="btn btn-outline-info btn-sm">移除收藏</button></form>
+								{{else}}
+								<form action="restaurants/{{this.id}}/favorite" method="POST" style="display: contents;"><button type="submit"
+										class="btn btn-info btn-sm ">加入收藏</button></form>
+								{{/if}}
+
+								{{#if this.isSelected }}
+								<form action="/restaurants/{{this.id}}/component?_method=DELETE" method="POST" style="display: contents;">
+									<button type="submit" class="btn btn-outline-success btn-sm ml-2">移除規劃</button></form>
+								{{else}}
+								<form action="restaurants/{{this.id}}/component" method="POST" style="display: contents;"><button type="submit"
+										class="btn btn-success btn-sm ml-2">加入規劃</button></form>
+								{{/if}}
+							</span>
+
+						</div>
+					</div>
+				</div>
+			{{/each}}
+			{{!-- {{#each attractions}} --}}
+			{{!-- <div class="card mb-4 mr-2" style="width: 260px; height: 140px;">
 				<div class="row no-gutters">
 					<div class="col-md-5">
 						<img src="{{this.image}}" class="card-img rounded"style=" height: 140px;" alt="">
@@ -31,8 +65,8 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			{{/each}}
+			</div> --}}
+			{{!-- {{/each}} --}}
 		</div>
 		<div class="container row p-3 text-center">
 			<label class="p-3 mr-2" style="font-size: 3em;"><i class="fas fa-utensils"></i></label>
@@ -109,6 +143,28 @@ background-position: center;
 background-repeat: no-repeat;
 width: 100%;
 height: 100%;
+}
+
+.ratings {
+position: relative;
+vertical-align: middle;
+display: inline-block;
+color: #ddd; /*背景星星顏色*/
+overflow: hidden;
+font-size: 20px; /*調整字體大小可放大縮小星星*/
+text-shadow: 0px 1px 0 #999;
+}
+.full_star {
+ /*調整寬度可變更星等*/
+position: absolute;
+left: 0;
+top: 0;
+white-space: nowrap;
+overflow: hidden;
+color:orange /*前景星星顏色*/
+}
+.shadow-sm{
+	background-color:papayawhip;
 }
 </style>
 

@@ -182,7 +182,7 @@ let userController = {
 			dataCategory = componentArray.data.map(d => d.category)
 			data.splice(0, 0, origin)
 			data.push(origin)
-      console.log('data',data)
+      //console.log('data',data)
 			for (let i = 0; i < data.length - 1; i++) {
 				let location1 = data[i]
 				let location2 = data[i + 1]
@@ -383,13 +383,17 @@ let userController = {
 			})
 			const Restaurants = await user.FavoritedRestaurants.map(r => ({
 				...r.dataValues,
+				name: r.dataValues.name.substring(0, 7),
 				isSelected: user.ComponentRestaurants.map(d => d.id).includes(r.id) ? true : false,
+				introduction: r.dataValues.introduction.substring(0, 10),
+				ratingStars: (Math.round((r.rating / 5) * 100)) + '%',
+				opening_hours: r.opening_hours.substring(0, 10)
 			}))
 
 			locations = Restaurants.map(d => d.name)
 			for (i = 0; i < locations.length; i++) {
 				duration = await googleMapsClient.directions({
-					origin: '台北火車站',
+					origin: res.locals.origin,
 					destination: locations[i]
 				}).asPromise()
 					.then((response) => {
@@ -403,13 +407,16 @@ let userController = {
 			}
 			const Attractions = user.FavoritedAttractions.map(r => ({
 				...r.dataValues,
+				name: r.dataValues.name.substring(0, 7),
 				isSelected: user.ComponentAttractions.map(d => d.id).includes(r.id) ? true : false,
-				opening_hours: r.opening_hours.substring(0, 20)
+				introduction: r.dataValues.introduction.substring(0, 10),
+				ratingStars: (Math.round((r.rating / 5) * 100)) + '%',
+				opening_hours: r.opening_hours.substring(0, 10)
 			}))
 			locations = Attractions.map(d => d.name)
 			for (i = 0; i < locations.length; i++) {
 				duration = await googleMapsClient.directions({
-					origin: '台北火車站',
+					origin: res.locals.origin,
 					destination: locations[i]
 				}).asPromise()
 					.then((response) => {
@@ -422,13 +429,16 @@ let userController = {
 			}
 			const Shops = user.FavoritedShops.map(r => ({
 				...r.dataValues,
+				name: r.dataValues.name.substring(0, 7),
 				isSelected: user.ComponentShops.map(d => d.id).includes(r.id) ? true : false,
-				opening_hours: r.opening_hours.substring(0, 20)
+				introduction: r.dataValues.introduction.substring(0, 10),
+				ratingStars: (Math.round((r.rating / 5) * 100)) + '%',
+				opening_hours: r.opening_hours.substring(0, 10)
 			}))
 			locations = Shops.map(d => d.name)
 			for (i = 0; i < locations.length; i++) {
 				duration = await googleMapsClient.directions({
-					origin: '台北火車站',
+					origin: res.locals.origin,
 					destination: locations[i]
 				}).asPromise()
 					.then((response) => {
@@ -439,10 +449,15 @@ let userController = {
 					})
 				Shops[i].duration = duration
 			}
+			favoriteArray.push(...Attractions)
+			favoriteArray.push(...Restaurants)
+			favoriteArray.push(...Shops)
+			console.log('favoriteArray', favoriteArray)
 			return res.render('favorite', {
 				attractions: Attractions,
 				restaurants: Restaurants,
 				shops: Shops,
+				favoriteArray: favoriteArray
 
 			})
 		} catch (err) { console.log(err) }

@@ -38,7 +38,7 @@ module.exports = {
     queryInterface.bulkInsert('Restaurants',
       restaurants.map((item) =>
         ({
-          category:'Restaurant',
+          category:'restaurant',
           name: item.name,
           phone: item.phone,
           address: item.address,
@@ -47,7 +47,7 @@ module.exports = {
           introduction: item.introduction,
           stayTime: 90,
           rating: ((Math.random() * 1) + (Math.floor(Math.random() * 4) + 1)).toFixed(1),
-          Location: 'Taipei',
+          Location: 'taipei',
           viewCounts: Math.floor(Math.random() * 20) + 1,
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -56,7 +56,7 @@ module.exports = {
     queryInterface.bulkInsert('Attractions',
       attractions.map((item) =>
       ({
-        category: 'Attraction',
+        category: 'attraction',
         name: item.name,
         phone: item.phone,
         address: item.address,
@@ -65,7 +65,7 @@ module.exports = {
         introduction: item.introduction,
         stayTime: 90,
         rating: ((Math.random() * 1) + (Math.floor(Math.random() * 4) + 1)).toFixed(1),
-        Location: 'Taipei',
+        Location: 'taipei',
         viewCounts: Math.floor(Math.random() * 20) + 1,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -83,7 +83,7 @@ module.exports = {
           introduction: item.introduction,
           stayTime: 90,
           rating: ((Math.random() * 1) + (Math.floor(Math.random() * 4)+1)).toFixed(1),
-          Location: 'Taipei',
+          Location: 'taipei',
           viewCounts: Math.floor(Math.random() * 20) + 1,
           createdAt: new Date(),
           updatedAt: new Date(),
