@@ -20,8 +20,11 @@ module.exports = {
       address: {
         type: Sequelize.STRING
       },
-      opening_hours: {
-        type: Sequelize.STRING
+      opening_up: {
+        type: Sequelize.INTEGER
+      },
+      opening_down: {
+        type: Sequelize.INTEGER
       },
       image: {
         type: Sequelize.STRING

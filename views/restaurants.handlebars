@@ -13,23 +13,22 @@
 				<a class="nav-link " href="/shops">
 					<i class="fas fa-gifts" style="font-size: 36px; color:  lightblue;"></i></a>
 			</li>
-
 		</ul>
 
 
 	<div class="row p-5">
 		{{#each restaurants}}
 		<div class="col-md-3">
-			<div class="card shadow-sm" style="width: 13rem;height: 22rem;">
-				<img class="card-img-top image-fluid " src="{{this.image}}" alt="Card image cap" >
+			<div class="card shadow-sm" style="width: 13rem; height: 22rem;">
+				<img class="card-img-top image-fluid " src="{{this.image}}" alt="Card image cap" width="200px" height="180px">
 				<div class="card-body text-center ">
 					<a  href="/restaurants/{{this.id}}">{{this.name}}...</a>
 					<div class="ratings">
 						<div class="empty_star">★★★★★</div>
 						<div class="full_star"style="width: {{this.ratingStars}};">★★★★★</div>
 					</div>
-					<p style="font-size: 12px;" > 營業時間: {{this.opening_hours}}</p>
-					<p style="font-size: 12px;">{{this.introduction}}...</p>
+					<span style="font-size: 12px;" > 營業時間: {{this.opening_hours}}</span>
+					<span style="font-size: 12px;">{{this.introduction}}...</span>
 					<span class="row m-auto">
 						{{#if this.isFavorited }}
 						<form action="/restaurants/{{this.id}}/favorite?_method=DELETE" method="POST" style="display: contents;"><button
@@ -43,7 +42,7 @@
 						<form action="/restaurants/{{this.id}}/component?_method=DELETE" method="POST" style="display: contents;"><button
 								type="submit" class="btn btn-outline-success btn-sm ml-2">移除規劃</button></form>
 						{{else}}
-						<form action="restaurants/{{this.id}}/component" method="POST" style="display: contents;"><button type="submit"
+						<form action="/restaurants/{{this.id}}/component" method="POST" style="display: contents;"><button type="submit"
 								class="btn btn-success btn-sm ml-2">加入規劃</button></form>
 						{{/if}}
 					</span>
@@ -81,7 +80,6 @@
 </div>
 
 <style>
-
   .home_bg {
   background-image: url(https://www.crazyppt.com/wp-content/uploads/2018/10/1-1PRG01119.jpg);
   background-size: cover;

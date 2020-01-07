@@ -1,6 +1,4 @@
-<div class="container p-5 ">
-
-
+<div class="home_bg p-5 ">
 	<ul class="nav">
 		<li class="nav-item">
 			<a class="nav-link " href="/restaurants">
@@ -19,41 +17,46 @@
 
 	<div class="row p-5">
 		{{#each attractions}}
-		<div class="col-md-3 ">
-			<div class="card shadow-sm">
-				<img class="card-img-top" src="{{this.image}}" alt="Card image cap" width="200px" height="180px">
-				<div class="card-body text-center m-auto">
-					<p class="card-text  mb-2">
-						<a href="/attractions/{{this.id}}">
-							{{this.name}}
-						</a>
-					</p>
+		<div class="col-md-3">
+			<div class="card shadow-sm" style="width: 13rem;height: 22rem;">
+				<img class="card-img-top image-fluid " src="{{this.image}}" alt="Card image cap" width="200px" height="180px">
+				<div class="card-body text-center ">
+					<a href=" attractions/{{this.id}}">{{this.name}}...</a>
 					<div class="ratings">
 						<div class="empty_star">★★★★★</div>
 						<div class="full_star" style="width: {{this.ratingStars}};">★★★★★</div>
 					</div>
-					<p class="card-text mb-2">{{this.opening_hours}}</p>
-					<p>{{this.introduction}}</p>
-					<div class="card-text row ">
+					<span style="font-size: 12px;"> 營業時間: {{this.opening_hours}}</span>
+					<span style="font-size: 12px;">{{this.introduction}}...</span>
+					<span class="row m-auto">
 						{{#if this.isFavorited }}
-						<form action="/attractions/{{this.id}}/favorite?_method=DELETE" method="POST"><button type="submit"	class="btn btn-outline-info btn-sm mt-4 ml-4" >移除收藏</button></form>
+						<form action="/attractions/{{this.id}}/favorite?_method=DELETE" method="POST" style="display: contents;"><button
+								type="submit" class="btn btn-outline-info btn-sm">移除收藏</button></form>
 						{{else}}
-						<form action="/attractions/{{this.id}}/favorite" method="POST"><button type="submit" class="btn btn btn-info btn-sm mt-4 ml-4 ">加到收藏</button>
-						</form>
+						<form action= "/attractions/{{this.id}}/favorite" method="POST" style="display: contents;"><button type="submit"
+								class="btn btn-info btn-sm ">加入收藏</button></form>
 						{{/if}}
-					</div>
+
+						{{#if this.isSelected }}
+						<form action="/attractions/{{this.id}}/component?_method=DELETE" method="POST" style="display: contents;">
+							<button type="submit" class="btn btn-outline-success btn-sm ml-2">移除規劃</button></form>
+						{{else}}
+						<form action="/attractions/{{this.id}}/component" method="POST" style="display: contents;"><button type="submit"
+								class="btn btn-success btn-sm ml-2">加入規劃</button></form>
+						{{/if}}
+					</span>
 
 				</div>
 			</div>
 		</div>
 		{{/each}}
-	</div>
+		</div>
 	<br />
 	<br />
 	<nav aria-label="Page navigation example">
 		<ul class="pagination">
 			<li class="page-item">
-				<a class="page-link" href="/restaurants?page={{prev}}" aria-label="Previous">
+				<a class="page-link" href=" attractions?page={{prev}}" aria-label="Previous">
 					<span aria-hidden="true">&laquo;</span>
 				</a>
 			</li>
@@ -75,6 +78,14 @@
 
 </div>
 <style>
+  .home_bg {
+  background-image: url(https://www.crazyppt.com/wp-content/uploads/2018/10/1-1PRG01119.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+}
 	.ratings {
 		position: relative;
 		vertical-align: middle;
@@ -97,4 +108,7 @@
 		color: #D56A16;
 		/*前景星星顏色*/
 	}
+	.shadow-sm{
+	background-color:papayawhip;
+}
 </style>

@@ -51,7 +51,7 @@ router.get('/users/:tour_id/daysTour', userController.getDaysTour)
 //restaurant, attraction, tour, blog display,
 router.get('/restaurants', toursController.getRestaurants)
 router.get('/attractions', toursController.getAttractions)
-router.get('/shops', toursController.getShops)
+router.get('/shops', authenticated,toursController.getShops)
 router.get('/dailyTours', toursController.getDailyTours)
 router.get('/daysTours', toursController.getDaysTours)
 //router.get('/blog/:tour_id', toursController.getBlogs)

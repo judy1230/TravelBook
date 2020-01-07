@@ -1,7 +1,9 @@
 <div class="home_bg row m-auto p-5">
-  <div class="position-right">
-		<a class="" href="javascript:history.back()">回上一頁</a>
+	<div class="container p-3 text-right">
+			<a class="btn btn-info" href="javascript:history.back()">回上一頁</a>
+			<a href="/users/{{user.id}}/dailyTour" class="btn btn-outline-success" type="submit">計算行程</a>
 	</div>
+
 		<div class="container row p-3 text-center">
 			{{#each favoriteArray}}
 				<div class="col-md-3">
@@ -17,19 +19,13 @@
 							<span style="font-size: 12px;"> 營業時間: {{this.opening_hours}}</span>
 							<p style="font-size: 12px;">{{this.introduction}}...</p>
 							<span class="row m-auto">
-								{{#if this.isFavorited }}
-								<form action="/restaurants/{{this.id}}/favorite?_method=DELETE" method="POST" style="display: contents;"><button
+								<form action="/{{this.category}}s/{{this.id}}/favorite?_method=DELETE" method="POST" method="POST" style="display: contents;"><button
 										type="submit" class="btn btn-outline-info btn-sm">移除收藏</button></form>
-								{{else}}
-								<form action="restaurants/{{this.id}}/favorite" method="POST" style="display: contents;"><button type="submit"
-										class="btn btn-info btn-sm ">加入收藏</button></form>
-								{{/if}}
-
 								{{#if this.isSelected }}
-								<form action="/restaurants/{{this.id}}/component?_method=DELETE" method="POST" style="display: contents;">
+								<form action="/users/{{this.id}}/{{this.category}}/component?_method=DELETE" method="POST" method="POST" style="display: contents;">
 									<button type="submit" class="btn btn-outline-success btn-sm ml-2">移除規劃</button></form>
 								{{else}}
-								<form action="restaurants/{{this.id}}/component" method="POST" style="display: contents;"><button type="submit"
+								<form action="/users/{{this.id}}/{{this.category}}/component" method="POST" style="display: contents;"><button type="submit"
 										class="btn btn-success btn-sm ml-2">加入規劃</button></form>
 								{{/if}}
 							</span>
@@ -38,102 +34,10 @@
 					</div>
 				</div>
 			{{/each}}
-			{{!-- {{#each attractions}} --}}
-			{{!-- <div class="card mb-4 mr-2" style="width: 260px; height: 140px;">
-				<div class="row no-gutters">
-					<div class="col-md-5">
-						<img src="{{this.image}}" class="card-img rounded"style=" height: 140px;" alt="">
-						<input type="hidden" name="attractionId" value="{{this.id}}" />
-					</div>
-					<div class="col-md-7">
-						<form action="/attractions/{{this.id}}/favorite?_method=DELETE" method="POST"><button type="submit"class="btn close btn-sm"><span aria-hidden="true">×</span></button>
-						</form>
-						<div class=" card-body">
-              <div class="container row">
-								<a class="" style="font-size:16px;" href="/attractions/{{this.id}}">{{this.name}}</a>
-								<h8><i class="fas fa-car" style="color:deepskyblue"></i> {{this.duration}}</h8>
-									{{#if this.isSelected }}
-									<form action="/users/{{this.id}}/attraction/component?_method=DELETE" method="POST" class=" "><button type="submit"
-											class="btn close btn-sm" style="font-size:16px;color:red;" title="移除規劃"><i class="fas fa-minus-circle"></i></button></form>
-									{{else}}
-									<form action="/users/{{this.id}}/attraction/component" method="POST" class=""><button type="submit"
-											class="btn close btn-sm" style="font-size:16px; color:grey;" title="加入規劃"><i class="fas fa-calendar-plus"></i></button>
-									</form>
-									{{/if}}
-								</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div> --}}
-			{{!-- {{/each}} --}}
 		</div>
-		<div class="container row p-3 text-center">
-			<label class="p-3 mr-2" style="font-size: 3em;"><i class="fas fa-utensils"></i></label>
-			{{#each restaurants}}
-			<div class="card mb-3 mr-2" style="width: 240px; height: 180px;">
-				<div class="row no-gutters">
-					<div class="col-md-5">
-						<img src="{{this.image}}" class="card-img rounded" style=" height: 180px;"alt="">
-						<input type="hidden" name="restaurantId" value="{{this.id}}" />
-					</div>
-					<div class="col-md-7">
-						<form action="/restaurants/{{this.id}}/favorite?_method=DELETE" method="POST" style="display: contents;"><button type="submit" class="btn close btn-sm"><span aria-hidden="true">×</span></button></form>
-						<div class="card-body row m-auto">
-							<a class="card-title" href="/restaurants/{{this.id}}">{{this.name}}</a>
-							<h8><i class="fas fa-car" style="color:deepskyblue"></i> {{this.duration}}</h8>
-								<div class="container mt-3">
-									{{#if this.isSelected }}
-									<form action="/users/{{this.id}}/restaurant/component?_method=DELETE" method="POST" class="ml-3 "><button type="submit"
-											class="btn close btn-sm" style="font-size:16px;color:red;" title="移除規劃"><i class="fas fa-minus-circle"></i></button></form>
-									{{else}}
-									<form action="/users/{{this.id}}/restaurant/component" method="POST" class="ml-2 "><button type="submit"
-											class="btn close btn-sm" style="font-size:16px; color:grey;" title="加入規劃"><i class="fas fa-calendar-plus"></i></button>
-									</form>
-									{{/if}}
-								</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			{{/each}}
-		</div>
-		<div class="container row p-3 text-center">
-			<label class="p-3 mr-2" style="font-size: 3em;"><i class="fas fa-gifts"></i></label>
-			{{#each shops}}
-			<div class="card mb-3 mr-2" style="width: 240px; height: 180px;">
-				<div class="row no-gutters">
-					<div class="col-md-5">
-						<img src="{{this.image}}" class="card-img rounded" style=" height: 180px;" alt="">
-						<input type="hidden" name="shopId" value="{{this.id}}" />
-					</div>
-					<div class="col-md-7">
-            <form  action="/shops/{{this.id}}/favorite?_method=DELETE" method="POST"><button type="submit"	class="btn close btn-sm "><span aria-hidden="true">×</span></button>
-            </form>
-						<div class="card-body row m-auto">
-							<a class="card-title" href="/shops/{{this.id}}">{{this.name}}</a>
-							<h8><i class="fas fa-car" style="color:deepskyblue"></i> {{this.duration}}</h8>
-							<div class="container mt-5">
-								{{#if this.isSelected }}
-								<form action="/users/{{this.id}}/shop/component?_method=DELETE" method="POST" class="ml-3"><button type="submit"
-										class="btn close btn-sm"style="font-size:16px;color:red;" title="移除規劃"><i class="fas fa-minus-circle"></i></button></form>
-								{{else}}
-								<form action="/users/{{this.id}}/shop/component" method="POST" class="ml-2"><button type="submit"
-										class="btn close btn-sm"style="font-size:16px;color:grey;" title="加入規劃"><i class="fas fa-calendar-plus"></i></button>
-								</form>
-								{{/if}}
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			{{/each}}
-		</div>
-	{{!-- <form action="/users/:tour_id/dailyTour" method="POST" style="width: 100%;"> --}}
-		{{!-- <div class="container p-3 text-right">
-			<button action="/users/1/dailyTour" class="btn btn-lg btn-primary" type="submit">Submit</button>
-		</div> --}}
-	{{!-- <form> --}}
+
+
+
 </div>
 <style>
 .home_bg {

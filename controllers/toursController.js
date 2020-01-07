@@ -11,6 +11,9 @@ const Like = db.Like
 const Comment = db.Comment
 const Location = db.Location
 const pageLimit = 4
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
+
 // const Followship = db.Followship
 const helpersreq = require('../_helpers.js')
 
@@ -67,10 +70,11 @@ const toursController = {
 				//clean up restaurant data
 				const data = result.rows.map(r => ({
 					...r.dataValues,
-					name: r.dataValues.name.substring(0, 10),
+					name: r.dataValues.name.substring(0, 7),
 					introduction: r.dataValues.introduction.substring(0, 20),
-					isFavorited: r.dataValues.FavoritedUsers.map(d => d.id).includes(req.user.id),
-					ratingStars: (Math.round((r.rating / 5) * 100)) + '%'
+					//isFavorited: r.dataValues.FavoritedUsers.map(d => d.id).includes(req.user.id),
+					ratingStars: (Math.round((r.rating / 5) * 100)) + '%',
+					opening_hours: r.dataValues.opening_hours.substring(0, 10),
 				}))
 				//return { data, page, pages, totalPage, prev, next }
 				console.log('data', data)
@@ -102,7 +106,7 @@ const toursController = {
 			//const isLiked = restaurant.LikedUsers.map(d => d.id).includes(req.user.id)
 			return res.render('restaurant', {
 				restaurant,
-				isFavorited: isFavorited,
+				//isFavorited: isFavorited,
 				//isLiked: isLiked
 			})
 		})
@@ -129,9 +133,11 @@ const toursController = {
 				//clean up restaurant data
 				const data = result.rows.map(r => ({
 					...r.dataValues,
+					name: r.dataValues.name.substring(0, 7),
 					introduction: r.dataValues.introduction.substring(0, 10),
 					isFavorited: r.dataValues.FavoritedUsers.map(d => d.id).includes(req.user.id),
-					ratingStars: (Math.round((r.rating / 5) * 100)) + '%'
+					ratingStars: (Math.round((r.rating / 5) * 100)) + '%',
+					opening_hours: r.dataValues.opening_hours.substring(0, 7),
 				}))
 				console.log('data',data)
 				return res.render('attractions', {
@@ -171,29 +177,34 @@ const toursController = {
 			include: [
 				{ model: User, as: 'FavoritedUsers' },
 			],
-			where: whereQuery, offset: offset, limit: pageLimit
-		})
-			.then(result => {
-				let page = Number(req.query.page) || 1
-				let pages = Math.ceil(result.count / pageLimit)
-				let totalPage = Array.from({ length: pages }).map((item, index) => index + 1)
-				let prev = page - 1 < 1 ? 1 : page - 1
-				let next = page + 1 > pages ? pages : page + 1
+			// where: {
+			// 	"opening_up": { $lte: new Date().getHours() },
+			// 	"opening_down": { $gte: new Date().getHours() },
+			// }
+		}).then(result => {
+			currentTime = new Date().getHours() + new Date().getMinutes() / 60
+			console.log('currentTime', currentTime)
 				//clean up restaurant data
 				const data = result.rows.map(r => ({
 					...r.dataValues,
-					introduction: r.dataValues.introduction.substring(0, 10),
+					name: r.dataValues.name.substring(0, 10),
+					introduction: r.dataValues.introduction.substring(0, 20),
 					isFavorited: r.dataValues.FavoritedUsers.map(d => d.id).includes(req.user.id),
-					ratingStars: (Math.round((r.rating / 5) * 100)) + '%'
+					ratingStars: (Math.round((r.rating / 5) * 100)) + '%',
+					status: currentTime > r.dataValues.opening_up && currentTime <
+						r.dataValues.opening_down ? '營業中' :
+						r.dataValues.opening_up - currentTime  < 0.5 ? '即將營業' :
+						r.dataValues.opening_down - currentTime < 1 ? '即將結束營業' :
+            '休息中'
 				}))
 				//return { data, page, pages, totalPage, prev, next }
 				console.log('data', data)
 				return res.render('shops', {
 					shops: data,
-					page: page,
-					totalPage: totalPage,
-					prev: prev,
-					next: next,
+				//	page: page,
+				//	totalPage: totalPage,
+				//	prev: prev,
+				//	next: next,
 				})
 			})
 
