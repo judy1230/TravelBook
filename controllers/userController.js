@@ -250,6 +250,21 @@ let userController = {
 		} catch (err) { console.log(err) }
 
 	},
+	postRestComment: (req, res) => {
+		return Comment.create({
+			UserId: req.user.id,
+			RestaurantId: req.params.rest_id,
+			comment: req.body.comment
+		}).then((comment) => {
+			return res.redirect('back')
+		})
+	},
+	removeRestComment: (req, res) => {
+		return Comment.findByPk(req.params.comment_id).then((comment) => {
+			comment.destroy()
+			return res.redirect('back')
+		})
+	},
 	postBlog: (req, res) => {
 		return res.redirect('/tours/blog/:tour_id')
 	},

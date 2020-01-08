@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
   Attraction.associate = function(models) {
     // associations can be defined here
     Attraction.hasMany(models.Comment)
+    Attraction.hasMany(models.Photos)
     Attraction.hasMany(models.Component)
     Attraction.hasMany(models.Favorite)
     Attraction.hasMany(models.Like)

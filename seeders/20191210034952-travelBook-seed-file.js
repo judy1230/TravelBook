@@ -4,6 +4,7 @@ const faker = require('faker')
 const attractions = require('../seeders/attraction_temp.json')
 const restaurants = require('../seeders/restaurant_temp.json')
 const shops = require('../seeders/Shopping_temp.json')
+const photos = require('../seeders/photos.json')
 module.exports = {
 
   up: (queryInterface, Sequelize) => {
@@ -43,6 +44,8 @@ module.exports = {
           phone: item.phone,
           address: item.address,
           opening_hours: item.opening_hours,
+          opening_up: item.opening_up,
+          opening_down: item.opening_down,
           image: item.image,
           introduction: item.introduction,
           stayTime: 90,
@@ -78,6 +81,7 @@ module.exports = {
           name: item.name,
           phone: item.phone,
           address: item.address,
+          opening_hours: item.opening_hours,
           opening_up: item.opening_up,
           opening_down: item.opening_down,
           image: item.image,
@@ -86,6 +90,17 @@ module.exports = {
           rating: ((Math.random() * 1) + (Math.floor(Math.random() * 4)+1)).toFixed(1),
           Location: 'taipei',
           viewCounts: Math.floor(Math.random() * 20) + 1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        })
+      ), {});
+    queryInterface.bulkInsert('Photos',
+      photos.map((item) =>
+        ({
+          restaurantId: item.restId,
+          attractionId: item.attractionId,
+          shopId: item.shopId,
+          image: item.image,
           createdAt: new Date(),
           updatedAt: new Date(),
         })

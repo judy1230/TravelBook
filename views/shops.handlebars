@@ -44,11 +44,11 @@
 
 						<div class="col-3 text-right">
 							{{#if this.isSelected }}
-							<form action="/shops/{{this.id}}/component?_method=DELETE" method="POST">
+							<form action="/users/{{this.id}}/shop/component?_method=DELETE" method="POST">
 								<button type="submit" class="btn close"><i class="far fa-calendar-minus"
 										style="color:green"></i></button></form>
 							{{else}}
-							<form action="/shops/{{this.id}}/component" method="POST" style="display: contents;"><button type="submit"
+							<form action="/users/{{this.id}}/shop/component" method="POST" style="display: contents;"><button type="submit"
 									class="btn close btn-sm "><i class="fas fa-calendar-alt" style="color:green"></i></button></form>
 							{{/if}}
 						</div>

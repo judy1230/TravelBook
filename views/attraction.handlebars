@@ -1,56 +1,119 @@
 <div class="container row p-5 m-auto">
-	<div class="col-md-7 ">
-		<a class="mb-5 mr-5" style="font-size: 3em;"><i class="fas fa-utensils"></i></a>
-		<img class="img-responsive center-block rounded " src="{{attraction.image}}"
-			style="width: 350px;margin-bottom: 25px;">
+	<div class="col-md-6 ">
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				{{#each attraction.Photos}}
+				<div class="swiper-slide text-center">
+					<img class="img-responsive center-block rounded" src="{{this.image}}" style="width: 400px">
+				</div>
+				{{/each}}
+			</div>
+			<!--如果需要分页器 -->
+			<div class="swiper-pagination"></div>
+			<!-- 如果需要导航按钮 -->
+			{{!-- <div class="swiper-button-prev " ></div>
+			<div class="swiper-button-next"></div> --}} --}}
+
+			<!-- 如果需要滚动条 -->
+			{{!-- <div class="swiper-scrollbar"></div>  --}}
+		</div>
 	</div>
 	<div class="col-md-5 ">
 		<div class="well">
-			<h5>{{attraction.name}} </h5>
-			<span><i class="fas fa-car-alt"></i>{{attraction.duration}}</span>
+			<label><i class="fas fa-camera-retro" style="font-size: 36px;color:tomato;"></i></label>
+			<h5 style="color: saddlebrown;">{{attraction.name}} <span class="fas fa-eye"
+					style="color: purple;font-size: 20px"><strong> {{attraction.viewCounts}}</strong></span></h5>
+
 			<ul class="list-unstyled">
 				<li><strong>Opening Hour:</strong> {{attraction.opening_hours}}</li>
 				<li><strong>Tel:</strong> {{attraction.phone}} </li>
 				<li><strong>Address:</strong> {{attraction.address}} </li>
-				<li class="far fa-grin-beam" style="color: purple;font-size: 20px"><strong> {{attraction.viewCounts}}</strong>
-				</li>
 			</ul>
 		</div>
-		<p>{{attraction.description}} </p>
-	</div>
+		<div class="row float-left">
+			{{#if isFavorited }}
+			<form action="/attractions/{{attraction.id}}/favorite?_method=DELETE" method="POST" style="display: contents;">
+				<button type="submit" class="btn btn-outline-info btn-sm">移除收藏</button></form>
+			{{else}}
+			<form action="/attractions/{{attraction.id}}/favorite" method="POST" style="display: contents;"><button
+					type="submit" class="btn btn-info btn-sm ">加入收藏</button></form>
+			{{/if}}
 
+			{{#if isSelected }}
+			<form action="/users/{{attraction.id}}/attraction/component?_method=DELETE" method="POST"
+				style="display: contents;"><button type="submit" class="btn btn-outline-success btn-sm ml-2">移除規劃</button>
+			</form>
+			{{else}}
+			<form action="/attraction/{{attraction.id}}/component" method="POST" style="display: contents;"><button
+					type="submit" class="btn btn-success btn-sm ml-2">加入規劃</button></form>
+			{{/if}}
+		</div>
+	</div>
+	<div class="container mt-2">
+		<p style="font-size: 14px; color:dimgray">{{attraction.introduction}} </p>
+	</div>
 	<hr>
 	<br />
 	<br />
 
-	<div class="container p-5">
-		<h6>所有評論：</h6>
+	<div class="container p-2">
+		<h7>所有評論：</h7>
 		{{#each attraction.Comments}}
-		{{#if ../user.isAdmin}}
-		<form action="/comments/{{this.id}}?_method=DELETE" method="POST" style="float: right;">
-			<button type="submit" class="btn btn-danger">Delete</button>
-		</form>
-		{{/if}}
 		<blockquote class="blockquote mb-0">
-			<h4><a href="/users/{{this.User.id}}">{{this.User.name}}</a></h4>
-			<p>{{this.comment}}</p>
-			<footer class="blockquote-footer">{{moment this.createdAt}}</footer>
+			<h6><a href="/users/{{this.User.id}}">{{this.User.name}}</a></h6>
+			<p style="font-size: 16px;color:black">{{this.comment}}</p>
+			{{#if ../isAdmin }}
+			<form action="/comment/{{this.id}}?_method=DELETE" method="POST" style="float: right;">
+				<button type="submit" class="btn btn-danger">Delete</button>
+			</form>
+			{{/if}}
+			<footer class="blockquote-footer" style="color:slategray">{{moment this.createdAt}}</footer>
+
 		</blockquote>
 		<hr />
 		{{/each}}
 		<br />
 		<br />
-		<form action="/comments" method="POST">
+		<form action="/attraction/{{attraction.id}}/comment" method="POST">
 			<div class="form-group">
 				<label for="text">留下評論：</label>
-				<textarea class="form-control" id="text" name="text" rows="3"></textarea>
+				<textarea class="form-control" style="font-size: 16px;" id="comment" name="comment" rows="3"></textarea>
 			</div>
 			<div class="text-right">
-				<input type="hidden" name="attractionId" value="{{attraction.id}}" />
+				<input type="hidden" name="rest_id" value="{{attraction.id}}" />
 				<button type="submit" class="btn btn-primary">Submit</button>
 				<a href="javascript:history.back()">回上一頁</a>
 			</div>
 		</form>
 	</div>
+
 </div>
-</div>
+
+<script>
+	let mySwiper = new Swiper('.swiper-container', {
+		direction: 'horizontal', // 垂直切换选项
+		autoplay: true,//可选选项，自动滑动
+		mousewheel: true,
+		// 如果需要分页器
+		// pagination: {
+		//	el: '.swiper-pagination',
+		//},
+
+		// 如果需要前进后退按钮
+		//navigation: {
+		//	nextEl: '.swiper-button-next',
+		//	prevEl: '.swiper-button-prev',
+		//},
+
+		// 如果需要滚动条
+		// scrollbar: {
+		//	el: '.swiper-scrollbar',
+		//},
+	})
+</script>
+<style>
+	.swiper-container {
+		width: 500px;
+		height: 200px;
+	}
+</style>

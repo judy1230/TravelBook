@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     phone: DataTypes.STRING,
     address: DataTypes.STRING,
+    opening_hours: DataTypes.STRING,
     opening_up: DataTypes.INTEGER,
     opening_down: DataTypes.INTEGER,
     image: DataTypes.STRING,
@@ -23,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
   Shop.associate = function(models) {
     // associations can be defined here
     Shop.hasMany(models.Comment)
+    Shop.hasMany(models.Photos)
     Shop.hasMany(models.Component)
     Shop.hasMany(models.Favorite)
     Shop.hasMany(models.Like)

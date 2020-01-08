@@ -15,10 +15,10 @@
 	</ul>
 
 
-	<div class="row p-5">
+	<div class="container row">
 		{{#each attractions}}
 		<div class="col-md-3">
-			<div class="card shadow-sm" style="width: 13rem;height: 22rem;">
+			<div class="card shadow-sm mt-5" style="width: 13rem;height: 22rem;">
 				<img class="card-img-top image-fluid " src="{{this.image}}" alt="Card image cap" width="200px" height="180px">
 				<div class="card-body text-center ">
 					<a href=" attractions/{{this.id}}">{{this.name}}...</a>
@@ -38,14 +38,13 @@
 						{{/if}}
 
 						{{#if this.isSelected }}
-						<form action="/attractions/{{this.id}}/component?_method=DELETE" method="POST" style="display: contents;">
+						<form action="/users/{{this.id}}/attraction/component?_method=DELETE" method="POST" style="display: contents;">
 							<button type="submit" class="btn btn-outline-success btn-sm ml-2">移除規劃</button></form>
 						{{else}}
-						<form action="/attractions/{{this.id}}/component" method="POST" style="display: contents;"><button type="submit"
+						<form action="/users/{{this.id}}/attraction/component" method="POST" style="display: contents;"><button type="submit"
 								class="btn btn-success btn-sm ml-2">加入規劃</button></form>
 						{{/if}}
 					</span>
-
 				</div>
 			</div>
 		</div>
@@ -53,7 +52,7 @@
 		</div>
 	<br />
 	<br />
-	<nav aria-label="Page navigation example">
+	{{!-- <nav aria-label="Page navigation example">
 		<ul class="pagination">
 			<li class="page-item">
 				<a class="page-link" href=" attractions?page={{prev}}" aria-label="Previous">
@@ -73,7 +72,7 @@
 			</a>
 			</li>
 		</ul>
-	</nav>
+	</nav> --}}
 
 
 </div>
