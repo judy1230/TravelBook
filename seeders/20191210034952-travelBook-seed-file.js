@@ -39,7 +39,7 @@ module.exports = {
     queryInterface.bulkInsert('Restaurants',
       restaurants.map((item) =>
         ({
-          category:'restaurant',
+          category: 'restaurant',
           name: item.name,
           phone: item.phone,
           address: item.address,
@@ -58,26 +58,8 @@ module.exports = {
       ), {});
     queryInterface.bulkInsert('Attractions',
       attractions.map((item) =>
-      ({
-        category: 'attraction',
-        name: item.name,
-        phone: item.phone,
-        address: item.address,
-        opening_hours: item.opening_hours,
-        image: item.image,
-        introduction: item.introduction,
-        stayTime: 90,
-        rating: ((Math.random() * 1) + (Math.floor(Math.random() * 4) + 1)).toFixed(1),
-        Location: 'taipei',
-        viewCounts: Math.floor(Math.random() * 20) + 1,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      })
-      ), {});
-    queryInterface.bulkInsert('Shops',
-      shops.map((item) =>
         ({
-          category:'shop',
+          category: 'attraction',
           name: item.name,
           phone: item.phone,
           address: item.address,
@@ -87,7 +69,27 @@ module.exports = {
           image: item.image,
           introduction: item.introduction,
           stayTime: 90,
-          rating: ((Math.random() * 1) + (Math.floor(Math.random() * 4)+1)).toFixed(1),
+          rating: ((Math.random() * 1) + (Math.floor(Math.random() * 4) + 1)).toFixed(1),
+          Location: 'taipei',
+          viewCounts: Math.floor(Math.random() * 20) + 1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        })
+      ), {});
+    queryInterface.bulkInsert('Shops',
+      shops.map((item) =>
+        ({
+          category: 'shop',
+          name: item.name,
+          phone: item.phone,
+          address: item.address,
+          opening_hours: item.opening_hours,
+          opening_up: item.opening_up,
+          opening_down: item.opening_down,
+          image: item.image,
+          introduction: item.introduction,
+          stayTime: 90,
+          rating: ((Math.random() * 1) + (Math.floor(Math.random() * 4) + 1)).toFixed(1),
           Location: 'taipei',
           viewCounts: Math.floor(Math.random() * 20) + 1,
           createdAt: new Date(),
@@ -149,7 +151,7 @@ module.exports = {
           updatedAt: new Date(),
         })
       ), {});
-      queryInterface.bulkInsert('Favorites',
+    queryInterface.bulkInsert('Favorites',
       Array.from({ length: 3 }).map(d =>
         ({
           UserId: Math.floor(Math.random() * 3) + 1,
@@ -159,7 +161,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         })
-        ), {});
+      ), {});
     return queryInterface.bulkInsert('Likes',
       Array.from({ length: 3 }).map(d =>
         ({

@@ -1,51 +1,61 @@
-
 <div class="home_bg p-5 ">
-		<ul class="nav">
-			<li class="nav-item">
-				<a class="nav-link " href="restaurants">
-					<i class="fas fa-utensils"  style="font-size: 36px; color: black;"></i></a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link " href="/attractions">
-					<i class="fas fa-camera-retro"  style="font-size: 36px; color: lightblue;"></i></a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link " href="/shops">
-					<i class="fas fa-gifts" style="font-size: 36px; color:  lightblue;"></i></a>
-			</li>
-		</ul>
 
 
-	<div class="row p-3">
+	<ul class="nav">
+		<li class="nav-item">
+			<a class="nav-link " href="/restaurants">
+				<i class="fas fa-utensils" style="font-size: 36px; color: black;"></i></a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link " href="/attractions">
+				<i class="fas fa-camera-retro" style="font-size: 36px; color:lightblue;"></i></a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link " href="/shops">
+				<i class="fas fa-gifts" style="font-size: 36px; color:  lightblue;"></i></a>
+		</li>
+	</ul>
+
+
+	<div class="row p-5">
 		{{#each restaurants}}
 		<div class="col-md-3">
-			<div class="card shadow-sm mt-5" style="width: 13rem;">
+			<div class="card shadow-sm mt-5" style="width: 13rem; ">
 				<img class="card-img-top image-fluid " src="{{this.image}}" alt="Card image cap" width="200px" height="180px">
-				<div class="card-body text-center ">
-					<a  href="/restaurants/{{this.id}}">{{this.name}}...</a>
-					<div class="ratings">
+				<div class="card-body text-center">
+					<a class="card-title font-weight-bold" href="/restaurants/{{this.id}}">{{this.name}}...</a>
+					<p class="m-auto" style="font-size: 14px;color:tomato;">{{this.status}}</p>
+					<div class="ratings row">
 						<div class="empty_star">★★★★★</div>
-						<div class="full_star"style="width: {{this.ratingStars}};">★★★★★</div>
+						<div class="full_star" style="width: {{this.ratingStars}};">★★★★★</div>
 					</div>
-					<span style="font-size: 12px;color:tomato;" >{{this.status}}</span>
-					<span style="font-size: 12px;">{{this.introduction}}...</span>
-					<span class="row m-auto">
-						{{#if this.isFavorited }}
-						<form action="/restaurants/{{this.id}}/favorite?_method=DELETE" method="POST" style="display: contents;"><button
-								type="submit" class="btn btn-outline-info btn-sm">移除收藏</button></form>
-						{{else}}
-						<form action="restaurants/{{this.id}}/favorite" method="POST" style="display: contents;"><button type="submit"
-								class="btn btn-info btn-sm ">加入收藏</button></form>
-						{{/if}}
+					<div class="container row">
+						<div class="col-3"></div>
+						<div class="col-3 text-right ml-4">
+							{{#if this.isFavorited }}
+							<form action="/restaurants/{{this.id}}/favorite?_method=DELETE" method="POST">
+								<button type="submit" class="btn close btn-sm"><i class="far fa-heart" style="color:red"></i></button>
+							</form>
+							{{else}}
+							<form action="restaurants/{{this.id}}/favorite" method="POST"><button type="submit" class="btn close btn-sm "><i
+										class="fas fa-heart" style="color:red"></i></button></form>
+							{{/if}}
+						</div>
 
-						{{#if this.isSelected }}
-						<form action="/users/{{this.id}}/restaurant/component?_method=DELETE" method="POST" style="display: contents;"><button
-								type="submit" class="btn btn-outline-success btn-sm ml-2">移除規劃</button></form>
-						{{else}}
-						<form action="/users/{{this.id}}/restaurant/component" method="POST" style="display: contents;"><button type="submit"
-								class="btn btn-success btn-sm ml-2">加入規劃</button></form>
-						{{/if}}
-					</span>
+						<div class="col-3 text-right">
+							{{#if this.isSelected }}
+							<form action="/users/{{this.id}}/restaurant/component?_method=DELETE" method="POST">
+								<button type="submit" class="btn close"><i class="far fa-calendar-minus"
+										style="color:green"></i></button></form>
+							{{else}}
+							<form action="/users/{{this.id}}/restaurant/component" method="POST" style="display: contents;"><button
+									type="submit" class="btn close btn-sm "><i class="fas fa-calendar-alt"
+										style="color:green"></i></button></form>
+							{{/if}}
+						</div>
+						<div class="col-3" style="width:100%;"></div>
+					</div>
+
 				</div>
 			</div>
 		</div>
@@ -53,7 +63,7 @@
 	</div>
 	<br />
 	<br />
-	{{!-- <nav aria-label="Page navigation example">
+	<nav aria-label="Page navigation example">
 		<ul class="pagination">
 			<li class="page-item">
 				<a class="page-link" href="/restaurants?page={{prev}}" aria-label="Previous">
@@ -64,8 +74,7 @@
 			{{#ifCond this ../page}}
 			<li class="page-item active"><a class="page-link" href="#">{{this}}</a></li>
 			{{else}}
-			<li class="page-item"><a class="page-link"
-					href="/restaurants?page={{this}}">{{this}}</a></li>
+			<li class="page-item"><a class="page-link" href="/restaurants?page={{this}}">{{this}}</a></li>
 			{{/ifCond}}
 			{{/each}}
 			<a class="page-link" href="/restaurants?page={{next}}" aria-label="Next">
@@ -73,43 +82,45 @@
 			</a>
 			</li>
 		</ul>
-	</nav> --}}
+	</nav>
 
 
 </div>
-
 <style>
-  .home_bg {
-  background-image: url(https://www.crazyppt.com/wp-content/uploads/2018/10/1-1PRG01119.jpg);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  width: 100%;
-  height: 100%;
-}
+	.home_bg {
+		background-image: url(https://www.crazyppt.com/wp-content/uploads/2018/10/1-1PRG01119.jpg);
+		background-color: antiquewhite;
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		width: 100%;
+		height: 100%;
+	}
 
-.ratings {
-position: relative;
-vertical-align: middle;
-display: inline-block;
-color: #ddd; /*背景星星顏色*/
-overflow: hidden;
-font-size: 20px; /*調整字體大小可放大縮小星星*/
-text-shadow: 0px 1px 0 #999;
-}
-.full_star {
- /*調整寬度可變更星等*/
-position: absolute;
-left: 0;
-top: 0;
-white-space: nowrap;
-overflow: hidden;
-color:orange /*前景星星顏色*/
-}
-.shadow-sm{
-	background-color:papayawhip;
-}
+	.ratings {
+		position: relative;
+		vertical-align: middle;
+		display: inline-block;
+		color: #ddd;
+		/*背景星星顏色*/
+		overflow: hidden;
+		font-size: 20px;
+		/*調整字體大小可放大縮小星星*/
+		text-shadow: 0px 1px 0 #999;
+	}
 
+	.full_star {
+		/*調整寬度可變更星等*/
+		position: absolute;
+		left: 0;
+		top: 0;
+		white-space: nowrap;
+		overflow: hidden;
+		color: orange
+			/*前景星星顏色*/
+	}
 
+	.shadow-sm {
+		background-color: antiquewhite;
+	}
 </style>
-

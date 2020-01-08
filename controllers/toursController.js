@@ -12,11 +12,9 @@ const Comment = db.Comment
 const Photos = db.Photos
 const Location = db.Location
 const pageLimit = 4
-const Sequelize = require('sequelize')
-const Op = Sequelize.Op
+//const Sequelize = require('sequelize')
 const currentTime = new Date().getHours() + new Date().getMinutes() / 60
-// const Followship = db.Followship
-const helpersreq = require('../_helpers.js')
+//const helpersreq = require('../_helpers.js')
 
 
 const toursController = {
@@ -69,8 +67,8 @@ const toursController = {
 					ratingStars: (Math.round((r.rating / 5) * 100)) + '%',
 					status: currentTime > JSON.parse("[" + r.dataValues.opening_up + "]") && currentTime <
 						JSON.parse("[" + r.dataValues.opening_down + "]") ? '營業中' :
-						JSON.parse("[" + r.dataValues.opening_up + "]") - currentTime < 0.5 ? '即將營業' :
-							JSON.parse("[" + r.dataValues.opening_down + "]") - currentTime < 1 ? '即將結束營業' :
+						Math.abs(JSON.parse("[" + r.dataValues.opening_up + "]") - currentTime) < 0.5 && (JSON.parse("[" + r.dataValues.opening_up + "]") - currentTime) > 0 ? '即將營業' :
+							Math.abs(JSON.parse("[" + r.dataValues.opening_down + "]") - currentTime) < 1 && (JSON.parse("[" + r.dataValues.opening_down + "]") - currentTime) > 0 ? '即將結束營業' :
 								'休息中'
 				}))
 				return res.render('restaurants', {
@@ -98,11 +96,10 @@ const toursController = {
 			const isSelected = req.user ? restaurant.ComponentUsers.map(d => d.id).includes(req.user.id) : false
 			const status = currentTime > JSON.parse("[" + restaurant.opening_up + "]") && currentTime <
 				JSON.parse("[" + restaurant.opening_down + "]") ? '營業中' :
-				JSON.parse("[" + restaurant.opening_up + "]") - currentTime < 0.5 ? '即將營業' :
-					JSON.parse("[" + restaurant.opening_down + "]") - currentTime < 1 ? '即將結束營業' :
+				Math.abs(JSON.parse("[" + restaurant.opening_up + "]") - currentTime) < 0.5 && (JSON.parse("[" + restaurant.opening_up + "]") - currentTime) > 0 ? '即將營業' :
+					Math.abs(JSON.parse("[" + restaurant.opening_down + "]") - currentTime) < 1 && (JSON.parse("[" + restaurant.opening_down + "]") - currentTime) > 0 ? '即將結束營業' :
 						'休息中'
 			const isAdmin = req.user ? req.user.role === 'admin' : false
-			console.log('isAdmin', isAdmin)
 			return res.render('restaurant', {
 				restaurant,
 				isFavorited,
@@ -122,6 +119,7 @@ const toursController = {
 			]
 		})
 			.then(result => {
+				console.log('currentTime', currentTime)
 				const data = result.rows.map(r => ({
 					...r.dataValues,
 					name: r.dataValues.name.substring(0, 7),
@@ -129,7 +127,11 @@ const toursController = {
 					isFavorited: req.user ? r.dataValues.FavoritedUsers.map(d => d.id).includes(req.user.id) : false,
 					isSelected: req.user ? r.dataValues.ComponentUsers.map(d => d.id).includes(req.user.id) : false,
 					ratingStars: (Math.round((r.rating / 5) * 100)) + '%',
-					opening_hours: r.dataValues.opening_hours.substring(0, 7),
+					status: currentTime > JSON.parse("[" + r.dataValues.opening_up + "]") && currentTime <
+						JSON.parse("[" + r.dataValues.opening_down + "]") ? '營業中' :
+						Math.abs(JSON.parse("[" + r.dataValues.opening_up + "]") - currentTime) < 0.5 && (JSON.parse("[" + r.dataValues.opening_up + "]") - currentTime) > 0 ? '即將營業' :
+							Math.abs(JSON.parse("[" + r.dataValues.opening_down + "]") - currentTime) < 1 && (JSON.parse("[" + r.dataValues.opening_down + "]") - currentTime) > 0 ? '即將結束營業' :
+								'休息中'
 				}))
 				console.log('data', data)
 				return res.render('attractions', {
@@ -153,12 +155,18 @@ const toursController = {
 			})
 			const isFavorited = req.user ? attraction.FavoritedUsers.map(d => d.id).includes(req.user.id) : false
 			const isSelected = req.user ? attraction.ComponentUsers.map(d => d.id).includes(req.user.id) : false
+			const status = currentTime > JSON.parse("[" + attraction.opening_up + "]") && currentTime <
+				JSON.parse("[" + attraction.opening_down + "]") ? '營業中' :
+				Math.abs(JSON.parse("[" + attraction.opening_up + "]") - currentTime) < 0.5 && (JSON.parse("[" + attraction.opening_up + "]") - currentTime) > 0 ? '即將營業' :
+					Math.abs(JSON.parse("[" + attraction.opening_down + "]") - currentTime) < 1 && (JSON.parse("[" + attraction.opening_down + "]") - currentTime) > 0 ? '即將結束營業' :
+						'休息中'
 			const isAdmin = req.user ? req.user.role === 'admin' : false
 			return res.render('attraction', {
 				attraction,
 				isFavorited,
 				isSelected,
-				isAdmin
+				isAdmin,
+				status
 			})
 		})
 
@@ -175,14 +183,13 @@ const toursController = {
 			const data = result.rows.map(r => ({
 				...r.dataValues,
 				name: r.dataValues.name.substring(0, 10),
-				introduction: r.dataValues.introduction.substring(0, 20),
 				isFavorited: req.user ? r.dataValues.FavoritedUsers.map(d => d.id).includes(req.user.id) : false,
 				isSelected: req.user ? r.dataValues.ComponentUsers.map(d => d.id).includes(req.user.id) : false,
 				ratingStars: (Math.round((r.rating / 5) * 100)) + '%',
-				status: currentTime > r.dataValues.opening_up && currentTime <
-					r.dataValues.opening_down ? '營業中' :
-					r.dataValues.opening_up - currentTime < 0.5 ? '即將營業' :
-						r.dataValues.opening_down - currentTime < 1 ? '即將結束營業' :
+				status: currentTime > JSON.parse("[" + r.dataValues.opening_up + "]") && currentTime <
+					JSON.parse("[" + r.dataValues.opening_down + "]") ? '營業中' :
+					Math.abs(JSON.parse("[" + r.dataValues.opening_up + "]") - currentTime) < 0.5 && (JSON.parse("[" + r.dataValues.opening_up + "]") - currentTime) > 0 ? '即將營業' :
+						Math.abs(JSON.parse("[" + r.dataValues.opening_down + "]") - currentTime) < 1 && (JSON.parse("[" + r.dataValues.opening_down + "]") - currentTime) > 0 ? '即將結束營業' :
 							'休息中'
 			}))
 			return res.render('shops', {
@@ -205,14 +212,20 @@ const toursController = {
 			shop.update({
 				viewCounts: totalViewCounts
 			})
-			const isFavorited = req.user ? attraction.FavoritedUsers.map(d => d.id).includes(req.user.id) : false
-			const isSelected = req.user ? attraction.ComponentUsers.map(d => d.id).includes(req.user.id) : false
+			const isFavorited = req.user ? shop.FavoritedUsers.map(d => d.id).includes(req.user.id) : false
+			const isSelected = req.user ? shop.ComponentUsers.map(d => d.id).includes(req.user.id) : false
 			const isAdmin = req.user ? req.user.role === 'admin' : false
+			const status = currentTime > JSON.parse("[" + shop.opening_up + "]") && currentTime <
+				JSON.parse("[" + shop.opening_down + "]") ? '營業中' :
+				Math.abs(JSON.parse("[" + shop.opening_up + "]") - currentTime) < 0.5 && (JSON.parse("[" + shop.opening_up + "]") - currentTime) > 0 ? '即將營業' :
+					Math.abs(JSON.parse("[" + shop.opening_down + "]") - currentTime) < 1 && (JSON.parse("[" + shop.opening_down + "]") - currentTime) > 0 ? '即將結束營業' :
+						'休息中'
 			return res.render('shop', {
 				shop,
 				isFavorited,
 				isSelected,
-				isAdmin
+				isAdmin,
+				status
 			})
 		})
 	},

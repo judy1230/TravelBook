@@ -12,6 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     phone: DataTypes.STRING,
     address: DataTypes.STRING,
     opening_hours: DataTypes.STRING,
+    opening_up: DataTypes.STRING,
+    opening_down: DataTypes.STRING,
     image: DataTypes.STRING,
     introduction: DataTypes.TEXT,
     stayTime: DataTypes.INTEGER,

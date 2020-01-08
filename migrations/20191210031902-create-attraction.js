@@ -23,6 +23,12 @@ module.exports = {
       opening_hours: {
         type: Sequelize.STRING
       },
+      opening_up: {
+        type: Sequelize.STRING
+      },
+      opening_down: {
+        type: Sequelize.STRING
+      },
       image: {
         type: Sequelize.STRING
       },

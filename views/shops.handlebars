@@ -20,11 +20,11 @@
 	<div class="row p-5">
 		{{#each shops}}
 		<div class="col-md-3">
-			<div class="card shadow-sm" style="width: 13rem; ">
+			<div class="card shadow-sm mt-5" style="width: 13rem;">
 				<img class="card-img-top image-fluid " src="{{this.image}}" alt="Card image cap" width="200px" height="180px">
 				<div class="card-body text-center">
-					<a class="card-title " href="/shops/{{this.id}}">{{this.name}}...</a>
-					<span class="text-center card-text" style="font-size: 14px;color:tomato;">{{this.status}}</span>
+					<a class="card-title font-weight-bold" href="/shops/{{this.id}}">{{this.name}}...</a>
+					<p class="m-auto" style="font-size: 14px;color:tomato;">{{this.status}}</p>
 					<div class="ratings card-text row">
 						<div class="empty_star">★★★★★</div>
 						<div class="full_star" style="width: {{this.ratingStars}};">★★★★★</div>

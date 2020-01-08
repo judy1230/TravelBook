@@ -43,18 +43,18 @@
 		<a class="navbar-brand font-italic" href="/">TravelBook</a>
 		<div class="navbar-collapse offcanvas-collapse navbar-text" id="navbarsExampleDefault">
 			<ul class="container text-right">
-				{{#ifCond localUser.role 'admin'}}
+				{{#ifCond req.user.role 'admin'}}
 				<a href="/admin/" style="color: white;margin-right: 10px;">Admin 後台</a>
 				{{/ifCond}}
 				{{#if user}}
 				<span style="color: white;margin-right: 10px;">Hi, {{user.name}}</span>
 				{{/if}}
 
-				<a class="fas fa-clipboard-check mr-3" href="/users/{{user.id}}/tourEdit" title="行程規劃"></a>
+				{{!-- <a class="fas fa-clipboard-check mr-3" href="/users/{{user.id}}/tourEdit" title="行程規劃"></a> --}}
 				<a class="fas fa-clipboard-check mr-3" href="/users/{{user.id}}/dailyTour" title="行程規劃"></a>
 				<a class="fas fa-briefcase mr-3" href="/users/{{user.id}}/favorite" title="收藏包"></a>
 				<a class="fas fa-portrait mr-3" href="/users/{{user.id}}/profile" title="個人資料"></a>
-				<a class="fas fa-toggle-on mr-3" href="/logout" title="LogOut"></a>
+				<a  href="/logout" title="LogOut">登出</a>
 
 			</ul>
 		</div>

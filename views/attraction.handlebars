@@ -25,6 +25,11 @@
 					style="color: purple;font-size: 20px"><strong> {{attraction.viewCounts}}</strong></span></h5>
 
 			<ul class="list-unstyled">
+				{{#ifCond attraction.opening_up ""}}
+				<li style="font-size: 16px;color:tomato;">{{attractions.opening_hours}}</li>
+				{{else}}
+				<li style="font-size: 16px;color:tomato;">{{status}}</li>
+				{{/ifCond}}
 				<li><strong>Opening Hour:</strong> {{attraction.opening_hours}}</li>
 				<li><strong>Tel:</strong> {{attraction.phone}} </li>
 				<li><strong>Address:</strong> {{attraction.address}} </li>
