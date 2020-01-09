@@ -50,7 +50,7 @@
 				style="display: contents;"><button type="submit" class="btn btn-outline-success btn-sm ml-2">移除規劃</button>
 			</form>
 			{{else}}
-			<form action="/attraction/{{attraction.id}}/component" method="POST" style="display: contents;"><button
+			<form action="/users/{{attraction.id}}/attraction/component" method="POST" style="display: contents;"><button
 					type="submit" class="btn btn-success btn-sm ml-2">加入規劃</button></form>
 			{{/if}}
 		</div>
