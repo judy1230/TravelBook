@@ -21,11 +21,10 @@
 	<div class="col-md-5 ">
 		<div class="well">
 			<label><i class="fas fa-utensils" style="font-size: 36px;color:tomato;"></i></label>
-			<h5 style="color: saddlebrown;">{{restaurant.name}} <span class="fas fa-eye"
-					style="color: purple;font-size: 20px"><strong> {{restaurant.viewCounts}}</strong></span></h5>
+			<h5 style="color: saddlebrown;">{{restaurant.name}} </h5>
 
 			<ul class="list-unstyled">
-				<li style="font-size: 16px;color:tomato;">{{status}}</li>
+				<p style="font-size: 16px;color:tomato;">{{status}}<span class="fas fa-eye ml-4" style="color:darkolivegreen;font-size: 15px; ">{{restaurant.viewCounts}}</span><span class="fas fa-heart ml-4" style="color:darkorange;font-size: 15px; margin-right:4px;" >{{restaurant.LikedUsers.length}}</span></p>
 				<li><strong>Opening Hour:</strong> {{restaurant.opening_hours}}</li>
 				<li><strong>Tel:</strong> {{restaurant.phone}} </li>
 				<li><strong>Address:</strong> {{restaurant.address}} </li>

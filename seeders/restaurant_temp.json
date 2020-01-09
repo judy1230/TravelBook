@@ -11,14 +11,14 @@
 
 		},
 		{
-		  "name": "台北老爺酒店-中山日本料理廳",
-		  "phone": "02-2542-3299#328",
-			"address": "臺北市中山區中山北路2段37之1號2F",
-			"opening_hours": "11:30 – 22:00",
-		  "opening_up": "11.5",
-		  "opening_down": "22",
-		  "image": "http://www.royal-taipei.com.tw/assets/img/restaurant5/1.jpg",
-		  "introduction": "濃厚日式風格的中山日本廳，以柔和色系、新東方設計感的Sushi Bar，塑造出時尚奢華的新氛圍。主廚以豐富的料理經驗，每日進口最新鮮、高品質的食材，打造無懈可擊的料理美饌，展現東瀛藝術美食新風華。"
+		  "name": "TAÏRROIR態芮",
+		  "phone": "02-8501-5500",
+			"address": "台北市中山區樂群三路299號6樓",
+			"opening_hours": "12:00～14:30、18:30～22:30",
+		  "opening_up": "12,18.5",
+		  "opening_down": "14.5,22.5",
+		  "image": "https://d3h1lg3ksw6i6b.cloudfront.net/media/image/2018/04/01/3ed873c78e544bb1b2f7790c88690282_%E6%85%8B%E8%8A%AE_%E8%BF%B7%E9%AD%82%E9%A6%99%E8%8A%8B%E6%B3%A5%E9%B4%A8+copy.jpeg",
+		  "introduction": "2018年榮獲台北米其林一星。2019 年榮獲台北米其林二星。謝謝您的到來，一同體驗料理融和時代文化的感動。 所謂料理，就是用料有理，也是種找尋自我認同的旅程。透過料理，我們彼此分享故事，闡述想法。主廚Kai 融合經歷，理念及技藝，Taïrroir重新演譯新世代飲食精神，傳遞台灣經典，從不同角度，體現台灣風土文化，向世界發聲，讓全球聽見這土地獨有的美食精神。"
 		},
 		{
 		  "name": "台北國賓大飯店-川菜廳",

@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     //Location.hasMany(models.Restaurant)
     //Location.hasMany(models.Attraction)
     //Location.hasMany(models.Shop)
-    Location.hasMany(models.Tour)
+    //Location.hasMany(models.Tour)
     Location.hasMany(models.Blog)
   };
   return Location;

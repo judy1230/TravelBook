@@ -10,18 +10,18 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     image: DataTypes.STRING,
     UserId: DataTypes.INTEGER,
-    LocationId: DataTypes.INTEGER,
+    Location: DataTypes.STRING,
     description: DataTypes.TEXT,
-    days: DataTypes.STRING,
+    days: DataTypes.INTEGER,
     tag: DataTypes.STRING,
-    likedCount: DataTypes.STRING,
+    favoriteCount: DataTypes.STRING,
   }, {});
   Tour.associate = function(models) {
     // associations can be defined here
     Tour.hasMany(models.Comment)
     Tour.hasMany(models.Blog)
     Tour.hasMany(models.Like)
-    Tour.belongsTo(models.Location)
+   // Tour.belongsTo(models.Location)
     Tour.belongsTo(models.User)
     Tour.belongsToMany(models.User, {
       through: models.Like,

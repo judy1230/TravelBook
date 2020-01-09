@@ -17,19 +17,19 @@ module.exports = {
       UserId: {
         type: Sequelize.INTEGER
       },
-      LocationId: {
-        type: Sequelize.INTEGER
+      Location: {
+        type: Sequelize.STRING
       },
       description: {
         type: Sequelize.TEXT
       },
       days: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       tag: {
         type: Sequelize.STRING
       },
-      likedCount: {
+      favoriteCount: {
         type: Sequelize.TEXT
       },
       createdAt: {

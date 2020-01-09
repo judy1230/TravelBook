@@ -61,7 +61,7 @@ const toursController = {
 				const data = result.rows.map(r => ({
 					...r.dataValues,
 					name: r.dataValues.name.substring(0, 7),
-					introduction: r.dataValues.introduction.substring(0, 20),
+					//introduction: r.dataValues.introduction.substring(0, 20),
 					isFavorited: req.user ? r.dataValues.FavoritedUsers.map(d => d.id).includes(req.user.id) : false,
 					isSelected: req.user ? r.dataValues.ComponentUsers.map(d => d.id).includes(req.user.id) :false,
 					ratingStars: (Math.round((r.rating / 5) * 100)) + '%',
@@ -123,7 +123,7 @@ const toursController = {
 				const data = result.rows.map(r => ({
 					...r.dataValues,
 					name: r.dataValues.name.substring(0, 7),
-					introduction: r.dataValues.introduction.substring(0, 10),
+					//introduction: r.dataValues.introduction.substring(0, 10),
 					isFavorited: req.user ? r.dataValues.FavoritedUsers.map(d => d.id).includes(req.user.id) : false,
 					isSelected: req.user ? r.dataValues.ComponentUsers.map(d => d.id).includes(req.user.id) : false,
 					ratingStars: (Math.round((r.rating / 5) * 100)) + '%',
@@ -145,6 +145,7 @@ const toursController = {
 			include: [
 				{ model: User, as: 'FavoritedUsers' },
 				{ model: User, as: 'ComponentUsers' },
+				{ model: User, as: 'LikedUsers' },
 				{ model: Comment, include: [User] },
 				Photos
 			]
@@ -203,6 +204,7 @@ const toursController = {
 			include: [
 				{ model: User, as: 'FavoritedUsers' },
 				{ model: User, as: 'ComponentUsers' },
+				{ model: User, as: 'LikedUsers' },
 				{ model: Comment, include: [User] },
 				Photos
 			]

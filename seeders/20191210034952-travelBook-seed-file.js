@@ -113,11 +113,11 @@ module.exports = {
           title: faker.name.findName(),
           image: faker.image.imageUrl(),
           UserId: Math.floor(Math.random() * 2) + 1,
-          LocationId: Math.floor(Math.random() * 5) + 1,
+          Location: 'taipei',
           description: faker.lorem.text(),
           days: Math.floor(Math.random() * 2) + 1,
           tag: faker.name.findName(),
-          likedCount: Math.floor(Math.random() * 20) + 1,
+          favoriteCount: Math.floor(Math.random() * 20) + 1,
           createdAt: new Date(),
           updatedAt: new Date(),
         })

@@ -1,4 +1,4 @@
-<div class="home_bg p-5 ">
+<div class="home_bg mt-4">
 
 
 	<ul class="nav">
@@ -17,11 +17,11 @@
 	</ul>
 
 
-	<div class="row p-5">
+	<div class="container row m-auto">
 		{{#each restaurants}}
 		<div class="col-md-3">
 			<div class="card shadow-sm mt-5" style="width: 13rem; ">
-				<img class="card-img-top image-fluid " src="{{this.image}}" alt="Card image cap" width="200px" height="180px">
+				<img class="card-img-top image-fluid " src="{{this.image}}" alt="Card image cap" width="200px" height="180px" >
 				<div class="card-body text-center">
 					<a class="card-title font-weight-bold" href="/restaurants/{{this.id}}">{{this.name}}...</a>
 					<p class="m-auto" style="font-size: 14px;color:tomato;">{{this.status}}</p>
@@ -45,10 +45,10 @@
 						<div class="col-3 text-right">
 							{{#if this.isSelected }}
 							<form action="/users/{{this.id}}/restaurant/component?_method=DELETE" method="POST">
-								<button type="submit" class="btn close"><i class="far fa-calendar-minus"
+								<button type="submit" class="btn close"><i class="far fa-check-circle"
 										style="color:green"></i></button></form>
 							{{else}}
-							<form action="/users/{{this.id}}/restaurant/component" method="POST" style="display: contents;"><button
+							<form action="/restaurant/{{this.id}}/component" method="POST" style="display: contents;"><button
 									type="submit" class="btn close btn-sm "><i class="fas fa-calendar-alt"
 										style="color:green"></i></button></form>
 							{{/if}}
