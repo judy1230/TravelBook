@@ -107,36 +107,36 @@ module.exports = {
           updatedAt: new Date(),
         })
       ), {});
-    queryInterface.bulkInsert('Tours',
-      Array.from({ length: 3 }).map(d =>
-        ({
-          title: faker.name.findName(),
-          image: faker.image.imageUrl(),
-          UserId: Math.floor(Math.random() * 2) + 1,
-          Location: 'taipei',
-          description: faker.lorem.text(),
-          days: Math.floor(Math.random() * 2) + 1,
-          tag: faker.name.findName(),
-          favoriteCount: Math.floor(Math.random() * 20) + 1,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        })
-      ), {});
-    queryInterface.bulkInsert('Blogs',
-      Array.from({ length: 3 }).map(d =>
-        ({
-          title: faker.name.findName(),
-          image: faker.image.imageUrl(),
-          UserId: Math.floor(Math.random() * 2) + 1,
-          LocationId: Math.floor(Math.random() * 5) + 1,
-          TourId: Math.floor(Math.random() * 3) + 1,
-          content: faker.lorem.text(),
-          tag: faker.name.findName(),
-          likedCount: Math.floor(Math.random() * 20) + 1,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        })
-      ), {});
+    // queryInterface.bulkInsert('Tours',
+    //   Array.from({ length: 3 }).map(d =>
+    //     ({
+    //       title: faker.name.findName(),
+    //       image: faker.image.imageUrl(),
+    //       UserId: Math.floor(Math.random() * 2) + 1,
+    //       Location: 'taipei',
+    //       description: faker.lorem.text(),
+    //       days: Math.floor(Math.random() * 2) + 1,
+    //       tag: faker.name.findName(),
+    //       favoriteCount: Math.floor(Math.random() * 20) + 1,
+    //       createdAt: new Date(),
+    //       updatedAt: new Date(),
+    //     })
+    //   ), {});
+    // queryInterface.bulkInsert('Blogs',
+    //   Array.from({ length: 3 }).map(d =>
+    //     ({
+    //       title: faker.name.findName(),
+    //       image: faker.image.imageUrl(),
+    //       UserId: Math.floor(Math.random() * 2) + 1,
+    //       LocationId: Math.floor(Math.random() * 5) + 1,
+    //       TourId: Math.floor(Math.random() * 3) + 1,
+    //       content: faker.lorem.text(),
+    //       tag: faker.name.findName(),
+    //       likedCount: Math.floor(Math.random() * 20) + 1,
+    //       createdAt: new Date(),
+    //       updatedAt: new Date(),
+    //     })
+    //   ), {});
     queryInterface.bulkInsert('Comments',
       Array.from({ length: 5 }).map(d =>
         ({
@@ -184,8 +184,8 @@ module.exports = {
     queryInterface.bulkDelete('Attractions', null, {});
     queryInterface.bulkDelete('Shops', null, {});
     queryInterface.bulkDelete('Locations', null, {});
-    queryInterface.bulkDelete('Tours', null, {});
-    queryInterface.bulkDelete('Blogs', null, {});
+    //queryInterface.bulkDelete('Tours', null, {});
+    //queryInterface.bulkDelete('Blogs', null, {});
     queryInterface.bulkDelete('Comment', null, {});
     queryInterface.bulkDelete('Favorites', null, {});
     return queryInterface.bulkDelete('Likes', null, {});

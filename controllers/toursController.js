@@ -116,6 +116,7 @@ const toursController = {
 			],
 			include: [
 				{ model: User, as: 'FavoritedUsers' },
+				{ model: User, as: 'ComponentUsers' },
 			]
 		})
 			.then(result => {
@@ -179,6 +180,7 @@ const toursController = {
 			],
 			include: [
 				{ model: User, as: 'FavoritedUsers' },
+				{ model: User, as: 'ComponentUsers' }
 			]
 		}).then(result => {
 			const data = result.rows.map(r => ({

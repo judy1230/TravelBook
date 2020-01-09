@@ -17,20 +17,26 @@ module.exports = {
       UserId: {
         type: Sequelize.INTEGER
       },
-      Location: {
+      startMinInit: {
         type: Sequelize.STRING
       },
-      description: {
-        type: Sequelize.TEXT
+      startHourInit: {
+        type: Sequelize.STRING
+      },
+      origin: {
+        type: Sequelize.STRING
+      },
+      date: {
+        type: Sequelize.STRING
       },
       days: {
-        type: Sequelize.INTEGER
-      },
-      tag: {
         type: Sequelize.STRING
       },
       favoriteCount: {
         type: Sequelize.TEXT
+      },
+      tourComponents: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

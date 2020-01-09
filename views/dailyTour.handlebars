@@ -1,6 +1,7 @@
 
 <div class="home_bg mt-4 mb-5 p-5 row">
-	<form action="/users/{{user.id}}/dailyTour/{{tour.id}}?_method=PUT" method="POST" class="form-input col-6"style="width:50%;">
+	<form action="/users/{{user.id}}/dailyTour/{{tour.id}}?_method=PUT" method="POST" class="form-input col-6"
+		style="width:50%;">
 	<div class="tour-form ml-5">
 		<input type="text" name="title" value="{{title}}"class="text-center" style="width: 30%; margin-right:25px;"	placeholder="Today's Tour">
 		<ul class="moveable timeline" id="items-list">
@@ -13,6 +14,7 @@
 					style="color:mediumblue; font-size:16px;width:10%; " value=" {{startMinInit}}"
 					placeholder="{{startMinInit}}">
 			</li>
+
 			{{#each tourComponents}}
 			<li>
 				<div class="card mb-3" style="max-width: 500px;">
@@ -27,14 +29,11 @@
 							<div class="card-body">
 								<h6 class="card-title" href="#">{{this.destination}} {{this.end}}</h6>
 								<label>停留時間:</label>
-
 								  <form action="/users/{{this.id}}/{{this.category}}/component?_method=PUT" method="POST">
 											<input type="text" name="stayTime" value=" {{this.stayTime}}" class="form-style text-center"
 												style="color:purple; width:25%;"><span>mins</span>
 												<button type="submit" class="btn btn-outline-light btn-sm" style="color:yellowgreen;">修改時間</button>
 									</form>
-
-
 								<p class="card-text" style="font-size: 14px;"><span><i class="fas fa-car" style="color:deepskyblue"></i></span> {{this.duration}}</p>
 							</div>
 						</div>
@@ -62,6 +61,16 @@
 			</iframe>
 		</div>
 	</div>
+	<form action="/users/{{user.id}}/tour" method="POST" class="col-1" style="width:20%;">
+			<input type="hidden" name="title" value="{{title}}">
+			<input type="hidden" name="origin" value="{{origin}}">
+			<input type="hidden" name="startHourInit" value="{{startHourInit}}">
+			<input type="hidden" name="startMinInit" value="{{startMinInit}}">
+			<input type="hidden" name="date" value="{{date}}">
+			<button type="submit"class="btn close btn-sm "><i class="far fa-bookmark" style="color:green"></i></button>
+			</form>
+	<a href="/users/{{user.id}}/tourEdit">tourEdit</a>
+
 
 </div>
 
@@ -124,7 +133,7 @@
 </script> --}}
 
 <style>
-	.home_bg {
+.home_bg {
   background-image: url(https://png.pngtree.com/thumb_back/fh260/back_pic/05/10/85/72598e504024b48.jpg);
   background-size: cover;
   background-position: center;
@@ -221,7 +230,7 @@
   -webkit-transition: .4s linear;
   -moz-transition: .4s linear;
   -ms-transition: .4s linear;
-  -o-transition: .4s linear;
+  -o-transition: .4s linear
   transition: .4s linear;
 	float:right;
 }

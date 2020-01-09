@@ -59,16 +59,19 @@
 	<div class="container p-2">
 		<h7>所有評論：</h7>
 		{{#each restaurant.Comments}}
-		<blockquote class="blockquote mb-0">
-			<h6><a href="/users/{{this.User.id}}">{{this.User.name}}</a></h6>
-			<p style="font-size: 16px;color:black">{{this.comment}}</p>
+		<blockquote class="blockquote row m-auto text-center">
+			<div class="col-md-1"></div>
+			<a href="/users/{{this.User.id}}" class="mr-2 mt-1"><img class="rounded" src="{{this.User.avatar}}" width="50px;" height="50px"></a>
+			<div class="col-md-6 comment_bg">
+				<p class="mb-0" style="font-size: 16px;color:black">{{this.comment}}
+				<span class="blockquote-footer" style="color:slategray">{{moment this.createdAt}}</span>
+			</div>
+			</p>
 			{{#if ../isAdmin }}
-			<form action="/comment/{{this.id}}?_method=DELETE" method="POST" style="float: right;">
+			<form action="/comment/{{this.id}}?_method=DELETE" method="POST" class="col-3"style="float: right;">
 				<button type="submit" class="btn btn-danger">Delete</button>
 			</form>
 			{{/if}}
-			<footer class="blockquote-footer" style="color:slategray">{{moment this.createdAt}}</footer>
-
 		</blockquote>
 		<hr />
 		{{/each}}
@@ -114,6 +117,10 @@
 <style>
 	.swiper-container {
 		width: 500px;
-		height: 200px;
+		height: 300px;
+	}
+	.comment_bg {
+		background-color:bisque;
+		border-radius: 20px;
 	}
 </style>

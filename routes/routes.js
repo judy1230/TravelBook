@@ -26,10 +26,9 @@ const authenticatedAdmin = (req, res, next) => {
 //index
 router.get('/', (req, res) => res.redirect('/tours'))
 router.get('/tours',  toursController.getTours)
-
 router.get('/users/:id/tourEdit', authenticated, userController.tourEdit)
-//router.post('/users/:id/tourEdit', authenticated, userController.postTour)
-
+router.post('/users/:id/tour', authenticated, userController.addUserTour)
+router.get('/users/:tour_id/dailyTour', authenticated, userController.getUserTour)
 router.get('/users/:id/favorite', authenticated,userController.getFavorites)
 router.post('/restaurant/:rest_id/component', authenticated,userController.addRestComponent)
 router.delete('/users/:rest_id/restaurant/component', authenticated, userController.removeRestComponent)
@@ -40,7 +39,7 @@ router.put('/users/:attraction_id/attraction/component', authenticated, userCont
 router.post('/users/:shop_id/shop/component', authenticated, userController.addShopComponent)
 router.delete('/users/:shop_id/shop/component', authenticated, userController.removeShopComponent)
 router.put('/users/:shop_id/shop/component', authenticated, userController.putShopComponent)
-router.get('/users/:tour_id/dailyTour', authenticated, userController.getDailyTour)
+//router.get('/users/:tour_id/dailyTour', authenticated, userController.getDailyTour)
 router.put('/users/:id/dailyTour/', authenticated, userController.putTour)
 router.post('/restaurant/:rest_id/comment', authenticated, userController.postRestComment)
 router.delete('/comment/:comment_id', authenticatedAdmin, userController.removeRestComment)
