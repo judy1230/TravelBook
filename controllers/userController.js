@@ -186,8 +186,9 @@ let userController = {
 				}))
 			})
 			return Tour.create({
+				title:req.body.title,
 				UserId: req.user.id,
-				temp: true,
+				temp: false,
 				origin: req.body.origin,
 				date: req.body.date,
 				startHourInit: req.body.startHourInit,
@@ -195,7 +196,7 @@ let userController = {
 				days: "1",
 				tourComponents: componentArray
 			}).then(tour => {
-				console.log('tour.tourComponents', tour.tourComponents)
+				//console.log('tour.tourComponents', tour.tourComponents)
 				return res.redirect('back')
 			})
 		} catch (err) { console.log(err) }
@@ -410,114 +411,114 @@ let userController = {
 		return res.redirect('/tours/blog/:tour_id')
 	},
 
-	getDailyTour: async (req, res) => {
-		try {
-			data = []
-			origin = res.locals.origin
-			googleMapsClient = require('@google/maps').createClient({
-				key: process.env.API_KEY,
-				Promise: Promise
-			})
-			componentArray = await Component.findAll({
-				where: {
-					UserId: req.user.id
-				},
-				include: [
-					Restaurant,
-					Attraction,
-					Shop
-				],
-				order: [
-					['id', 'ASC']
-				],
-			}).then(components => {
-				data = components.map(d => d.Restaurant ? d.Restaurant.dataValues : d.Attraction ? d.Attraction.dataValues : d.Shop.dataValues)
-				return { data: data, stayTime: components.map(r => r.stayTime) }
-			})
+	// getDailyTour: async (req, res) => {
+	// 	try {
+	// 		data = []
+	// 		origin = res.locals.origin
+	// 		googleMapsClient = require('@google/maps').createClient({
+	// 			key: process.env.API_KEY,
+	// 			Promise: Promise
+	// 		})
+	// 		componentArray = await Component.findAll({
+	// 			where: {
+	// 				UserId: req.user.id
+	// 			},
+	// 			include: [
+	// 				Restaurant,
+	// 				Attraction,
+	// 				Shop
+	// 			],
+	// 			order: [
+	// 				['id', 'ASC']
+	// 			],
+	// 		}).then(components => {
+	// 			data = components.map(d => d.Restaurant ? d.Restaurant.dataValues : d.Attraction ? d.Attraction.dataValues : d.Shop.dataValues)
+	// 			return { data: data, stayTime: components.map(r => r.stayTime) }
+	// 		})
 
-			data = componentArray.data.map(d => d.name)
-			dataId = componentArray.data.map(d => d.id)
-			dataImage = componentArray.data.map(d => d.image)
+	// 		data = componentArray.data.map(d => d.name)
+	// 		dataId = componentArray.data.map(d => d.id)
+	// 		dataImage = componentArray.data.map(d => d.image)
 
-			dataStayTime = componentArray.stayTime.map(d => d ? d : 90)
-			//console.log('dataStayTime', dataStayTime)
-			dataCategory = componentArray.data.map(d => d.category)
-			data.splice(0, 0, origin)
-			data.push(origin)
-			date = `${new Date().getMonth() + 1} /  ${new Date().getDate()} / ${new Date().getFullYear()}`
-			tourComponents = []
-			startMinInit = new Date().getMinutes()
-			startHourInit = new Date().getHours()
-			for (let i = 0; i < data.length - 1; i++) {
-				let location1 = data[i]
-				let location2 = data[i + 1]
-				let diff = 0
-				let diffLeave = 0
-				if (location1 != data[0]) {
-					startMin = leaveMin
-					startHour = leaveHour
-				} else {
-					startMin = startMinInit
-					startHour = startHourInit
-				}
-				duration = await googleMapsClient.directions({
-					origin: location1,
-					destination: location2
-				}).asPromise()
-					.then((response) => {
-						return response.json.routes[0].legs[0].duration
-					})
-					.catch((err) => {
-						console.log(err);
-					})
-				endMin = Math.floor(startMin + (duration.value / 60))
-				leaveMin = endMin + dataStayTime[i]
+	// 		dataStayTime = componentArray.stayTime.map(d => d ? d : 90)
+	// 		//console.log('dataStayTime', dataStayTime)
+	// 		dataCategory = componentArray.data.map(d => d.category)
+	// 		data.splice(0, 0, origin)
+	// 		data.push(origin)
+	// 		date = `${new Date().getMonth() + 1} /  ${new Date().getDate()} / ${new Date().getFullYear()}`
+	// 		tourComponents = []
+	// 		startMinInit = new Date().getMinutes()
+	// 		startHourInit = new Date().getHours()
+	// 		for (let i = 0; i < data.length - 1; i++) {
+	// 			let location1 = data[i]
+	// 			let location2 = data[i + 1]
+	// 			let diff = 0
+	// 			let diffLeave = 0
+	// 			if (location1 != data[0]) {
+	// 				startMin = leaveMin
+	// 				startHour = leaveHour
+	// 			} else {
+	// 				startMin = startMinInit
+	// 				startHour = startHourInit
+	// 			}
+	// 			duration = await googleMapsClient.directions({
+	// 				origin: location1,
+	// 				destination: location2
+	// 			}).asPromise()
+	// 				.then((response) => {
+	// 					return response.json.routes[0].legs[0].duration
+	// 				})
+	// 				.catch((err) => {
+	// 					console.log(err);
+	// 				})
+	// 			endMin = Math.floor(startMin + (duration.value / 60))
+	// 			leaveMin = endMin + dataStayTime[i]
 
-				if (endMin > 60) {
-					diff = Math.floor(endMin / 60)
-					endMin %= 60
-				}
-				if (leaveMin > 60) {
-					diffLeave = parseInt(leaveMin / 60)
-					leaveMin %= 60
-				}
-				endHour = startHour + diff
-				leaveHour = startHour + diffLeave
-				image = dataImage[i]
-				tourComponents.push({
-					origin: location1,
-					destination: location2,
-					id: dataId[i],
-					duration: duration.text,
-					category: dataCategory[i],
-					end: `${endHour}: ${endMin}`,
-					leaveEnd: `${leaveHour}: ${leaveMin}`,
-					stayTime: dataStayTime[i],
-					image: image
-				})
-			}
+	// 			if (endMin > 60) {
+	// 				diff = Math.floor(endMin / 60)
+	// 				endMin %= 60
+	// 			}
+	// 			if (leaveMin > 60) {
+	// 				diffLeave = parseInt(leaveMin / 60)
+	// 				leaveMin %= 60
+	// 			}
+	// 			endHour = startHour + diff
+	// 			leaveHour = startHour + diffLeave
+	// 			image = dataImage[i]
+	// 			tourComponents.push({
+	// 				origin: location1,
+	// 				destination: location2,
+	// 				id: dataId[i],
+	// 				duration: duration.text,
+	// 				category: dataCategory[i],
+	// 				end: `${endHour}: ${endMin}`,
+	// 				leaveEnd: `${leaveHour}: ${leaveMin}`,
+	// 				stayTime: dataStayTime[i],
+	// 				image: image
+	// 			})
+	// 		}
 
-			destination = tourComponents[tourComponents.length - 1],
-				endLocation = tourComponents[tourComponents.length - 1].destination,
-				endDuration = tourComponents[tourComponents.length - 1].duration,
-				endTime = tourComponents[tourComponents.length - 1].end
-			tourComponents.pop()
+	// 		destination = tourComponents[tourComponents.length - 1],
+	// 			endLocation = tourComponents[tourComponents.length - 1].destination,
+	// 			endDuration = tourComponents[tourComponents.length - 1].duration,
+	// 			endTime = tourComponents[tourComponents.length - 1].end
+	// 		tourComponents.pop()
 
-			console.log('tourComponents578', ...tourComponents)
-			return res.render('dailyTour', {
-				API_KEY: process.env.API_KEY,
-				origin,
-				destination,
-				endLocation,
-				endDuration,
-				endTime,
-				tourComponents,
-				date,
-				startMinInit,
-				startHourInit
-			})
-		} catch (err) { console.log(err) }
-	},
+	// 		console.log('tourComponents578', ...tourComponents)
+	// 		return res.render('dailyTour', {
+	// 			API_KEY: process.env.API_KEY,
+	// 			origin,
+	// 			destination,
+	// 			endLocation,
+	// 			endDuration,
+	// 			endTime,
+	// 			tourComponents,
+	// 			date,
+	// 			startMinInit,
+	// 			startHourInit
+	// 		})
+	// 	} catch (err) { console.log(err) }
+	// },
 	getDaysTour: (req, res) => {
 		return res.render('daysTour')
 	},

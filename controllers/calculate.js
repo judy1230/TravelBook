@@ -159,21 +159,24 @@ const calculate = {
 				],
 			}).then(components => {
 				data = components.map(d => d.Restaurant ? d.Restaurant.dataValues : d.Attraction ? d.Attraction.dataValues : d.Shop.dataValues)
-				return data.map(r => ({
-					name: r.name,
-					image: r.image,
-					id: r.id,
-					stayTime: r.stayTime ? r.stayTime : 90,
-					category: r.category
-				}))
+				return {
+					data: data.map(r => ({
+						name: r.name,
+						image: r.image,
+						id: r.id,
+						stayTime: r.stayTime,
+						category: r.category
+					})),
+					stayTime: components.map(r => r.stayTime)
+				}
 			})
 			console.log('componentArray', componentArray)
-			data = componentArray.map(d => d.name)
-			dataId = componentArray.map(d => d.id)
-			dataImage = componentArray.map(d => d.image)
-			dataStayTime = componentArray.map(d => d.stayTime ? d.stayTime : 90)
+			data = componentArray.data.map(d => d.name)
+			dataId = componentArray.data.map(d => d.id)
+			dataImage = componentArray.data.map(d => d.image)
+			dataStayTime = componentArray.stayTime.map(d => d ? d : 90)
 			console.log('dataStayTime', dataStayTime)
-			dataCategory = componentArray.map(d => d.category)
+			dataCategory = componentArray.data.map(d => d.category)
 			data.splice(0, 0, origin)
 			data.push(origin)
 
