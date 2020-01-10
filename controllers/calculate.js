@@ -140,7 +140,7 @@ const calculate = {
 			date = req.body.date || `${new Date().getMonth() + 1} /  ${new Date().getDate()} / ${new Date().getFullYear()}`
 			origin = req.body.origin || res.locals.origin
 			//let componentArray
-			//origin = req.body.origin || res.locals.origin
+			origin = req.body.origin || res.locals.origin
 			googleMapsClient = require('@google/maps').createClient({
 				key: process.env.API_KEY,
 				Promise: Promise
