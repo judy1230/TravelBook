@@ -56,373 +56,20 @@ let userController = {
 		res.redirect('/signin')
 	},
 	tourEdit: async (req, res) => {
-		// 	console.log('///////////////////hello editTour///////////')
-		// 	try {
-		// 		data = []
-		// 		// title = req.body.title
-		// 		// origin = req.body.origin
-		// 		// date = req.body.date
-		// 		// startHourInit = parseInt(req.body.startHourInit)
-		// 		// startMinInit = parseInt(req.body.startMinInit)
-		// 		// stayTime = parseInt(req.body.stayTime)
-		// 		// tourComponents = []
-		// 		// googleMapsClient = require('@google/maps').createClient({
-		// 		// 	key: process.env.API_KEY,
-		// 		// 	Promise: Promise
-		// 		// })
-		// 		componentArray = await Component.findAll({
-		// 			where: {
-		// 				UserId: req.user.id
-		// 			},
-		// 			include: [
-		// 				Restaurant,
-		// 				Attraction,
-		// 				Shop
-		// 			],
-		// 			order: [
-		// 				['id', 'ASC']
-		// 			],
-		// 		}).then(components => {
-		// 			data = components.map(d => d.Restaurant ? d.Restaurant.dataValues : d.Attraction ? d.Attraction.dataValues : d.Shop.dataValues)
-		// 			return { data: data, stayTime: components.map(r => r.stayTime) }
-		// 		})
-
-		// 		data = componentArray.data.map(d => d.name)
-		// 		dataId = componentArray.data.map(d => d.id)
-		// 		dataImage = componentArray.data.map(d => d.image)
-		// 		dataStayTime = componentArray.data.map(d => d.stayTime)
-		// 		dataCategory = componentArray.data.map(d => d.category)
-		// 		data.splice(0, 0, origin)
-		// 		data.push(origin)
-		// 		//console.log('data',data)
-		// 		for (let i = 0; i < data.length - 1; i++) {
-		// 			let location1 = data[i]
-		// 			let location2 = data[i + 1]
-		// 			if (location1 != data[0]) {
-		// 				startMin = leaveMin
-		// 				startHour = leaveHour
-		// 			} else {
-		// 				startMin = startMinInit
-		// 				startHour = startHourInit
-		// 			}
-		// 			duration = await googleMapsClient.directions({
-		// 				origin: location1,
-		// 				destination: location2
-		// 			}).asPromise()
-		// 				.then((response) => {
-		// 					return response.json.routes[0].legs[0].duration
-		// 				})
-		// 				.catch((err) => {
-		// 					console.log(err);
-		// 				})
-		// 			endMin = Math.floor(startMin + (duration.value / 60))
-		// 			leaveMin = endMin + dataStayTime[i]
-		// 			let diff = 0
-		// 			if (endMin > 60) {
-		// 				diff = Math.floor(endMin / 60)
-		// 				endMin %= 60
-		// 			}
-		// 			if (leaveMin > 60) {
-		// 				diffLeave = parseInt(leaveMin / 60)
-		// 				leaveMin %= 60
-		// 			}
-		// 			endHour = startHour + diff
-		// 			leaveHour = startHour + diffLeave
-		// 			image = dataImage[i]
-		// 			tourComponents.push({
-		// 				origin: location1,
-		// 				destination: location2,
-		// 				id: dataId[i],
-		// 				duration: duration.text,
-		// 				category: dataCategory[i],
-		// 				end: `${endHour}: ${endMin}`,
-		// 				leaveEnd: `${leaveHour}: ${leaveMin}`,
-		// 				stayTime: dataStayTime[i],
-		// 				image: image
-		// 			})
-		// 		}
-		// 		destination = tourComponents[tourComponents.length - 1],
-		// 			endLocation = tourComponents[tourComponents.length - 1].destination,
-		// 			endDuration = tourComponents[tourComponents.length - 1].duration,
-		// 			endTime = tourComponents[tourComponents.length - 1].end
-		// 		tourComponents.pop()
-		// 		return res.render('tourEdit', {
-		// 			API_KEY: process.env.API_KEY,
-		// 			origin:
-		// 			destination,
-		// 			endLocation,
-		// 			endDuration,
-		// 			endTime,
-		// 			tourComponents,
-		// 			date,
-		// 			startMinInit,
-		// 			startHourInit
-		// 		})
-		// 	} catch (err) { console.log(err) }
-	},
-	addUserTour: async (req, res) => {
-		// 	console.log('///////////////////add userTour///////////')
-		// 	try {
-		// 		if (!req.body.title) { req.body.title= 'Taipei tour'}
-		// 		data = []
-		// 		//tourComponents = []
-		// 		googleMapsClient = require('@google/maps').createClient({
-		// 			key: process.env.API_KEY,
-		// 			Promise: Promise
-		// 		})
-		// 		componentArray = await Component.findAll({
-		// 			where: {
-		// 				UserId: req.user.id
-		// 			},
-		// 			include: [
-		// 				Restaurant,
-		// 				Attraction,
-		// 				Shop
-		// 			],
-		// 			order: [
-		// 				['id', 'ASC']
-		// 			],
-		// 		}).then(components => {
-		// 			data = components.map(d => d.Restaurant ? d.Restaurant.dataValues : d.Attraction ? d.Attraction.dataValues : d.Shop.dataValues)
-		// 			return { data: data, stayTime: components.map(r => r.stayTime) }
-		// 		})
-		// 		console.log('componentArray',componentArray)
-		// 		// data = componentArray.data.map(d => d.name)
-		// 		// dataId = componentArray.data.map(d => d.id)
-		// 		// dataImage = componentArray.data.map(d => d.image)
-		// 		// dataStayTime = componentArray.data.map(d => d.stayTime)
-		// 		// dataCategory = componentArray.data.map(d => d.category)
-		// 		// data.splice(0, 0, origin)
-		// 		// data.push(origin)
-		// 		//console.log('data',data)
-		// 		// for (let i = 0; i < data.length - 1; i++) {
-		// 		// 	let location1 = data[i]
-		// 		// 	let location2 = data[i + 1]
-		// 		// 	if (location1 != data[0]) {
-		// 		// 		startMin = leaveMin
-		// 		// 		startHour = leaveHour
-		// 		// 	} else {
-		// 		// 		startMin = startMinInit
-		// 		// 		startHour = startHourInit
-		// 		// 	}
-		// 		// 	duration = await googleMapsClient.directions({
-		// 		// 		origin: location1,
-		// 		// 		destination: location2
-		// 		// 	}).asPromise()
-		// 		// 		.then((response) => {
-		// 		// 			return response.json.routes[0].legs[0].duration
-		// 		// 		})
-		// 		// 		.catch((err) => {
-		// 		// 			console.log(err);
-		// 		// 		})
-		// 		// 	endMin = Math.floor(startMin + (duration.value / 60))
-		// 		// 	leaveMin = endMin + dataStayTime[i]
-		// 		// 	let diff = 0
-		// 		// 	if (endMin > 60) {
-		// 		// 		diff = Math.floor(endMin / 60)
-		// 		// 		endMin %= 60
-		// 		// 	}
-		// 		// 	if (leaveMin > 60) {
-		// 		// 		diffLeave = parseInt(leaveMin / 60)
-		// 		// 		leaveMin %= 60
-		// 		// 	}
-		// 		// 	endHour = startHour + diff
-		// 		// 	leaveHour = startHour + diffLeave
-		// 		// 	image = dataImage[i]
-		// 		// 	tourComponents.push({
-		// 		// 		origin: location1,
-		// 		// 		destination: location2,
-		// 		// 		id: dataId[i],
-		// 		// 		duration: duration.text,
-		// 		// 		category: dataCategory[i],
-		// 		// 		end: `${endHour}: ${endMin}`,
-		// 		// 		leaveEnd: `${leaveHour}: ${leaveMin}`,
-		// 		// 		stayTime: dataStayTime[i],
-		// 		// 		image: image
-		// 		// 	})
-		// 		// }
-		// 		Tour.create({
-		// 			title: req.body.title,
-		// 			UserId: req.user.id,
-		// 		  origin : req.body.origin,
-		// 			date: req.body.date,
-		// 			startHourInit : req.body.startHourInit,
-		// 		  startMinInit : req.body.startMinInit,
-		// 			stayTime: req.body.stayTime,
-		// 			days: "1",
-		// 			tourComponents: JSON.stringify(...componentArray)
-		// 		})
-		// 		return tour
-		// 	} catch (err) { console.log(err) }
-
-
-	},
-	getUserTour: async (req, res, next) => {
-		console.log('///////////////////get getUserTour///////////')
-		//data = []
+		console.log('///////////////////hello editTour///////////')
 		try {
-			origin = res.locals.origin
-			componentArray = await Component.findAll({
-				where: {
-					UserId: req.user.id
-				},
-				include: [
-					Restaurant,
-					Attraction,
-					Shop
-				],
-				order: [
-					['id', 'ASC']
-				],
-			}).then(components => {
-				data = components.map(d => d.Restaurant ? d.Restaurant.dataValues : d.Attraction ? d.Attraction.dataValues : d.Shop.dataValues)
-				let result
-				return data.map(r => ({
-					name: r.name,
-					image: r.image,
-					id: r.id,
-					stayTime: r.stayTime ? r.stayTime : 90,
-					category: r.category
-				}))
-			})
-			console.log('componentArray', componentArray)
-			date = `${new Date().getMonth() + 1} /  ${new Date().getDate()} / ${new Date().getFullYear()}`
-			// tourComponents = []
-			startMinInit = new Date().getMinutes()
-			startHourInit = new Date().getHours()
-
-			Tour.create({
-				UserId: req.user.id,
-				temp: true,
-				origin: origin,
-				date: date,
-				startHourInit: startHourInit,
-				startMinInit: startMinInit,
-				days: "1",
-				tourComponents: componentArray
-			}).then(tour => {
-				console.log('tour.tourComponents', tour.tourComponents)
-				return next()
-			})
-		} catch (err) { console.log(err) }
-	},
-	calculateDuration: async (req, res) => {
-		console.log('/////////////////// calculateDuration ///////////')
-		try {
-			let data = []
-			//let componentArray
-			//origin = req.body.origin || res.locals.origin
+			data = []
+			title = req.body.title
+			origin = req.body.origin
+			date = req.body.date
+			startHourInit = parseInt(req.body.startHourInit)
+			startMinInit = parseInt(req.body.startMinInit)
+			stayTime = parseInt(req.body.stayTime)
+			tourComponents = []
 			googleMapsClient = require('@google/maps').createClient({
 				key: process.env.API_KEY,
 				Promise: Promise
 			})
-			componentArray = await Tour.findOne(
-				{
-					where: { UserId: req.user.id, temp: true },
-					order: [
-						['updatedAt', 'DESC'],
-					],
-				}
-			).then(tour => {
-				console.log('tour', tour)
-				return ({
-					data: tour.tourComponents,
-					startHourInit: tour.startHourInit,
-					startMinInit: tour.startMinInit,
-					origin: tour.origin,
-					date: tour.date
-				})
-			})
-			startHourInit = componentArray.startHourInit
-			startMinInit = componentArray.startMinInit
-			origin = componentArray.origin
-			date = componentArray.date
-			console.log('componentArray.data', componentArray.data)
-			data = componentArray.data.map(d => d.name)
-			console.log('data332', data)
-			dataId = componentArray.data.map(d => d.id)
-			dataImage = componentArray.data.map(d => d.image)
-			dataStayTime = componentArray.data.map(d => d.stayTime ? d.stayTime : 90)
-			dataCategory = componentArray.data.map(d => d.category)
-			data.splice(0, 0, origin)
-			data.push(origin)
-			date = `${new Date().getMonth() + 1} /  ${new Date().getDate()} / ${new Date().getFullYear()}`
-			tourComponents = []
-			startMinInit = new Date().getMinutes()
-			startHourInit = new Date().getHours()
-			for (let i = 0; i < data.length - 1; i++) {
-				let location1 = data[i]
-				let location2 = data[i + 1]
-				let diff = 0
-				let diffLeave = 0
-				if (location1 != data[0]) {
-					startMin = leaveMin
-					startHour = leaveHour
-				} else {
-					startMin = startMinInit
-					startHour = startHourInit
-				}
-				duration = await googleMapsClient.directions({
-					origin: location1,
-					destination: location2
-				}).asPromise()
-					.then((response) => {
-						return response.json.routes[0].legs[0].duration
-					})
-					.catch((err) => {
-						console.log(err);
-					})
-				endMin = Math.floor(startMin + (duration.value / 60))
-				leaveMin = endMin + dataStayTime[i]
-
-				if (endMin > 60) {
-					diff = Math.floor(endMin / 60)
-					endMin %= 60
-				}
-				if (leaveMin > 60) {
-					diffLeave = parseInt(leaveMin / 60)
-					leaveMin %= 60
-				}
-				endHour = startHour + diff
-				leaveHour = startHour + diffLeave
-				image = dataImage[i]
-				tourComponents.push({
-					origin: location1,
-					destination: location2,
-					id: dataId[i],
-					duration: duration.text,
-					category: dataCategory[i],
-					end: `${endHour}: ${endMin}`,
-					leaveEnd: `${leaveHour}: ${leaveMin}`,
-					stayTime: dataStayTime[i],
-					image: image
-				})
-			}
-			destination = tourComponents[tourComponents.length - 1]
-			endLocation = tourComponents[tourComponents.length - 1].destination,
-			endDuration = tourComponents[tourComponents.length - 1].duration,
-			endTime = tourComponents[tourComponents.length - 1].end
-			tourComponents.pop()
-			console.log('tourComponents', tourComponents)
-			return res.render('dailyTour', {
-				API_KEY: process.env.API_KEY,
-				title: req.body.title,
-				origin,
-				destination,
-				endLocation,
-				endDuration,
-				endTime,
-				tourComponents: tourComponents,
-				date,
-				startMinInit,
-				startHourInit
-			})
-		} catch (err) { console.log(err) }
-	},
-	putTour: async (req, res) => {
-		console.log('///////////////////hello putTour///////////')
-		try {
-
 			componentArray = await Component.findAll({
 				where: {
 					UserId: req.user.id
@@ -440,16 +87,6 @@ let userController = {
 				return { data: data, stayTime: components.map(r => r.stayTime) }
 			})
 
-			Tour.findOne({ where: { UserId: req.user, temp: true } }).then(tour => {
-				tour.update({
-					UserId: req.user.id,
-					id: req.params.tour_id,
-					title: req.body.title,
-					startMinInit: req.body.startMinInit,
-					startHourInit: req.body.startHourInit,
-					origin: req.body.origin
-				})
-			})
 			data = componentArray.data.map(d => d.name)
 			dataId = componentArray.data.map(d => d.id)
 			dataImage = componentArray.data.map(d => d.image)
@@ -509,50 +146,116 @@ let userController = {
 				endDuration = tourComponents[tourComponents.length - 1].duration,
 				endTime = tourComponents[tourComponents.length - 1].end
 			tourComponents.pop()
-			console.log('tourComponents566', ...tourComponents)
-			Tour.create({
-				title: req.body.title,
+			return res.render('tourEdit', {
+				API_KEY: process.env.API_KEY,
+				origin:
+					destination,
+				endLocation,
+				endDuration,
+				endTime,
+				tourComponents,
+				date,
+				startMinInit,
+				startHourInit
+			})
+		} catch (err) { console.log(err) }
+	},
+	postUserTour: async (req, res) => {
+		console.log('////////////////post tour/////////')
+		try {
+			componentArray = await Component.findAll({
+				where: {
+					UserId: req.user.id
+				},
+				include: [
+					Restaurant,
+					Attraction,
+					Shop
+				],
+				order: [
+					['id', 'ASC']
+				],
+			}).then(components => {
+				data = components.map(d => d.Restaurant ? d.Restaurant.dataValues : d.Attraction ? d.Attraction.dataValues : d.Shop.dataValues)
+				return data.map(r => ({
+					name: r.name,
+					image: r.image,
+					id: r.id,
+					stayTime: r.stayTime ? r.stayTime : 90,
+					category: r.category
+				}))
+			})
+			return Tour.create({
 				UserId: req.user.id,
+				temp: true,
 				origin: req.body.origin,
 				date: req.body.date,
 				startHourInit: req.body.startHourInit,
 				startMinInit: req.body.startMinInit,
-				stayTime: req.body.stayTime,
 				days: "1",
-				tourComponents: JSON.stringify(...tourComponents)
+				tourComponents: componentArray
 			}).then(tour => {
-				console.log('tour', tour)
-				return res.render('dailyTour', {
-					API_KEY: process.env.API_KEY,
-					title,
-					origin,
-					destination,
-					endLocation,
-					endDuration,
-					endTime,
-					tourComponents,
-					date,
-					startMinInit,
-					startHourInit
-				})
-
+				console.log('tour.tourComponents', tour.tourComponents)
+				return res.redirect('back')
 			})
-			// return res.render('dailyTour', {
-			// 	API_KEY: process.env.API_KEY,
-			// //	title,
-			// 	origin,
-			// 	destination,
-			// 	endLocation,
-			// 	endDuration,
-			// 	endTime,
-			// 	tourComponents,
-			// 	date,
-			// 	startMinInit,
-			// 	startHourInit
-			// })
 		} catch (err) { console.log(err) }
 
+
+
 	},
+	// getUserTour: async (req, res, next) => {
+	// 	console.log('///////////////////get getUserTour///////////')
+	// 	//data = []
+	// 	try {
+	// 		origin = res.locals.origin
+	// 		componentArray = await Component.findAll({
+	// 			where: {
+	// 				UserId: req.user.id
+	// 			},
+	// 			include: [
+	// 				Restaurant,
+	// 				Attraction,
+	// 				Shop
+	// 			],
+	// 			order: [
+	// 				['id', 'ASC']
+	// 			],
+	// 		}).then(components => {
+	// 			data = components.map(d => d.Restaurant ? d.Restaurant.dataValues : d.Attraction ? d.Attraction.dataValues : d.Shop.dataValues)
+	// 			let result
+	// 			return data.map(r => ({
+	// 				name: r.name,
+	// 				image: r.image,
+	// 				id: r.id,
+	// 				stayTime: r.stayTime ? r.stayTime : 90,
+	// 				category: r.category
+	// 			}))
+	// 		})
+	// 		console.log('componentArray', componentArray)
+	// 		date = `${new Date().getMonth() + 1} /  ${new Date().getDate()} / ${new Date().getFullYear()}`
+	// 		// tourComponents = []
+	// 		startMinInit = new Date().getMinutes()
+	// 		startHourInit = new Date().getHours()
+
+
+	// 		// Tour.create({
+	// 		// 	UserId: req.user.id,
+	// 		// 	temp: true,
+	// 		// 	origin: origin,
+	// 		// 	date: date,
+	// 		// 	startHourInit: startHourInit,
+	// 		// 	startMinInit: startMinInit,
+	// 		// 	days: "1",
+	// 		// 	tourComponents: componentArray
+	// 		// }).then(tour => {
+	// 		// 	console.log('tour.tourComponents', tour.tourComponents)
+	// 		// 	return next()
+	// 		// })
+	// 	} catch (err) { console.log(err) }
+	// },
+
+
+
 	// putTour: async(req, res) => {
 	// 	console.log('///////////////////hello putTour///////////')
 	// 	try {

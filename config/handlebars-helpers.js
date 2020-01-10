@@ -4,6 +4,8 @@ const helpersreq = require('../_helpers')
 module.exports = {
 	ifCond: function (a, b, options) {
 		if (a === b) {
+			console.log('a', a)
+			console.log('b', b)
 			return options.fn(this)
 		}
 		return options.inverse(this)
