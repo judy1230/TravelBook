@@ -4,6 +4,7 @@ const router = express.Router();
 const toursController = require('../controllers/toursController.js')
 const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController.js')
+const calculate = require('../controllers/calculate.js')
 // const multer = require('multer')
 // const upload = multer({ dest: 'temp/' })
 const passport = require('../config/passport')
@@ -28,7 +29,9 @@ router.get('/', (req, res) => res.redirect('/tours'))
 router.get('/tours',  toursController.getTours)
 router.get('/users/:id/tourEdit', authenticated, userController.tourEdit)
 router.post('/users/:id/tour', authenticated, userController.addUserTour)
-router.get('/users/:tour_id/dailyTour', authenticated, userController.getUserTour)
+
+router.get('/users/:tour_id/dailyTour', authenticated, userController.getUserTour, calculate.calculateDuration)
+//userController.calculateDuration
 router.get('/users/:id/favorite', authenticated,userController.getFavorites)
 router.post('/restaurant/:rest_id/component', authenticated,userController.addRestComponent)
 router.delete('/users/:rest_id/restaurant/component', authenticated, userController.removeRestComponent)

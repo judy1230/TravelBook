@@ -17,6 +17,9 @@ module.exports = {
       UserId: {
         type: Sequelize.INTEGER
       },
+      temp: {
+        type: Sequelize.BOOLEAN
+      },
       startMinInit: {
         type: Sequelize.STRING
       },
@@ -36,7 +39,7 @@ module.exports = {
         type: Sequelize.TEXT
       },
       tourComponents: {
-        type: Sequelize.STRING
+        type: Sequelize.JSON
       },
       createdAt: {
         allowNull: false,

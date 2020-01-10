@@ -10,13 +10,14 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     image: DataTypes.STRING,
     UserId: DataTypes.INTEGER,
+    temp: DataTypes.BOOLEAN,
     startMinInit: DataTypes.STRING,
     startHourInit: DataTypes.STRING,
     origin: DataTypes.STRING,
     date: DataTypes.STRING,
     days: DataTypes.STRING,
     favoriteCount: DataTypes.STRING,
-    tourComponents: DataTypes.STRING,
+    tourComponents: DataTypes.JSON,
   }, {});
   Tour.associate = function(models) {
     // associations can be defined here
