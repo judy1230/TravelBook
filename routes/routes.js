@@ -29,10 +29,10 @@ router.get('/', (req, res) => res.redirect('/tours'))
 router.get('/tours', toursController.getTours)
 
 //router.get('/users/:id/tourEdit', authenticated, userController.tourEdit)
-router.post('/users/:id/tour', authenticated, userController.postUserTour)
+router.post('/users/:id/tour', authenticated, userController.postTour)
+router.get('/users/:id/tour/:tour_id', authenticated, userController.getUserDailyTour)
 
 router.put('/users/:id/dailyTour/', authenticated, calculate.calculateDisplay)
-
 router.get('/users/:tour_id/dailyTour', authenticated,  calculate.calculateDisplay)
 //userController.calculateDuration
 router.get('/users/:id/favorite', authenticated,userController.getFavorites)
@@ -79,7 +79,7 @@ router.delete('/shops/:shop_id/favorite', authenticated, toursController.removeF
 //router.get('/blog/:tour_id', toursController.getBlog)
 
 //SHARE
-//router.get('/users/:id/share', userController.getShare)
+router.get('/users/:id/tour/:tour_id/share', userController.getShare)
 //router.post('/users/:id/share', userController.getShare)
 
 //admin controller

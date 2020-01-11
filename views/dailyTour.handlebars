@@ -7,17 +7,21 @@
 	<button type="submit"
 		class="btn close btn-sm "><i class="far fa-bookmark" style="color:green"></i></button>
 	{{/ifCond}}
+	{{#if tour.id}}
+
+		<a href="/users/{{user.id}}/tour/{{id}}" ><i class="fa-briefcase" style="color:green; font-size:16px;"></i></a>
+	{{/if}}
 
 	<div class="tour-form ml-5">
-		<input type="text" name="title" value="{{title}}"class="text-center" style="width: 30%; margin-right:25px;"	placeholder="Today's Tour">
+		<input type="text" name="title" value="{{title}}" class="title text-center form-style" style="width: 30%; margin-right:25px;"	>
 		<ul class="moveable timeline" id="items-list">
 			<li class="input-append row">
-				<input type="text" name="origin" value="{{origin}}"class="form-style text-center" style="width: 30%; margin-right:25px;"placeholder={{origin}}>
-				<input type="text" name="date" class="form-style datepicker text-center" style="width:35%; " value="{{date}}" placeholder="日期: {{date}}">
-				<input type="text" name="startHourInit" class="time form-style text-center" style="color:mediumblue; font-size:16px;width:10%; margin-left:20px;" value="{{startHourInit}} " placeholder="{{startHourInit}}">
+				<input type="text" name="origin" value="{{origin}}"class=" form-style text-center" style="width: 25%; margin-right:25px;"placeholder={{origin}}>
+				<input type="text" name="date" class="form-style datepicker text-center" style="width:30%; " value="{{date}}" placeholder="日期: {{date}}">
+				<input type="text" name="startHourInit" class="time  text-center" style="color:mediumblue; font-size:14px;width:12%; margin-left:15px;" value="{{startHourInit}} " placeholder="{{startHourInit}}">
 				<span class="text-center"style="width:20px;"> : </span>
-				<input type="text" name="startMinInit" class="time form-style text-center"
-					style="color:mediumblue; font-size:16px;width:10%; " value=" {{startMinInit}}"
+				<input type="text" name="startMinInit" class="time  text-center"
+					style="color:mediumblue; font-size:14px; width:12%;" value=" {{startMinInit}}"
 					placeholder="{{startMinInit}}">
 			</li>
 
@@ -37,7 +41,7 @@
 								<label>停留時間:</label>
 								  <form action="/users/{{this.id}}/{{this.category}}/component?_method=PUT" method="POST">
 											<input type="text" name="stayTime" value=" {{this.stayTime}}" class="form-style text-center"
-												style="color:purple; width:25%;"><span>mins</span>
+												style="color:purple; width:30%;"><span>mins</span>
 												<button type="submit" class="btn btn-outline-light btn-sm" style="color:yellowgreen;">修改時間</button>
 									</form>
 								<p class="card-text" style="font-size: 14px;"><span><i class="fas fa-car" style="color:deepskyblue"></i></span> {{this.duration}}</p>
@@ -56,6 +60,9 @@
 		<div class="form-submit out-line-close">
 			<input type="submit" name="submit" value="重新計算">
 		</div>
+		{{!-- <div class="form-submit out-line-close">
+			<input type="submit" name="submit" value="reset">
+		</div> --}}
 	</div>
 	</form>
 	<!-- 地圖放置處 -->
@@ -80,8 +87,8 @@
 		daysOfWeekHighlighted: "0,6",
 		todayHighlight: true
 	})
-
 </script>
+
 
 {{!-- <script>
 
@@ -130,6 +137,10 @@
 </script> --}}
 
 <style>
+input {padding:5px 10px; background:rgb(192, 192, 192,0.3); border:0 none;
+cursor:pointer;
+-webkit-border-radius: 5px;
+border-radius: 5px; }
 .home_bg {
   background-image: url(https://png.pngtree.com/thumb_back/fh260/back_pic/05/10/85/72598e504024b48.jpg);
   background-size: cover;
@@ -173,7 +184,7 @@
 		z-index: 400;
 	}
 
-	[draggable="true"] {
+	/*[draggable="true"] {
 		user-select: none;
 		-moz-user-select: none;
 		-webkit-user-select: none;
@@ -199,7 +210,7 @@
 			background-color: #eee;
 		} */
 		}
-	}
+	} */
 	.tour-form input.form-style {
   width: 100%;
   border: none;
@@ -208,10 +219,12 @@
   padding-bottom: 5px;
   margin-bottom: 10px;
   outline: none;
+	background-color: transparent;
 }
  .form-submit {
   text-align: left;
   padding: 0 15px;
+
 }
 
  .form-submit input {
@@ -220,9 +233,9 @@
   background-color: transparent;
   border: 1px solid #000;
   border-radius: 12px;
-  padding: 15px 60px;
-  margin-top: 16px;
-  margin-bottom: 14px;
+  padding: 15px 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   cursor: pointer;
   -webkit-transition: .4s linear;
   -moz-transition: .4s linear;
@@ -236,6 +249,7 @@
   background-color: #000;
   color: #fff;
 }
+
 
 
 </style>

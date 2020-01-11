@@ -29,6 +29,18 @@ module.exports = {
       origin: {
         type: Sequelize.STRING
       },
+      destination: {
+        type: Sequelize.STRING
+      },
+      endDuration: {
+        type: Sequelize.STRING
+      },
+      endLocation: {
+        type: Sequelize.STRING
+      },
+      endTime: {
+        type: Sequelize.STRING
+      },
       date: {
         type: Sequelize.STRING
       },

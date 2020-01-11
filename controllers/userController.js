@@ -55,21 +55,115 @@ let userController = {
 		req.logout()
 		res.redirect('/signin')
 	},
-	tourEdit: async (req, res) => {
-		console.log('///////////////////hello editTour///////////')
+	// tourEdit: async (req, res) => {
+	// 	console.log('///////////////////hello editTour///////////')
+	// 	try {
+	// 		data = []
+	// 		title = req.body.title
+	// 		origin = req.body.origin
+	// 		date = req.body.date
+	// 		startHourInit = parseInt(req.body.startHourInit)
+	// 		startMinInit = parseInt(req.body.startMinInit)
+	// 		stayTime = parseInt(req.body.stayTime)
+	// 		tourComponents = []
+	// 		googleMapsClient = require('@google/maps').createClient({
+	// 			key: process.env.API_KEY,
+	// 			Promise: Promise
+	// 		})
+	// 		componentArray = await Component.findAll({
+	// 			where: {
+	// 				UserId: req.user.id
+	// 			},
+	// 			include: [
+	// 				Restaurant,
+	// 				Attraction,
+	// 				Shop
+	// 			],
+	// 			order: [
+	// 				['id', 'ASC']
+	// 			],
+	// 		}).then(components => {
+	// 			data = components.map(d => d.Restaurant ? d.Restaurant.dataValues : d.Attraction ? d.Attraction.dataValues : d.Shop.dataValues)
+	// 			return { data: data, stayTime: components.map(r => r.stayTime) }
+	// 		})
+
+	// 		data = componentArray.data.map(d => d.name)
+	// 		dataId = componentArray.data.map(d => d.id)
+	// 		dataImage = componentArray.data.map(d => d.image)
+	// 		dataStayTime = componentArray.data.map(d => d.stayTime)
+	// 		dataCategory = componentArray.data.map(d => d.category)
+	// 		data.splice(0, 0, origin)
+	// 		data.push(origin)
+	// 		//console.log('data',data)
+	// 		for (let i = 0; i < data.length - 1; i++) {
+	// 			let location1 = data[i]
+	// 			let location2 = data[i + 1]
+	// 			if (location1 != data[0]) {
+	// 				startMin = leaveMin
+	// 				startHour = leaveHour
+	// 			} else {
+	// 				startMin = startMinInit
+	// 				startHour = startHourInit
+	// 			}
+	// 			duration = await googleMapsClient.directions({
+	// 				origin: location1,
+	// 				destination: location2
+	// 			}).asPromise()
+	// 				.then((response) => {
+	// 					return response.json.routes[0].legs[0].duration
+	// 				})
+	// 				.catch((err) => {
+	// 					console.log(err);
+	// 				})
+	// 			endMin = Math.floor(startMin + (duration.value / 60))
+	// 			leaveMin = endMin + dataStayTime[i]
+	// 			let diff = 0
+	// 			if (endMin > 60) {
+	// 				diff = Math.floor(endMin / 60)
+	// 				endMin %= 60
+	// 			}
+	// 			if (leaveMin > 60) {
+	// 				diffLeave = parseInt(leaveMin / 60)
+	// 				leaveMin %= 60
+	// 			}
+	// 			endHour = startHour + diff
+	// 			leaveHour = startHour + diffLeave
+	// 			image = dataImage[i]
+	// 			tourComponents.push({
+	// 				origin: location1,
+	// 				destination: location2,
+	// 				id: dataId[i],
+	// 				duration: duration.text,
+	// 				category: dataCategory[i],
+	// 				end: `${endHour}: ${endMin}`,
+	// 				leaveEnd: `${leaveHour}: ${leaveMin}`,
+	// 				stayTime: dataStayTime[i],
+	// 				image: image
+	// 			})
+	// 		}
+	// 		destination = tourComponents[tourComponents.length - 1],
+	// 			endLocation = tourComponents[tourComponents.length - 1].destination,
+	// 			endDuration = tourComponents[tourComponents.length - 1].duration,
+	// 			endTime = tourComponents[tourComponents.length - 1].end
+	// 		tourComponents.pop()
+	// 		return res.render('tourEdit', {
+	// 			API_KEY: process.env.API_KEY,
+	// 			origin:
+	// 				destination,
+	// 			endLocation,
+	// 			endDuration,
+	// 			endTime,
+	// 			tourComponents,
+	// 			date,
+	// 			startMinInit,
+	// 			startHourInit
+	// 		})
+	// 	} catch (err) { console.log(err) }
+	// },
+	postTour: async (req, res) => {
+		console.log('////////////////post tour/////////')
+		tourComponents = []
 		try {
-			data = []
-			title = req.body.title
-			origin = req.body.origin
-			date = req.body.date
-			startHourInit = parseInt(req.body.startHourInit)
-			startMinInit = parseInt(req.body.startMinInit)
-			stayTime = parseInt(req.body.stayTime)
-			tourComponents = []
-			googleMapsClient = require('@google/maps').createClient({
-				key: process.env.API_KEY,
-				Promise: Promise
-			})
 			componentArray = await Component.findAll({
 				where: {
 					UserId: req.user.id
@@ -84,9 +178,17 @@ let userController = {
 				],
 			}).then(components => {
 				data = components.map(d => d.Restaurant ? d.Restaurant.dataValues : d.Attraction ? d.Attraction.dataValues : d.Shop.dataValues)
-				return { data: data, stayTime: components.map(r => r.stayTime) }
+				return {
+					data: data.map(r => ({
+						name: r.name,
+						image: r.image,
+						id: r.id,
+						stayTime: r.stayTime,
+						category: r.category
+					})),
+					stayTime: components.map(r => r.stayTime)
+				}
 			})
-
 			data = componentArray.data.map(d => d.name)
 			dataId = componentArray.data.map(d => d.id)
 			dataImage = componentArray.data.map(d => d.image)
@@ -141,68 +243,57 @@ let userController = {
 					image: image
 				})
 			}
-			destination = tourComponents[tourComponents.length - 1],
+			destination = tourComponents[tourComponents.length - 1].destination,
 				endLocation = tourComponents[tourComponents.length - 1].destination,
 				endDuration = tourComponents[tourComponents.length - 1].duration,
 				endTime = tourComponents[tourComponents.length - 1].end
 			tourComponents.pop()
-			return res.render('tourEdit', {
-				API_KEY: process.env.API_KEY,
-				origin:
-					destination,
-				endLocation,
-				endDuration,
-				endTime,
-				tourComponents,
-				date,
-				startMinInit,
-				startHourInit
-			})
-		} catch (err) { console.log(err) }
-	},
-	postUserTour: async (req, res) => {
-		console.log('////////////////post tour/////////')
-		try {
-			componentArray = await Component.findAll({
-				where: {
-					UserId: req.user.id
-				},
-				include: [
-					Restaurant,
-					Attraction,
-					Shop
-				],
-				order: [
-					['id', 'ASC']
-				],
-			}).then(components => {
-				data = components.map(d => d.Restaurant ? d.Restaurant.dataValues : d.Attraction ? d.Attraction.dataValues : d.Shop.dataValues)
-				return data.map(r => ({
-					name: r.name,
-					image: r.image,
-					id: r.id,
-					stayTime: r.stayTime ? r.stayTime : 90,
-					category: r.category
-				}))
-			})
 			return Tour.create({
 				title:req.body.title,
 				UserId: req.user.id,
 				temp: false,
 				origin: req.body.origin,
+				destination: destination,
+				endDuration: endDuration,
+				endLocation: endLocation,
+				endTime: endTime,
 				date: req.body.date,
 				startHourInit: req.body.startHourInit,
 				startMinInit: req.body.startMinInit,
 				days: "1",
-				tourComponents: componentArray
+				tourComponents: tourComponents
 			}).then(tour => {
 				//console.log('tour.tourComponents', tour.tourComponents)
 				return res.redirect('back')
 			})
 		} catch (err) { console.log(err) }
 
+	},
+	getUserDailyTour: (req, res) => {
+		///把duration, destination,end 放進tourComponents裡
+		return Tour.findOne({
+			where: {
+				UserId: req.user.id,
+				id: req.params.tour_id
+			}
+		}).then(tour => {
+			console.log('tour.tourComponents', tour.tourComponents)
 
-
+			return res.render('getUserDailyTour', {
+				API_KEY: process.env.API_KEY,
+				title: tour.title,
+				origin: tour.origin,
+				destination: tour.destination,
+				endDuration: tour.endDuration,
+				endLocation: tour.endLocation,
+				endTime: tour.endTime,
+				date: tour.date,
+				startHourInit: tour.startHourInit,
+				startMinInit: tour.startMinInit,
+				tourComponents: tour.tourComponents,
+				id:tour.id
+			})
+		})
 	},
 
 	postRestComment: (req, res) => {
@@ -224,7 +315,7 @@ let userController = {
 		return res.redirect('/tours/blog/:tour_id')
 	},
 
-	
+
 	getDaysTour: (req, res) => {
 		return res.render('daysTour')
 	},
@@ -339,6 +430,7 @@ let userController = {
 		})
 	},
 	removeRestComponent: (req, res) => {
+		console.log('///////////hello reomve rest component////////')
 		return Component.findOne({
 			where: {
 				UserId: req.user.id,
