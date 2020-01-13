@@ -64,7 +64,7 @@ let userController = {
 		}).then(user => {
 			FavoriteCount = user.FavoritedRestaurants.length + user.FavoritedAttractions.length + user.FavoritedShops.length
 			console.log('user', user)
-			return res.render('profile2', { profile: user, FavoriteCount})
+			return res.render('profile', { profile: user, FavoriteCount})
 		})
 	},
   postTour: async (req, res) => {
@@ -187,7 +187,7 @@ let userController = {
 				id: req.params.tour_id
 			}
 		}).then(tour => {
-			console.log('tour.tourComponents', tour.tourComponents)
+			console.log('tour', tour.title)
 			//tour.tourComponents.pop()
 			return res.render('getUserDailyTour', {
 				API_KEY: process.env.API_KEY,
