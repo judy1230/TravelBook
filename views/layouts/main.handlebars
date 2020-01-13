@@ -47,13 +47,15 @@
 				<a href="/admin/" style="color: white;margin-right: 10px;">Admin 後台</a>
 				{{/ifCond}}
 				{{#if user}}
-				<span style="color: white;margin-right: 10px;">Hi, {{user.name}}</span>
+				<span style="color: white;margin-right: 20px;">Hi, {{user.name}}</span>
+				<img style="border-radius:50%;margin-right: 20px;" width="50px;" height="50px;"src="{{user.avatar}}">
 				{{/if}}
         {{#if user}}
 				<a class="fas fa-edit mr-3" href="/users/{{user.id}}/dailyTour" title="行程規劃"></a>
 				<a class="fas fa-briefcase mr-3" href="/users/{{user.id}}/favorite" title="收藏包"></a>
 				<a class="fas fa-portrait mr-3" href="/users/{{user.id}}/profile" title="個人資料"></a>
-				<a  href="/logout" title="LogOut">登出</a>
+				<button class="btn btn-outline-dark"><a href="/logout">登出</a></button>
+
 				{{else}}
 				<a href="/signin" title="LogOut">登入</a>
        {{/if}}
@@ -67,5 +69,16 @@
 
 		</div>
 	</main>
+	<footer id="sticky-footer" class="py-4 bg-dark text-white-50">
+		<div class="container text-center">
+			<small>Copyright 2019&copy; TravelBook</small>
+		</div>
+	</footer>
+	<style>
+   sticky-footer {
+	flex-shrink: none;
+	}
+	</style>
+
 </body>
 </html>
