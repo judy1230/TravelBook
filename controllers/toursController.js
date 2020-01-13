@@ -19,33 +19,45 @@ const currentTime = new Date().getHours() + new Date().getMinutes() / 60
 
 const toursController = {
 	// go to index
-	getIndex: (req, res) => {
-		return res.render('index')
+	getIndex: async (req, res) => {
+		try {
+			restaurants = await Restaurant.findAll({
+				order: [
+					['updatedAt', 'DESC']
+				],
+				include: [
+					{ model: User, as: 'FavoritedUsers' }
+				],
+			}).then(restaurants => {
+				console.log('restaurants', restaurants)
+				return restaurants
+			})
+			attractions = await Attraction.findAll({
+				order: [
+					['updatedAt', 'DESC']
+				],
+				include: [
+					{ model: User, as: 'FavoritedUsers' }
+				],
+			}).then(attractions => {
+				console.log('attractions', attractions)
+				return attractions
+			})
+			shops = await Shop.findAll({
+				order: [
+					['updatedAt', 'DESC']
+				],
+				include: [
+					{ model: User, as: 'FavoritedUsers' }
+				],
+			}).then(shops => {
+				console.log('shops', shops)
+				return shops
+			})
+			return res.render('index', {restaurants, attractions, shops})
+		} catch (err) { console.log(err) }
 	},
-	// getDailyTours: (req, res) => {
-	// 	return res.render('dailyTours')
-	// },
-	// getDaysTours: (req, res) => {
-	// 	return res.render('daysTours')
-	// },
-	// getDailyTour: (req, res) => {
-	// 	return res.render('dailyTour')
-	// },
-	// getDaysTour: (req, res) => {
-	// 	return res.render('daysTour')
-	// },
-	// getBlogs: (req, res) => {
-	// 	return res.render('blogs')
-	// },
-	// getBlog: (req, res) => {
-	// 	return res.render('blog')
-	// },
-	//getBlogEdit: (req, res) => {
-	//	return res.render('blogedit')
-	//},
-	//postBlog: (req, res) => {
-	//	return res.redirect('/tours/blog/:tour_id')
-	//},
+
 	getRestaurants: (req, res) => {
 		//console.log('req.user', req.user.Tours[0].dataValues.id)
 		return Restaurant.findAndCountAll({

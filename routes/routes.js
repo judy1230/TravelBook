@@ -25,8 +25,8 @@ const authenticatedAdmin = (req, res, next) => {
 	res.redirect('/signin')
 }
 //index
-router.get('/', (req, res) => res.redirect('/tours'))
-router.get('/tours', toursController.getIndex)
+router.get('/', (req, res) => res.redirect('/index'))
+router.get('/index', toursController.getIndex)
 
 //router.get('/users/:id/tourEdit', authenticated, userController.tourEdit)
 //temp tour
