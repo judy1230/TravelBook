@@ -1,0 +1,104 @@
+<hr>
+
+	<div class="container ">
+		{{!-- <i class="fas fa-user" style="font-size: 70px;">會員資料</i> --}}
+		<div class="row m-5">
+			<div class="col-md-6 p-4 text-center ">
+				<img class="img-responsive center-block rounded" src="{{profile.avatar}}"
+					style="width: 200px; margin-bottom: 25px;" alt="avatar">
+			</div>
+			<div class="col-md-6 ">
+				<div class="col align-self-start"></div>
+				<h3 class="" >{{profile.name}}</h3>
+				{{!-- <p>{{profile.email}}</p> --}}
+				<div class="col-md-6">
+					<div class="row mt-2">
+						<i class="fas fa-heart text-danger" style="font-size: 20px;" title="總收藏量"></i>
+						<span class="">{{FavoriteCount}}</span>
+					</div>
+					<div class=" mt-2">
+						{{#if profile.FavoritedRestaurants}}
+						<div class="row ">
+							<p class="">{{profile.FavoritedRestaurants.length}}個收藏的餐廳</p>
+							{{#each profile.FavoritedRestaurants }}
+							<a href="/restaurants/{{this.id}}"><img class="img-responsive center-block mr-3 rounded" src="{{this.image}}"
+									style="width:70px;margin-bottom: 25px;"></a>
+							{{/each}}
+						</div>
+						{{/if}}
+						{{#if profile.FavoritedAttractions}}
+						<div class="row ">
+							<p class="">{{profile.FavoritedAttractions.length}}個收藏的景點</p>
+							{{#each profile.FavoritedAttractions }}
+							<a href="/attractions/{{this.id}}"><img class="img-responsive center-block mr-3 rounded" src="{{this.image}}"
+									style="width:70px;margin-bottom: 25px;"></a>
+							{{/each}}
+						</div>
+						{{/if}}
+						{{#if profile.FavoritedShops}}
+						<div class="row ">
+							<p class="">{{profile.FavoritedShops.length}}個收藏的商店</p>
+							{{#each profile.FavoritedShops }}
+							<a href="/shops/{{this.id}}"><img class="img-responsive center-block mr-3 rounded" src="{{this.image}}"
+									style="width:70px;margin-bottom: 25px;"></a>
+							{{/each}}
+						</div>
+						{{/if}}
+					</div>
+					{{#each profile.Tours}}
+					<blockquote class="row mt-3">
+						<a class="fas fa-clipboard-check mr-3 " style="font-size: 24px;" href="/users/{{../profile.id}}/tour/{{this.id}}"
+							title="行程瀏覽">{{this.title}}</a>
+						<form action="/users/{{../profile.id}}/tour/{{this.id}}?_method=DELETE" method="POST" class="mt-1">
+							<button type="submit" class="btn close btn-sm "><i class="far fa-trash-alt" style="color:crimson"
+									title="刪除"></i></button>
+						</form>
+						<small>{{moment this.updatedAt}}</small>
+					</blockquote>
+					{{/each}}
+
+				</div>
+
+
+		</div>
+
+	</div>
+
+
+		<div class="row text-center" style="width:50%; ">
+			{{!-- {{#if profile.CommentsRest}}
+			<div class='col-6'>
+				<p class="">{{profile.CommentsRest.length}}個已評論的餐廳</p>
+				{{#each profile.CommentsRest }}
+				<a href="/restaurants/{{this.Restaurant.id}}"><img class="img-responsive center-block mr-3"
+						src="{{this.Restaurant.image}}" style="width:70px;margin-bottom: 25px;"></a>
+				{{/each}}
+				{{/if}}
+			</div> --}}
+
+
+		{{!-- <div class="row">
+			<div class="col-6">
+				{{#if profile.Followings}}
+				<p class=""><span>{{profile.Followings.length}}</span> followings(追蹤者)</p>
+				{{#each profile.Followings}}
+				<a href="/users/top/{{this.id}}"><img class="img-responsive center-block mr-3" src="{{this.image}}"
+						style="width:70px;margin-bottom: 25px;"></a>
+				{{/each}}
+				{{/if}}
+			</div>
+			<div class="col-6">
+				{{#if profile.Followers}}
+				<p class="">{{profile.Followers.length}} followers(追隨者)</p>
+				{{#each profile.Followers}}
+				<a href="/users/top/{{this.id}}"><img class="img-responsive center-block mr-3" src="{{this.image}}"
+						style="width:70px;margin-bottom: 25px;"></a>
+				{{/each}}
+				{{/if}}
+			</div> --}}
+
+		</div>
+
+
+
+	<hr />

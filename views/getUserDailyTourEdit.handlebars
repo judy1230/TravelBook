@@ -1,14 +1,21 @@
 <div class="home_bg mt-4 mb-5 p-5 row">
+	<form action="/users/{{user.id}}/tour/{{id}}/edit?_method=PUT" method="POST" class="form-input col-6" style="width:50%;">
 		<div class="tour-form ml-5">
-			<h5 type="text" name="title" value="{{title}}" class="title text-center form-style"
-				style="width: 30%; margin-right:25px;"></h5>
+			<input type="text" name="title" value="{{title}}" class="title text-center form-style"
+				style="width: 30%; margin-right:25px;">
 			<ul class="moveable timeline" id="items-list">
 				<li class="input-append row">
-					<p class=" form-style text-center" style="width: 25%; margin-right:25px;">{{origin}}</p>
-					<p class=" form-style text-center" class="form-style datepicker text-center" style="width:30%; ">日期: {{date}}
-					</p>
-					<p type="text" class="time  text-center"
-						style="color:mediumblue; font-size:14px;width:12%; margin-left:15px;">{{startHourInit}} : {{startMinInit}}
+					<input type="text" name="origin" value="{{origin}}" class=" form-style text-center"
+						style="width: 25%; margin-right:25px;" placeholder={{origin}}>
+					<input type="text" name="date" class="form-style datepicker text-center" style="width:30%; " value="{{date}}"
+						placeholder="日期: {{date}}">
+					<input type="text" name="startHourInit" class="time  text-center"
+						style="color:mediumblue; font-size:14px;width:12%; margin-left:15px;" value="{{startHourInit}} "
+						placeholder="{{startHourInit}}">
+					<span class="text-center" style="width:20px;"> : </span>
+					<input type="text" name="startMinInit" class="time  text-center"
+						style="color:mediumblue; font-size:14px; width:12%;" value=" {{startMinInit}}"
+						placeholder="{{startMinInit}}">
 				</li>
 
 				{{#each tourComponents}}
@@ -19,11 +26,17 @@
 								<img src="{{this.image}}" class="card-img" height="160px" width="160px" alt="">
 							</div>
 							<div class="col-md-6">
+								{{!-- <form action="/users/{{this.id}}/{{this.category}}/component?_method=DELETE" method="POST"><button
+										type="submit" class="btn close btn-sm"><span aria-hidden="true">×</span></button>
+								</form> --}}
 								<div class="card-body">
 									<h6 class="card-title" href="#">{{this.destination}} {{this.end}}</h6>
 									<label>停留時間:</label>
-									<span type="text" class="form-style text-center" style="color:purple; width:30%;">{{this.stayTime}}
-										mins</span>
+									<form action="/users/{{this.id}}/{{this.category}}/component?_method=PUT" method="POST">
+										<input type="text" name="stayTime" value=" {{this.stayTime}}" class="form-style text-center"
+											style="color:purple; width:30%;"><span>mins</span>
+										<button type="submit" class="btn btn-outline-light btn-sm" style="color:yellowgreen;">修改時間</button>
+									</form>
 									<p class="card-text" style="font-size: 14px;"><span><i class="fas fa-car"
 												style="color:deepskyblue"></i></span> {{this.duration}}</p>
 								</div>
@@ -38,11 +51,18 @@
 					<p><span><i class="fas fa-car" style="color:deepskyblue"></i></span>: {{endDuration}}</p>
 				</li>
 			</ul>
+			<div class="form-submit out-line-close">
+				<input type="submit" name="submit" value="重新計算">
+			</div>
+			<form action="/users/{{user.id}}/tour/{{id}}/edit?_method=DELETE" method="POST" class="mt-1">
+				<button type="submit" class="btn close btn-sm "><i class="far fa-trash-alt" style="color:crimson"
+						title="刪除"></i></button>
+			</form>
 			{{!-- <div class="form-submit out-line-close">
 			<input type="submit" name="submit" value="reset">
 		</div> --}}
 		</div>
-
+	</form>
 	<!-- 地圖放置處 -->
 
 	<div class="col-4 ml-5 mt-5 text-center sticky-top">
@@ -51,14 +71,6 @@
 				src="https://www.google.com/maps/embed/v1/directions?key={{API_KEY}}&origin={{origin}}&destination={{destination}}">>
 			</iframe>
 		</div>
-	</div>
-	<div class="row ">
-	<a action="/users/{{user.id}}/tour/{{id}}/edit" class="btn close btn-sm "><i class="fas fa-edit mr-1"style="color:brown" title="編輯"></i></a>
-	<a href="/users/{{user.id}}/tour/{{id}}/share" class="btn close btn-sm "><i class="far fa-share-square mr-1"
-			style="color:brown" title="分享"></i></a>
-	<form action="/users/{{user.id}}/tour/{{id}}?_method=DELETE" method="POST" class="mt-1">
-		<button type="submit" class="btn close btn-sm "><i class="far fa-trash-alt" style="color:crimson"title="刪除"></i></button>
-	</form>
 	</div>
 
 
@@ -74,6 +86,53 @@
 		todayHighlight: true
 	})
 </script>
+
+
+{{!-- <script>
+
+
+	let items = document.querySelectorAll('#items-list > li')
+
+	items.forEach(item => {
+		$(item).prop('draggable', true)
+		item.addEventListener('dragstart', dragStart)
+		item.addEventListener('drop', dropped)
+		item.addEventListener('dragenter', cancelDefault)
+		item.addEventListener('dragover', cancelDefault)
+	})
+
+	function dragStart(e) {
+		var index = $(e.target).index()
+		e.dataTransfer.setData('text/plain', index)
+	}
+
+	function dropped(e) {
+		cancelDefault(e)
+
+		// get new and old index
+		let oldIndex = e.dataTransfer.getData('text/plain')
+		let target = $(e.target)
+		let newIndex = target.index()
+
+		// remove dropped items at old place
+		let dropped = $(this).parent().children().eq(oldIndex).remove()
+
+		// insert the dropped items at new place
+		if (newIndex < oldIndex) {
+			target.before(dropped)
+			ajax()
+		} else {
+			target.after(dropped)
+		}
+	}
+
+	function cancelDefault(e) {
+		e.preventDefault()
+		e.stopPropagation()
+		return false
+	}
+
+</script> --}}
 
 <style>
 	input {

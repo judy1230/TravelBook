@@ -26,13 +26,19 @@ const authenticatedAdmin = (req, res, next) => {
 }
 //index
 router.get('/', (req, res) => res.redirect('/tours'))
-router.get('/tours', toursController.getTours)
+router.get('/tours', toursController.getIndex)
 
 //router.get('/users/:id/tourEdit', authenticated, userController.tourEdit)
+//temp tour
 router.post('/users/:id/tour', authenticated, userController.postTour)
-router.get('/users/:id/tour/:tour_id', authenticated, userController.getUserDailyTour)
-
 router.put('/users/:id/dailyTour/', authenticated, calculate.calculateDisplay)
+//store to db tour
+router.get('/users/:id/tour/:tour_id', authenticated, userController.getUserDailyTour)
+router.get('/users/:id/tour/:tour_id/edit', authenticated, userController.getUserDailyTourEdit)
+router.put('/users/:id/tour/:tour_id/edit', authenticated, userController.putUserDailyTourEdit)
+router.delete('/users/:id/tour/:tour_id', authenticated, userController.deleteUserDailyTour)
+
+
 router.get('/users/:tour_id/dailyTour', authenticated,  calculate.calculateDisplay)
 //userController.calculateDuration
 router.get('/users/:id/favorite', authenticated,userController.getFavorites)
@@ -79,12 +85,15 @@ router.delete('/shops/:shop_id/favorite', authenticated, toursController.removeF
 //router.get('/blog/:tour_id', toursController.getBlog)
 
 //SHARE
-router.get('/users/:id/tour/:tour_id/share', userController.getShare)
+//router.get('/users/:id/tour/:tour_id/share', authenticated, userController.getShare)
 //router.post('/users/:id/share', userController.getShare)
 
 //admin controller
 //router.get('/admin', adminController.getAdmin)
 //router.get('/admin/chart', adminController.getAdminChart)
+
+//user profile
+router.get('/users/:id/profile', authenticated, userController.getProfile)
 
 // //users sign up
 router.get('/signup', userController.signUpPage)

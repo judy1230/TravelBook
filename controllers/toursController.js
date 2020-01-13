@@ -19,7 +19,7 @@ const currentTime = new Date().getHours() + new Date().getMinutes() / 60
 
 const toursController = {
 	// go to index
-	getTours: (req, res) => {
+	getIndex: (req, res) => {
 		return res.render('index')
 	},
 	// getDailyTours: (req, res) => {
@@ -47,6 +47,7 @@ const toursController = {
 	//	return res.redirect('/tours/blog/:tour_id')
 	//},
 	getRestaurants: (req, res) => {
+		//console.log('req.user', req.user.Tours[0].dataValues.id)
 		return Restaurant.findAndCountAll({
 			order: [
 				['updatedAt', 'DESC']

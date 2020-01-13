@@ -249,7 +249,7 @@ const calculate = {
 				endDuration = tourComponents[tourComponents.length - 1].duration,
 				endTime = tourComponents[tourComponents.length - 1].end
 			tourComponents.pop()
-			console.log('tourComponents', tourComponents[0].id)
+			//console.log('tourComponents', tourComponents[0].id)
 			//console.log('destination',destination)
 			return res.render('dailyTour', {
 				API_KEY: process.env.API_KEY,
