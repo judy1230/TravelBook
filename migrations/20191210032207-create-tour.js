@@ -21,10 +21,10 @@ module.exports = {
         type: Sequelize.BOOLEAN
       },
       startMinInit: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       startHourInit: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       origin: {
         type: Sequelize.STRING

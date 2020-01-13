@@ -6,12 +6,8 @@ const Shop = db.Shop
 const User = db.User
 const Component = db.Component
 const Tour = db.Tour
-const Blog = db.Blog
-const Favorite = db.Favorite
-const Like = db.Like
 const Comment = db.Comment
-const Location = db.Location
-const helpersreq = require('../_helpers')
+
 
 
 let userController = {
@@ -71,7 +67,6 @@ let userController = {
 			return res.render('profile2', { profile: user, FavoriteCount})
 		})
 	},
-
   postTour: async (req, res) => {
 		console.log('////////////////post tour/////////')
 		tourComponents = []
@@ -192,7 +187,7 @@ let userController = {
 				id: req.params.tour_id
 			}
 		}).then(tour => {
-			//console.log('tour.tourComponents', tour.tourComponents)
+			console.log('tour.tourComponents', tour.tourComponents)
 			//tour.tourComponents.pop()
 			return res.render('getUserDailyTour', {
 				API_KEY: process.env.API_KEY,
@@ -218,8 +213,8 @@ let userController = {
 				id: req.params.tour_id
 			}
 		}).then(tour => {
-			//console.log('tour.tourComponents205', typeof(tour.tourComponents[0].id))
-			//tour.tourComponents.pop()
+			console.log('tour.tourComponents205', tour.tourComponents)
+			tour.tourComponents.pop()
 			return res.render('getUserDailyTourEdit', {
 				API_KEY: process.env.API_KEY,
 				title: tour.title,
@@ -238,7 +233,7 @@ let userController = {
 },
   putUserDailyTourEdit: async(req, res) => {
 		console.log('///////////put user daily tour /////////////')
-		console.log('/////改了時間會刪掉tourComponents////')
+
 		googleMapsClient = require('@google/maps').createClient({
 			key: process.env.API_KEY,
 			Promise: Promise
@@ -259,18 +254,15 @@ let userController = {
 					startMinInit: tour.startMinInit
 				}
 			})
-			console.log('componentArray', componentArray)
 			origin = req.body.origin || componentArray.origin
-			startHourInit = req.body.startHourInit || componentArray.startHourInit
-			startMinInit = req.body.startMinInit || componentArray.startMinInit
+			startHourInit = parseInt(req.body.startHourInit)|| componentArray.startHourInit
+			startMinInit = parseInt(req.body.startMinInit) || componentArray.startMinInit
 			data = componentArray.data.map(d => d.destination)
 			dataId = componentArray.data.map(d => d.id)
 			dataImage = componentArray.data.map(d => d.image)
 			dataStayTime = componentArray.data.map(d => d.stayTime)
 			dataCategory = componentArray.data.map(d => d.category)
 			data.splice(0, 0, origin)
-			//data.push(origin)
-			console.log('data',data)
 			for (let i = 0; i < data.length - 1; i++) {
 				let location1 = data[i]
 				let location2 = data[i + 1]
@@ -317,24 +309,24 @@ let userController = {
 					image: image
 				})
 			}
+
 			destination = tourComponents[tourComponents.length - 1].destination,
 				endLocation = tourComponents[tourComponents.length - 1].destination,
 				endDuration = tourComponents[tourComponents.length - 1].duration,
 				endTime = tourComponents[tourComponents.length - 1].end
-			//tourComponents.pop()
 			return Tour.findOne({
 				where: {
 					UserId: req.user.id,
 					id: req.params.tour_id
 				}
 			}).then(tour => {
-				tourComponents = Component.findAll
+				tourComponents.pop()
 				tour.update({
 					title: req.body.title,
 					origin: req.body.origin,
 					date: req.body.date,
-					startHourInit: req.body.startHourInit,
-					startMinInit: req.body.startMinInit,
+					startHourInit: parseInt(req.body.startHourInit),
+					startMinInit: parseInt(req.body.startMinInit),
 					tourComponents: tourComponents,
 				})
 
@@ -352,7 +344,6 @@ let userController = {
 			return res.redirect(`/users/${user.id}`)
 		})
   },
-
 	postRestComment: (req, res) => {
 		return Comment.create({
 			UserId: req.user.id,
@@ -371,8 +362,6 @@ let userController = {
 	postBlog: (req, res) => {
 		return res.redirect('/tours/blog/:tour_id')
 	},
-
-
 	getDaysTour: (req, res) => {
 		return res.render('daysTour')
 	},
