@@ -48,7 +48,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       favoriteCount: {
-        type: Sequelize.TEXT
+        type: Sequelize.STRING
       },
       tourComponents: {
         type: Sequelize.JSON
