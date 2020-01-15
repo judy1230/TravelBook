@@ -22,7 +22,6 @@ module.exports = (sequelize, DataTypes) => {
     days: DataTypes.STRING,
     favoriteCount: DataTypes.STRING,
     tourComponents: {
-      allowNull: false,
       type: DataTypes.JSON
     },
     createdAt: {
@@ -36,6 +35,16 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Tour.associate = function(models) {
     // associations can be defined here
+    Tour.hasMany(models.Comment)
+    Tour.hasMany(models.Blog)
+    Tour.hasMany(models.Like)
+    Tour.belongsTo(models.Location)
+    Tour.belongsTo(models.User)
+    Tour.belongsToMany(models.User, {
+      through: models.Like,
+      foreignKey: 'TourId',
+      as: 'LikedUser'
+    })
   };
   return Tour;
 };
