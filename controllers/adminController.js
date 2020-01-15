@@ -16,7 +16,7 @@ const helpersreq = require('../_helpers')
 
 const adminController = {
 	getAdmin: (req, res) => {
-		res.render('/admin/admin')
+		res.render('admin/admin')
 	},
 	getAdminChart: (req, res) => {
 		res.render('/admin/admin chart')

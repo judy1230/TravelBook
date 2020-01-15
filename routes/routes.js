@@ -1,14 +1,11 @@
 const express = require('express');
 const router = express.Router();
-
 const toursController = require('../controllers/toursController.js')
-const adminController = require('../controllers/adminController.js')
+//const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController.js')
 const calculate = require('../controllers/calculate.js')
-// const multer = require('multer')
-// const upload = multer({ dest: 'temp/' })
 const passport = require('../config/passport')
-const helpersreq = require('../_helpers')
+//const helpersreq = require('../_helpers')
 
 const authenticated = (req, res, next) => {
 	//console.log(req.user)
