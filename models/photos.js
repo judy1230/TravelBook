@@ -7,9 +7,9 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-    restaurantId: DataTypes.INTEGER,
-    attractionId: DataTypes.INTEGER,
-    shopId: DataTypes.INTEGER,
+    RestaurantId: DataTypes.INTEGER,
+    AttractionId: DataTypes.INTEGER,
+    ShopId: DataTypes.INTEGER,
     image: DataTypes.STRING
   }, {});
   Photos.associate = function(models) {

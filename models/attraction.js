@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     Attraction.hasMany(models.Component)
     Attraction.hasMany(models.Favorite)
     Attraction.hasMany(models.Like)
+    
     //Attraction.belongsTo(models.Location)
     Attraction.belongsToMany(models.User, {
       through: models.Favorite,

@@ -8,13 +8,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      restaurantId: {
+      RestaurantId: {
         type: Sequelize.INTEGER
       },
-      attractionId: {
+      AttractionId: {
         type: Sequelize.INTEGER
       },
-      shopId: {
+      ShopId: {
         type: Sequelize.INTEGER
       },
       image: {
