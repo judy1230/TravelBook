@@ -52,26 +52,32 @@ let userController = {
 		req.logout()
 		res.redirect('/signin')
 	},
-	getProfile: (req, res) => {
-		//console.log('req.user', req.user)
-		return User.findByPk(req.user.id, {
-			include: [
-				{ model: Restaurant, as: 'FavoritedRestaurants' },
-				{ model: Attraction, as: 'FavoritedAttractions' },
-				{ model: Shop, as: 'FavoritedShops' },
-				Tour,
-				Comment
-			]
-		}).then(user => {
-			FavoriteCount = user.FavoritedRestaurants.length + user.FavoritedAttractions.length + user.FavoritedShops.length
-			tours = user.Tours.map(d => ({
-				components: { ...Object.values(d.dataValues.tourComponents)},
-				id: d.id,
-				title: d.title,
-			}))
-			console.log('tours', tours)
-			return res.render('profile', { profile: user, FavoriteCount, tours } )
-		})
+	getProfile: async (req, res) => {
+		try { //console.log('req.user', req.user)
+			user = await User.findByPk(req.user.id, {
+				include: [
+					{ model: Restaurant, as: 'FavoritedRestaurants' },
+					{ model: Attraction, as: 'FavoritedAttractions' },
+					{ model: Shop, as: 'FavoritedShops' },
+					Tour
+				]
+			}).then(user => {
+				return user
+			})
+			tours = await Tour.findAll({
+				where: {
+					UserId: req.user.id
+				}
+			}).then(tours => {
+				return tours.map(d => ({
+					id: d.id,
+					title: d.title,
+				  components: d.tourComponents
+				}))
+			})
+			return res.render('profile', { profile: user, tours })
+		} catch (err) { console.log(err) }
+
 	},
   postTour: async (req, res) => {
 		console.log('////////////////post tour/////////')
@@ -160,11 +166,11 @@ let userController = {
 					image: image
 				})
 			}
-			destination = tourComponents[tourComponents.length - 1].destination,
+			  destination = tourComponents[tourComponents.length - 1].destination,
 				endLocation = tourComponents[tourComponents.length - 1].destination,
 				endDuration = tourComponents[tourComponents.length - 1].duration,
 				endTime = tourComponents[tourComponents.length - 1].end
-
+        tourComponents.pop()
 			return Tour.create({
 				title: req.body.title,
 				UserId: req.user.id,
@@ -193,7 +199,7 @@ let userController = {
 				id: req.params.tour_id
 			}
 		}).then(tour => {
-			tour.tourComponents.pop()
+			//tour.tourComponents.pop()
 			return res.render('getUserDailyTour', {
 				API_KEY: process.env.API_KEY,
 				title: tour.title,
@@ -212,15 +218,12 @@ let userController = {
 		})
 	},
 	getUserDailyTourEdit: async(req, res) => {
-		console.log('///////////get User Daily Tour Edit /////////////')
 		return Tour.findOne({
 			where: {
 				UserId: req.user.id,
 				id: req.params.tour_id
 			}
 		}).then(tour => {
-			console.log('tour.tourComponents205', tour.tourComponents)
-			tour.tourComponents.pop()
 			return res.render('getUserDailyTourEdit', {
 				API_KEY: process.env.API_KEY,
 				title: tour.title,
@@ -238,8 +241,6 @@ let userController = {
 		})
   },
   putUserDailyTourEdit: async(req, res) => {
-		console.log('///////////put user daily tour /////////////')
-
 		googleMapsClient = require('@google/maps').createClient({
 			key: process.env.API_KEY,
 			Promise: Promise
@@ -347,7 +348,7 @@ let userController = {
 		.then(tour => {
 			//console.log('tour', tour)
 			tour.destroy()
-			return res.redirect(`/users/${req.user.id}`)
+			return res.redirect(`/users/${req.user.id}/profile`)
 		})
   },
 	postRestComment: (req, res) => {
@@ -359,20 +360,29 @@ let userController = {
 			return res.redirect('back')
 		})
 	},
-	removeRestComment: (req, res) => {
+	removeComment: (req, res) => {
 		return Comment.findByPk(req.params.comment_id).then((comment) => {
 			comment.destroy()
 			return res.redirect('back')
 		})
 	},
-	postBlog: (req, res) => {
-		return res.redirect('/tours/blog/:tour_id')
+	postAttractionComment: (req, res) => {
+		return Comment.create({
+			UserId: req.user.id,
+			RestaurantId: req.params.attraction_id,
+			comment: req.body.comment
+		}).then((comment) => {
+			return res.redirect('back')
+		})
 	},
-	getDaysTour: (req, res) => {
-		return res.render('daysTour')
-	},
-	getBlog: (req, res) => {
-		return res.render('blog')
+	postShopComment: (req, res) => {
+		return Comment.create({
+			UserId: req.user.id,
+			RestaurantId: req.params.shop_id,
+			comment: req.body.comment
+		}).then((comment) => {
+			return res.redirect('back')
+		})
 	},
 	getFavorites: async (req, res) => {
 		try {
@@ -486,6 +496,57 @@ let userController = {
 		} catch (err) { console.log(err) }
 
 	},
+	addFavoriteRest: (req, res) => {
+		return Favorite.create({
+			UserId: req.user.id,
+			RestaurantId: req.params.rest_id,
+		}).then((favorite) => {
+			return res.redirect('back')
+		})
+	},
+	removeFavoriteRest: (req, res) => {
+		return Favorite.findOne({
+			UserId: req.user.id,
+			RestaurantId: req.params.rest_id,
+		}).then((favorite) => {
+			favorite.destroy()
+			return res.redirect('back')
+		})
+	},
+	addFavoriteAttraction: (req, res) => {
+		return Favorite.create({
+			UserId: req.user.id,
+			AttractionId: req.params.attraction_id,
+		}).then((favorite) => {
+			return res.redirect('back')
+		})
+	},
+	removeFavoriteAttraction: (req, res) => {
+		return Favorite.findOne({
+			UserId: req.user.id,
+			AttractionId: req.params.attraction_id,
+		}).then((favorite) => {
+			favorite.destroy()
+			return res.redirect('back')
+		})
+	},
+	addFavoriteShop: (req, res) => {
+		return Favorite.create({
+			UserId: req.user.id,
+			ShopId: req.params.shop_id,
+		}).then((favorite) => {
+			return res.redirect('back')
+		})
+	},
+	removeFavoriteShop: (req, res) => {
+		return Favorite.findOne({
+			UserId: req.user.id,
+			ShopId: req.params.shop_id,
+		}).then((favorite) => {
+			favorite.destroy()
+			return res.redirect('back')
+		})
+	},
 	addRestComponent: (req, res) => {
 		return Component.create({
 			UserId: req.user.id,
@@ -495,7 +556,6 @@ let userController = {
 		})
 	},
 	removeRestComponent: (req, res) => {
-		console.log('///////////hello reomve rest component////////')
 		return Component.findOne({
 			where: {
 				UserId: req.user.id,
@@ -542,14 +602,12 @@ let userController = {
 
 	},
 	putAttractionComponent: (req, res) => {
-		console.log('///////////hello put attraction////////')
 		return Component.findOne({
 			where: {
 				UserId: req.user.id,
 				AttractionId: req.params.attraction_id
 			}
 		}).then((component) => {
-			console.log('component', component)
 			component.update({
 				stayTime: req.body.stayTime
 			})
@@ -565,14 +623,12 @@ let userController = {
 		})
 	},
 	removeShopComponent: (req, res) => {
-		console.log('req.params.shop_id', req.params.shop_id)
 		return Component.findOne({
 			where: {
 				UserId: req.user.id,
 				ShopId: req.params.shop_id
 			}
 		}).then((component) => {
-			console.log('component', component)
 			component.destroy()
 			return res.redirect('back')
 		})
@@ -593,15 +649,34 @@ let userController = {
 			return res.redirect('back')
 		})
 	},
-	getBlogEdit: (req, res) => {
-		return res.render('blogEdit')
-	},
-	getShare: (req, res) => {
-		return res.render('share')
-	},
-	postShare: (req, res) => {
-		return res.redirect('back')
+	removeAllComponents: (req, res) => {
+		return Component.findAll({
+			where: {
+				UserId: req.user.id
+			}
+		}).then(components => {
+			components.destroy()
+			return res.redirect('back')
+		})
 	}
+	// getDaysTour: (req, res) => {
+	// 	return res.render('daysTour')
+	// },
+	// postBlog: (req, res) => {
+	// 	return res.redirect('/tours/blog/:tour_id')
+	// },
+	// getBlog: (req, res) => {
+	// 	return res.render('blog')
+	// },
+	// getBlogEdit: (req, res) => {
+	// 	return res.render('blogEdit')
+	// },
+	// getShare: (req, res) => {
+	// 	return res.render('share')
+	// },
+	// postShare: (req, res) => {
+	// 	return res.redirect('back')
+	// }
 
 
 }

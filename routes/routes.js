@@ -36,8 +36,15 @@ router.get('/users/:id/tour/:tour_id', authenticated, userController.getUserDail
 router.get('/users/:id/tour/:tour_id/edit', authenticated, userController.getUserDailyTourEdit)
 router.put('/users/:id/tour/:tour_id/edit', authenticated, userController.putUserDailyTourEdit)
 router.delete('/users/:id/tour/:tour_id', authenticated, userController.deleteUserDailyTour)
-//userController.calculateDuration
-router.get('/users/:id/favorite', authenticated,userController.getFavorites)
+//user favorite control
+router.get('/users/:id/favorite', authenticated, userController.getFavorites)
+router.post('/restaurants/:rest_id/favorite', authenticated, userController.addFavoriteRest)
+router.delete('/restaurants/:rest_id/favorite', authenticated, userController.removeFavoriteRest)
+router.post('/attractions/:attraction_id/favorite', authenticated, userController.addFavoriteAttraction)
+router.delete('/attractions/:attraction_id/favorite', authenticated, userController.removeFavoriteAttraction)
+router.post('/shops/:shop_id/favorite', authenticated, userController.addFavoriteShop)
+router.delete('/shops/:shop_id/favorite', authenticated, userController.removeFavoriteShop)
+//user component control
 router.post('/users/:rest_id/restaurant/component', authenticated,userController.addRestComponent)
 router.delete('/users/:rest_id/restaurant/component', authenticated, userController.removeRestComponent)
 router.put('/users/:rest_id/restaurant/component', authenticated, userController.putRestComponent)
@@ -47,38 +54,28 @@ router.put('/users/:attraction_id/attraction/component', authenticated, userCont
 router.post('/users/:shop_id/shop/component', authenticated, userController.addShopComponent)
 router.delete('/users/:shop_id/shop/component', authenticated, userController.removeShopComponent)
 router.put('/users/:shop_id/shop/component', authenticated, userController.putShopComponent)
-//router.get('/users/:tour_id/dailyTour', authenticated, userController.getDailyTour)
-
+router.delete('/components/removeAllComponents', authenticated, userController.removeAllComponents)
+//user comment control
 router.post('/restaurant/:rest_id/comment', authenticated, userController.postRestComment)
-router.delete('/comment/:comment_id', authenticatedAdmin, userController.removeRestComment)
+router.post('/restaurant/:attraction_id/comment', authenticated, userController.postAttractionComment)
+router.post('/restaurant/:shop_id/comment', authenticated, userController.postShopComment)
+router.delete('/comment/:comment_id', authenticatedAdmin, userController.removeComment)
+
+//restaurant, attraction,  display,
+router.get('/restaurants', toursController.getRestaurants)
+router.get('/attractions', toursController.getAttractions)
+router.get('/shops', toursController.getShops)
+router.get('/restaurants/:restaurant_id', toursController.getRestaurant)
+router.get('/attractions/:attraction_id', toursController.getAttraction)
+router.get('/shops/:shop_id', toursController.getShop)
+//tour control
 //router.get('/users/:tour_id/daysTour', userController.getDaysTour)
 //router.get('/users/:tour_id/blogEdit', userController.getBlogEdit)
 //router.post('/users/:tour_id/blogEdit', userController.postBlog)
 //router.get('/users/blog/:id', userController.getBlog)
-//router.get('/users/:id/profile', userController.getProfile)
-//router.post('/users/:id/profile', userController.postProfile)
-//restaurant, attraction, tour, blog display,
-router.get('/restaurants', toursController.getRestaurants)
-router.get('/attractions', toursController.getAttractions)
-router.get('/shops', toursController.getShops)
 //router.get('/dailyTours', toursController.getDailyTours)
 //router.get('/daysTours', toursController.getDaysTours)
 //router.get('/blog/:tour_id', toursController.getBlogs)
-router.get('/restaurants/:restaurant_id', toursController.getRestaurant)
-router.get('/attractions/:attraction_id', toursController.getAttraction)
-router.get('/shops/:shop_id', toursController.getShop)
-router.post('/restaurants/:rest_id/favorite', authenticated, toursController.addFavoriteRest)
-router.delete('/restaurants/:rest_id/favorite', authenticated, toursController.removeFavoriteRest)
-
-router.post('/attractions/:attraction_id/favorite', authenticated,toursController.addFavoriteAttraction)
-router.delete('/attractions/:attraction_id/favorite', authenticated, toursController.removeFavoriteAttraction)
-
-router.post('/shops/:shop_id/favorite', authenticated, toursController.addFavoriteShop)
-router.delete('/shops/:shop_id/favorite', authenticated, toursController.removeFavoriteShop)
-
-//router.get('/dailyTours/:tour_id', toursController.getDailyTour)
-//router.get('/daysTours/:tour_id', toursController.getDaysTour)
-//router.get('/blog/:tour_id', toursController.getBlog)
 
 //SHARE
 //router.get('/users/:id/tour/:tour_id/share', authenticated, userController.getShare)
@@ -90,6 +87,7 @@ router.delete('/shops/:shop_id/favorite', authenticated, toursController.removeF
 
 //user profile
 router.get('/users/:id/profile', authenticated, userController.getProfile)
+//router.post('/users/:id/profile', userController.postProfile)
 
 // //users sign up
 router.get('/signup', userController.signUpPage)

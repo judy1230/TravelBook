@@ -274,58 +274,7 @@ const toursController = {
 			})
 		})
 	},
-	addFavoriteRest: (req, res) => {
-		return Favorite.create({
-			UserId: req.user.id,
-			RestaurantId: req.params.rest_id,
-		}).then((favorite) => {
-			return res.redirect('back')
-		})
-	},
-	removeFavoriteRest: (req, res) => {
-		return Favorite.findOne({
-			UserId: req.user.id,
-			RestaurantId: req.params.rest_id,
-		}).then((favorite) => {
-			favorite.destroy()
-			return res.redirect('back')
-		})
-	},
-	addFavoriteAttraction: (req, res) => {
-		return Favorite.create({
-			UserId: req.user.id,
-			AttractionId: req.params.attraction_id,
-		}).then((favorite) => {
-			return res.redirect('back')
-		})
-	},
-	removeFavoriteAttraction: (req, res) => {
-		return Favorite.findOne({
-			UserId: req.user.id,
-			AttractionId: req.params.attraction_id,
-		}).then((favorite) => {
-			favorite.destroy()
-			return res.redirect('back')
-		})
-	},
-	addFavoriteShop: (req, res) => {
-		return Favorite.create({
-			UserId: req.user.id,
-			ShopId: req.params.shop_id,
-		}).then((favorite) => {
-			return res.redirect('back')
-		})
-	},
-	removeFavoriteShop: (req, res) => {
-		console.log('//////////////helllo remove shop////////')
-		return Favorite.findOne({
-			UserId: req.user.id,
-			ShopId: req.params.shop_id,
-		}).then((favorite) => {
-			favorite.destroy()
-			return res.redirect('back')
-		})
-	},
+	
 
 }
 

@@ -39,12 +39,12 @@
 		<a class="navbar-brand font-italic" href="/">TravelBook</a>
 		<div class="navbar-collapse  navbar-text mt-3">
 			<ul class="container text-right">
-				{{#ifCond req.user.role 'admin'}}
+				{{#ifCond user.role 'admin'}}
 				<a href="/admin/" style="color: white;margin-right: 10px;">Admin 後台</a>
 				{{/ifCond}}
 				{{#if user}}
 				<span style="color: white;margin-right: 20px;">Hi, {{user.name}}</span>
-				<img style="border-radius:50%;margin-right: 20px;" width="50px;" height="50px;"src="{{user.avatar}}">
+				<img src="{{user.avatar}}"style="border-radius:50%;margin-right: 20px;" width="50px;" height="50px;">
 				{{/if}}
         {{#if user}}
 				<a class="fas fa-edit mr-3" href="/users/{{user.id}}/dailyTour" title="行程規劃"></a>

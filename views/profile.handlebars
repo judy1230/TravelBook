@@ -42,7 +42,7 @@
 		<table class="table">
 			<thead class="thead-info">
 				<tr>
-					<th scope="col">#</th>
+					{{!-- <th scope="col">#</th> --}}
 					<th scope="col">title</th>
 					<th scope="col">Components</th>
 					<th scope="col">Action</th>
@@ -52,23 +52,22 @@
 			<tbody>
 				{{#each tours}}
 				<tr>
-					<th scope="row">{{this.id}}</th>
-					<td><a href="/users/{{../user.id}}/tour/{{this.id}}">
+					{{!-- <th scope="row">{{this.id}}</th> --}}
+					<td><a href="/users/{{../profile.id}}/tour/{{this.id}}">
 						{{this.title}}</a></td>
 					<td>
-						{{#each tours.components}}
+            {{#each this.components}}
 						<a href="/{{this.category}}s/{{this.id}}">{{this.destination}}</a>
-						{{/each}}
+            {{/each}}
 					</td>
 					<td class="text-center">
-						<a href="/users/{{../user.id}}/tour/{{this.id}}/edit" ><i class="fas fa-edit "
+						<a href="/users/{{../profile.id}}/tour/{{this.id}}/edit" ><i class="fas fa-edit "
 								style="color:brown; font-size:16px;" title="編輯"></i></a>
 						{{!-- <a href="/users/{{../user.id}}/tour/{{this.id}}/share" ><i class="far fa-share-square"
 								style="color:brown; font-size:16px;" title="分享"></i></a> --}}
 					</td>
 					<td>
-						<form action="/users/{{../user.id}}/tour/{{this.id}}?_method=DELETE" method="POST" class=" ">
-							<button type="submit" class="btn btn-outline-danger"><i class="far fa-trash-alt" style="color:wheat; font-size:16px;"
+						<form action="/users/{{../profile.id}}/tour/{{this.id}}?_method=DELETE" method="POST" class=" "><button type="submit" class="btn btn-outline-danger"><i class="far fa-trash-alt" style="color:wheat; font-size:16px;"
 									title="刪除"></i></button>
 						</form>
 					</td>
