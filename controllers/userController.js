@@ -6,8 +6,13 @@ const Shop = db.Shop
 const User = db.User
 const Component = db.Component
 const Tour = db.Tour
+const Favorite = db.Favorite
 const Comment = db.Comment
 const currentTime = new Date().getHours() + new Date().getMinutes() / 60
+//const Blog = db.Blog
+//const Like = db.Like
+//const Location = db.Location
+//const helpersreq = require('../_helpers')
 
 
 
