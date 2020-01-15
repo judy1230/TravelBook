@@ -63,14 +63,22 @@
 				</div>
 			</div>
 		</div>
+<<<<<<< HEAD
 		{{/each}}
+=======
+		{{!-- {{/each}} --}}
+>>>>>>> 43869f74daa8acb62b5959e4f1bc1e403e75d7f4
 	</div>
 	<br />
 	<br />
 	<nav aria-label="Page navigation example">
 		<ul class="pagination">
 			<li class="page-item">
+<<<<<<< HEAD
 				<a class="page-link" href="/attractions?page={{prev}}" aria-label="Previous">
+=======
+				<a class="page-link" href="/restaurants?page={{prev}}&categoryId={{categoryId}}" aria-label="Previous">
+>>>>>>> 43869f74daa8acb62b5959e4f1bc1e403e75d7f4
 					<span aria-hidden="true">&laquo;</span>
 				</a>
 			</li>
@@ -78,10 +86,18 @@
 			{{#ifCond this ../page}}
 			<li class="page-item active"><a class="page-link" href="#">{{this}}</a></li>
 			{{else}}
+<<<<<<< HEAD
 			<li class="page-item"><a class="page-link" href="/attractions?page={{this}}">{{this}}</a></li>
 			{{/ifCond}}
 			{{/each}}
 			<a class="page-link" href="/attractions?page={{next}}" aria-label="Next">
+=======
+			<li class="page-item"><a class="page-link"
+					href="/restaurants?page={{this}}&categoryId={{../categoryId}}">{{this}}</a></li>
+			{{/ifCond}}
+			{{/each}}
+			<a class="page-link" href="/restaurants?page={{next}}&categoryId={{categoryId}}" aria-label="Next">
+>>>>>>> 43869f74daa8acb62b5959e4f1bc1e403e75d7f4
 				<span aria-hidden="true">&raquo;</span>
 			</a>
 			</li>
@@ -90,6 +106,7 @@
 
 
 </div>
+<<<<<<< HEAD
 <style>
 	.home_bg {
 		background-image: url(https://www.crazyppt.com/wp-content/uploads/2018/10/1-1PRG01119.jpg);
@@ -127,3 +144,5 @@
 		background-color: papayawhip;
 	}
 </style>
+=======
+>>>>>>> 43869f74daa8acb62b5959e4f1bc1e403e75d7f4

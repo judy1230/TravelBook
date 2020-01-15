@@ -16,6 +16,29 @@
 		</li>
 	</ul>
 
+<<<<<<< HEAD
+=======
+	<ul class="nav">
+		{{!-- <li class="nav-item">
+				<a class="nav-link {{#ifCond '' categoryId}}{{/ifCond}}" href="?categoryId=" style="font-size: 24px; color: black;">全部</a>
+			</li> --}}
+		{{!-- {{#each categories}} --}}
+		{{!-- 寫程式時記得把active加進去 --}}
+		<li class="nav-item">
+			<a class="nav-link {{#ifCond this.id ../categoryId}}{{/ifCond}}" href="/restaurants">{{this.name}}
+				<i class="fas fa-utensils" style="font-size: 36px; color: black;"></i></a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link {{#ifCond this.id ../categoryId}}{{/ifCond}}" href="/attractions">{{this.name}}
+				<i class="fas fa-camera-retro" style="font-size: 36px; color: black;"></i></a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link {{#ifCond this.id ../categoryId}}{{/ifCond}}" href="#">{{this.name}}
+				<i class="fas fa-gifts" style="font-size: 36px; color: black;"></i></i></a>
+		</li>
+		{{!-- {{/each}} --}}
+	</ul>
+>>>>>>> 43869f74daa8acb62b5959e4f1bc1e403e75d7f4
 
 	<div class="container row m-auto">
 		{{#each restaurants}}
@@ -42,6 +65,7 @@
 							{{/if}}
 						</div>
 
+<<<<<<< HEAD
 						<div class="col-3 text-right">
 							{{#if this.isSelected }}
 							<form action="/users/{{this.id}}/restaurant/component?_method=DELETE" method="POST">
@@ -54,6 +78,38 @@
 							{{/if}}
 						</div>
 						<div class="col-3" style="width:100%;"></div>
+=======
+	<div class="row p-5">
+		{{!-- {{#each restaurants}} --}}
+		<div class="col-md-3 ">
+			<div class="card shadow-sm">
+				<img class="card-img-top" src="{{this.image}}http://lorempixel.com/640/480" alt="Card image cap" width="200px"
+					height="180px">
+				<div class="card-body text-center m-auto">
+					<p class="card-text  mb-2">
+						<a href="/restaurants/{{this.id}}">
+							{{this.name}} 餐廳
+						</a>
+						<span class="badge badge-secondary">{{this.Category.name}} 西式料理</span>
+					</p>
+					<p class="card-text mb-2">{{this.description}}open: 0800</p>
+					<div class="card-text row ">
+						{{#if this.isFavorited }}
+						<form action="/favorite/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
+								class="btn btn-danger ">移除收藏</button></form>
+						{{else}}
+						<form action="/favorite/{{this.id}}" method="POST"><button type="submit"
+								class="btn btn-outline-success btn-sm ">加到收藏</button>
+						</form>
+						{{/if}}
+						{{#if this.isLiked }}
+						<form action="/like/{{this.id}}?_method=DELETE" method="POST" class="ml-2"><button type="submit"
+								class="btn btn-danger btn-sm">Dislike</button></form>
+						{{else}}
+						<form action="/like/{{this.id}}" method="POST" class="ml-2"><button type="submit"
+								class="btn btn-outline-success btn-sm">Like</button></form>
+						{{/if}}
+>>>>>>> 43869f74daa8acb62b5959e4f1bc1e403e75d7f4
 					</div>
 
 				</div>
@@ -86,6 +142,7 @@
 
 
 </div>
+<<<<<<< HEAD
 <style>
 	.home_bg {
 		background-image: url(https://www.crazyppt.com/wp-content/uploads/2018/10/1-1PRG01119.jpg);
@@ -124,3 +181,5 @@
 		background-color: antiquewhite;
 	}
 </style>
+=======
+>>>>>>> 43869f74daa8acb62b5959e4f1bc1e403e75d7f4
