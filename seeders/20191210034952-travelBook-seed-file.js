@@ -100,9 +100,9 @@ module.exports = {
     queryInterface.bulkInsert('Photos',
       photos.map((item) =>
         ({
-          restaurantId: item.restId,
-          attractionId: item.attractionId,
-          shopId: item.shopId,
+          RestaurantId: item.restId,
+          AttractionId: item.attractionId,
+          ShopId: item.shopId,
           image: item.image,
           createdAt: new Date(),
           updatedAt: new Date(),
