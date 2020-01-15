@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt-nodejs')
 const faker = require('faker')
 const attractions = require('../seeders/attraction_temp.json')
 const restaurants = require('../seeders/restaurant_temp.json')
-const shops = require('../seeders/Shopping_temp.json')
+const shops = require('../seeders/shopping_temp.json')
 const photos = require('../seeders/photos.json')
 module.exports = {
 
