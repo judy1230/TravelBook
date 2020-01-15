@@ -50,10 +50,10 @@
 				<a class="fas fa-edit mr-3" href="/users/{{user.id}}/dailyTour" title="行程規劃"></a>
 				<a class="fas fa-briefcase mr-3" href="/users/{{user.id}}/favorite" title="收藏包"></a>
 				<a class="fas fa-portrait mr-3" href="/users/{{user.id}}/profile" title="個人資料"></a>
-				<button class="btn btn-outline-dark"><a href="/logout">登出</a></button>
+				<button class="btn btn-outline-dark"><a href="/logout">LogOut</a></button>
 
 				{{else}}
-				<a href="/signin" title="LogOut">登入</a>
+				<button class="btn btn-outline-dark"><a href="/signin">LogIn</a></button>
        {{/if}}
 			</ul>
 		</div>
