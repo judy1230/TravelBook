@@ -29,8 +29,18 @@ const toursController = {
 					{ model: User, as: 'FavoritedUsers' }
 				],
 			}).then(restaurants => {
-				console.log('restaurants', restaurants)
-				return restaurants
+				const data = restaurants.map(r => ({
+					...r.dataValues,
+					name: r.dataValues.name.substring(0, 7),
+					ratingStars: (Math.round((r.rating / 5) * 100)) + '%',
+					status: currentTime > JSON.parse("[" + r.dataValues.opening_up + "]") && currentTime <
+						JSON.parse("[" + r.dataValues.opening_down + "]") ? '營業中' :
+						Math.abs(JSON.parse("[" + r.dataValues.opening_up + "]") - currentTime) < 0.5 && (JSON.parse("[" + r.dataValues.opening_up + "]") - currentTime) > 0 ? '即將營業' :
+							Math.abs(JSON.parse("[" + r.dataValues.opening_down + "]") - currentTime) < 1 && (JSON.parse("[" + r.dataValues.opening_down + "]") - currentTime) > 0 ? '即將結束營業' :
+								'休息中'
+				}))
+
+				return data
 			})
 			attractions = await Attraction.findAll({
 				order: [
@@ -40,8 +50,17 @@ const toursController = {
 					{ model: User, as: 'FavoritedUsers' }
 				],
 			}).then(attractions => {
-				console.log('attractions', attractions)
-				return attractions
+				const data = attractions.map(r => ({
+					...r.dataValues,
+					name: r.dataValues.name.substring(0, 7),
+					ratingStars: (Math.round((r.rating / 5) * 100)) + '%',
+					status: currentTime > JSON.parse("[" + r.dataValues.opening_up + "]") && currentTime <
+						JSON.parse("[" + r.dataValues.opening_down + "]") ? '營業中' :
+						Math.abs(JSON.parse("[" + r.dataValues.opening_up + "]") - currentTime) < 0.5 && (JSON.parse("[" + r.dataValues.opening_up + "]") - currentTime) > 0 ? '即將營業' :
+							Math.abs(JSON.parse("[" + r.dataValues.opening_down + "]") - currentTime) < 1 && (JSON.parse("[" + r.dataValues.opening_down + "]") - currentTime) > 0 ? '即將結束營業' :
+								'休息中'
+				}))
+				return data
 			})
 			shops = await Shop.findAll({
 				order: [
@@ -51,13 +70,23 @@ const toursController = {
 					{ model: User, as: 'FavoritedUsers' }
 				],
 			}).then(shops => {
-				console.log('shops', shops)
-				return shops
+				const data = shops.map(r => ({
+					...r.dataValues,
+					name: r.dataValues.name.substring(0, 10),
+					ratingStars: (Math.round((r.rating / 5) * 100)) + '%',
+					status: currentTime > JSON.parse("[" + r.dataValues.opening_up + "]") && currentTime <
+						JSON.parse("[" + r.dataValues.opening_down + "]") ? '營業中' :
+						Math.abs(JSON.parse("[" + r.dataValues.opening_up + "]") - currentTime) < 0.5 && (JSON.parse("[" + r.dataValues.opening_up + "]") - currentTime) > 0 ? '即將營業' :
+							Math.abs(JSON.parse("[" + r.dataValues.opening_down + "]") - currentTime) < 1 && (JSON.parse("[" + r.dataValues.opening_down + "]") - currentTime) > 0 ? '即將結束營業' :
+								'休息中'
+				}))
+				return data
 			})
-			return res.render('index', {restaurants, attractions, shops})
+			return res.render('index', {
+				restaurants, attractions, shops
+			})
 		} catch (err) { console.log(err) }
 	},
-
 	getRestaurants: (req, res) => {
 		//console.log('req.user', req.user.Tours[0].dataValues.id)
 		return Restaurant.findAndCountAll({
@@ -133,7 +162,6 @@ const toursController = {
 			]
 		})
 			.then(result => {
-				console.log('currentTime', currentTime)
 				const data = result.rows.map(r => ({
 					...r.dataValues,
 					name: r.dataValues.name.substring(0, 7),
@@ -147,7 +175,7 @@ const toursController = {
 							Math.abs(JSON.parse("[" + r.dataValues.opening_down + "]") - currentTime) < 1 && (JSON.parse("[" + r.dataValues.opening_down + "]") - currentTime) > 0 ? '即將結束營業' :
 								'休息中'
 				}))
-				console.log('data', data)
+
 				return res.render('attractions', {
 					attractions: data
 				})
@@ -255,7 +283,6 @@ const toursController = {
 		})
 	},
 	removeFavoriteRest: (req, res) => {
-		console.log('//////////////helllo remove restaurant////////')
 		return Favorite.findOne({
 			UserId: req.user.id,
 			RestaurantId: req.params.rest_id,
@@ -265,7 +292,6 @@ const toursController = {
 		})
 	},
 	addFavoriteAttraction: (req, res) => {
-		console.log('//////////////helllo add attraction////////')
 		return Favorite.create({
 			UserId: req.user.id,
 			AttractionId: req.params.attraction_id,
@@ -274,7 +300,6 @@ const toursController = {
 		})
 	},
 	removeFavoriteAttraction: (req, res) => {
-		console.log('//////////////helllo remove attraction////////')
 		return Favorite.findOne({
 			UserId: req.user.id,
 			AttractionId: req.params.attraction_id,
@@ -284,7 +309,6 @@ const toursController = {
 		})
 	},
 	addFavoriteShop: (req, res) => {
-		console.log('//////////////helllo add shop////////')
 		return Favorite.create({
 			UserId: req.user.id,
 			ShopId: req.params.shop_id,

@@ -7,6 +7,7 @@ const User = db.User
 const Component = db.Component
 const Tour = db.Tour
 const Comment = db.Comment
+const currentTime = new Date().getHours() + new Date().getMinutes() / 60
 
 
 
@@ -52,7 +53,7 @@ let userController = {
 		res.redirect('/signin')
 	},
 	getProfile: (req, res) => {
-		console.log('req.user', req.user)
+		//console.log('req.user', req.user)
 		return User.findByPk(req.user.id, {
 			include: [
 				{ model: Restaurant, as: 'FavoritedRestaurants' },
@@ -63,8 +64,13 @@ let userController = {
 			]
 		}).then(user => {
 			FavoriteCount = user.FavoritedRestaurants.length + user.FavoritedAttractions.length + user.FavoritedShops.length
-			console.log('user', user)
-			return res.render('profile', { profile: user, FavoriteCount})
+			tours = user.Tours.map(d => ({
+				components: { ...Object.values(d.dataValues.tourComponents)},
+				id: d.id,
+				title: d.title,
+			}))
+			console.log('tours', tours)
+			return res.render('profile', { profile: user, FavoriteCount, tours } )
 		})
 	},
   postTour: async (req, res) => {
@@ -187,8 +193,7 @@ let userController = {
 				id: req.params.tour_id
 			}
 		}).then(tour => {
-			console.log('tour', tour.title)
-			//tour.tourComponents.pop()
+			tour.tourComponents.pop()
 			return res.render('getUserDailyTour', {
 				API_KEY: process.env.API_KEY,
 				title: tour.title,
@@ -201,7 +206,8 @@ let userController = {
 				startHourInit: tour.startHourInit,
 				startMinInit: tour.startMinInit,
 				tourComponents: tour.tourComponents,
-				id: tour.id
+				id: tour.id,
+				userId:req.user.id
 			})
 		})
 	},
@@ -230,7 +236,7 @@ let userController = {
 				id: tour.id
 			})
 		})
-},
+  },
   putUserDailyTourEdit: async(req, res) => {
 		console.log('///////////put user daily tour /////////////')
 
@@ -337,11 +343,11 @@ let userController = {
 
 	},
   deleteUserDailyTour: (req, res) => {
-	return Tour.findByPk(req.params.tour_id)
+		return Tour.findByPk(req.params.tour_id)
 		.then(tour => {
 			//console.log('tour', tour)
 			tour.destroy()
-			return res.redirect(`/users/${user.id}`)
+			return res.redirect(`/users/${req.user.id}`)
 		})
   },
 	postRestComment: (req, res) => {
@@ -391,10 +397,15 @@ let userController = {
 				isSelected: user.ComponentRestaurants.map(d => d.id).includes(r.id) ? true : false,
 				introduction: r.dataValues.introduction.substring(0, 10),
 				ratingStars: (Math.round((r.rating / 5) * 100)) + '%',
-				opening_hours: r.opening_hours.substring(0, 10)
+				opening_hours: r.opening_hours.substring(0, 10),
+				status: currentTime > JSON.parse("[" + r.dataValues.opening_up + "]") && currentTime <
+					JSON.parse("[" + r.dataValues.opening_down + "]") ? '營業中' :
+					Math.abs(JSON.parse("[" + r.dataValues.opening_up + "]") - currentTime) < 0.5 && (JSON.parse("[" + r.dataValues.opening_up + "]") - currentTime) > 0 ? '即將營業' :
+						Math.abs(JSON.parse("[" + r.dataValues.opening_down + "]") - currentTime) < 1 && (JSON.parse("[" + r.dataValues.opening_down + "]") - currentTime) > 0 ? '即將結束營業' :
+							'休息中'
 			}))
 
-			locations = Restaurants.map(d => d.name)
+			locations = Restaurants.map(d => d.address)
 			for (i = 0; i < locations.length; i++) {
 				duration = await googleMapsClient.directions({
 					origin: res.locals.origin,
@@ -406,7 +417,6 @@ let userController = {
 					.catch((err) => {
 						console.log(err);
 					})
-				//console.log('duration', duration)
 				Restaurants[i].duration = duration
 			}
 			const Attractions = user.FavoritedAttractions.map(r => ({
@@ -415,9 +425,14 @@ let userController = {
 				isSelected: user.ComponentAttractions.map(d => d.id).includes(r.id) ? true : false,
 				introduction: r.dataValues.introduction.substring(0, 10),
 				ratingStars: (Math.round((r.rating / 5) * 100)) + '%',
-				opening_hours: r.opening_hours.substring(0, 10)
+				opening_hours: r.opening_hours.substring(0, 10),
+				status: currentTime > JSON.parse("[" + r.dataValues.opening_up + "]") && currentTime <
+					JSON.parse("[" + r.dataValues.opening_down + "]") ? '營業中' :
+					Math.abs(JSON.parse("[" + r.dataValues.opening_up + "]") - currentTime) < 0.5 && (JSON.parse("[" + r.dataValues.opening_up + "]") - currentTime) > 0 ? '即將營業' :
+						Math.abs(JSON.parse("[" + r.dataValues.opening_down + "]") - currentTime) < 1 && (JSON.parse("[" + r.dataValues.opening_down + "]") - currentTime) > 0 ? '即將結束營業' :
+							'休息中'
 			}))
-			locations = Attractions.map(d => d.name)
+			locations = Attractions.map(d => d.address)
 			for (i = 0; i < locations.length; i++) {
 				duration = await googleMapsClient.directions({
 					origin: res.locals.origin,
@@ -437,9 +452,14 @@ let userController = {
 				isSelected: user.ComponentShops.map(d => d.id).includes(r.id) ? true : false,
 				introduction: r.dataValues.introduction.substring(0, 10),
 				ratingStars: (Math.round((r.rating / 5) * 100)) + '%',
-				opening_hours: r.opening_hours.substring(0, 10)
+				opening_hours: r.opening_hours.substring(0, 10),
+				status: currentTime > JSON.parse("[" + r.dataValues.opening_up + "]") && currentTime <
+					JSON.parse("[" + r.dataValues.opening_down + "]") ? '營業中' :
+					Math.abs(JSON.parse("[" + r.dataValues.opening_up + "]") - currentTime) < 0.5 && (JSON.parse("[" + r.dataValues.opening_up + "]") - currentTime) > 0 ? '即將營業' :
+						Math.abs(JSON.parse("[" + r.dataValues.opening_down + "]") - currentTime) < 1 && (JSON.parse("[" + r.dataValues.opening_down + "]") - currentTime) > 0 ? '即將結束營業' :
+							'休息中'
 			}))
-			locations = Shops.map(d => d.name)
+			locations = Shops.map(d => d.address)
 			for (i = 0; i < locations.length; i++) {
 				duration = await googleMapsClient.directions({
 					origin: res.locals.origin,
@@ -456,7 +476,6 @@ let userController = {
 			favoriteArray.push(...Attractions)
 			favoriteArray.push(...Restaurants)
 			favoriteArray.push(...Shops)
-			console.log('favoriteArray', favoriteArray)
 			return res.render('favorite', {
 				attractions: Attractions,
 				restaurants: Restaurants,

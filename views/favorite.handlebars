@@ -1,23 +1,31 @@
-<div class="home_bg row m-auto p-5">
+<div class="home_bg row m-auto p-5 " >
 	<div class="container p-3 text-right">
 			<a class="btn btn-info" href="javascript:history.back()">回上一頁</a>
 			<a href="/users/{{user.id}}/dailyTour" class="btn btn-outline-success" type="submit">計算行程</a>
 	</div>
 
-		<div class="container row p-3 text-center">
+		<div class="container row text-center" style="background-color:lemonchiffon;">
 			{{#each favoriteArray}}
 				<div class="col-md-3">
 					<div class="card shadow-sm mt-3" style="width: 13rem;height: 22rem;">
 						<img class="card-img-top image-fluid " src="{{this.image}}" alt="Card image cap"width="200px" height="180px">
-						<div class="card-body text-center ">
-							<a href="/{{this.category}}s/{{this.id}}">{{this.name}}...</a>
+						<div class="card-body text-center">
+							<a class ="card-title mr-2" href="/{{this.category}}s/{{this.id}}">{{this.name}}...</a>
+							{{#ifEquals this.category 'attraction'}}
 							<span class="" style="font-size: 20px;"><i class="fas fa-camera-retro"></i></span>
+							{{/ifEquals}}
+							{{#ifEquals this.category "restaurant"}}
+							<span class="" style="font-size: 20px;"><i class="fas fa-utensils"></i></span>
+							{{/ifEquals}}
+							{{#ifEquals this.category "shop"}}
+							<span class="" style="font-size: 20px;"><i class="fas fa-gifts"></i></span>
+							{{/ifEquals}}
 							<div class="ratings">
 								<div class="empty_star">★★★★★</div>
 								<div class="full_star" style="width: {{this.ratingStars}};">★★★★★</div>
 							</div>
-							<span style="font-size: 12px;"> 營業時間: {{this.opening_hours}}</span>
-							<p style="font-size: 12px;">{{this.introduction}}...</p>
+							<p class="m-auto"style="font-size: 14px; color:red;"> {{this.status}}</p>
+							<span class="m-auto" style="font-size: 12px;"><span class="fas fa-car" style="color:deepskyblue"></span>: {{this.duration}}</span>
 							<span class="row m-auto">
 								<form action="/{{this.category}}s/{{this.id}}/favorite?_method=DELETE" method="POST" method="POST" style="display: contents;"><button
 										type="submit" class="btn btn-outline-info btn-sm">移除收藏</button></form>
@@ -41,7 +49,7 @@
 </div>
 <style>
 .home_bg {
-background-image: url(https://www.crazyppt.com/wp-content/uploads/2018/10/1-1P225141509.jpg);
+background-image: url(http://photo.loveyd.com/uploads/allimg/080616/1143040.jpg);
 background-size: cover;
 background-position: center;
 background-repeat: no-repeat;
@@ -67,6 +75,16 @@ white-space: nowrap;
 overflow: hidden;
 color:orange /*前景星星顏色*/
 }
+.card-title{
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+}
+.card-title:hover{
+  text-overflow: inherit;
+  overflow: visible;
+}
+
 .shadow-sm{
 	background-color:papayawhip;
 }

@@ -1,34 +1,13 @@
-<div class="home_bg py-5 mt-4">
-
-
-	<ul class="nav">
-		<li class="nav-item">
-			<a class="nav-link " href="/restaurants">
-				<i class="fas fa-utensils" style="font-size: 36px; color: lightblue;"></i></a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link " href="/attractions">
-				<i class="fas fa-camera-retro" style="font-size: 36px; color:black;"></i></a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link " href="/shops">
-				<i class="fas fa-gifts" style="font-size: 36px; color:  lightblue;"></i></a>
-		</li>
-	</ul>
-
-
+<div class="home_bg mt-4">
 	<div class="container row m-auto">
-		{{#each attractions}}
+		<label>你所搜尋{{keyword}}, 結果如下:</label>
+		{{#each components}}
 		<div class="col-md-3">
-			<div class="card shadow-sm mt-5" style="width: 13rem; ">
+			<div class="card shadow-sm mt-5" style="width: 13rem;">
 				<img class="card-img-top image-fluid " src="{{this.image}}" alt="Card image cap" width="200px" height="180px">
 				<div class="card-body text-center">
-					<a class="card-title font-weight-bold" href="/attractions/{{this.id}}">{{this.name}}...</a>
-					{{#ifCond this.opening_up ""}}
-					<p class="m-auto" style="font-size: 14px;color:tomato;">{{this.opening_hours}}</p>
-					{{else}}
+					<a class="card-title font-weight-bold" href="/shops/{{this.id}}">{{this.name}}...</a>
 					<p class="m-auto" style="font-size: 14px;color:tomato;">{{this.status}}</p>
-					{{/ifCond}}
 					<div class="ratings card-text row">
 						<div class="empty_star">★★★★★</div>
 						<div class="full_star" style="width: {{this.ratingStars}};">★★★★★</div>
@@ -37,22 +16,22 @@
 						<div class="col-3"></div>
 						<div class="col-3 text-right ml-4">
 							{{#if this.isFavorited }}
-							<form action="/attractions/{{this.id}}/favorite?_method=DELETE" method="POST">
+							<form action="/shops/{{this.id}}/favorite?_method=DELETE" method="POST">
 								<button type="submit" class="btn close btn-sm"><i class="far fa-heart" style="color:red"></i></button>
 							</form>
 							{{else}}
-							<form action="attractions/{{this.id}}/favorite" method="POST"><button type="submit" class="btn close btn-sm "><i
+							<form action="shops/{{this.id}}/favorite" method="POST"><button type="submit" class="btn close btn-sm "><i
 										class="fas fa-heart" style="color:red"></i></button></form>
 							{{/if}}
 						</div>
 
 						<div class="col-3 text-right">
 							{{#if this.isSelected }}
-							<form action="/users/{{this.id}}/attraction/component?_method=DELETE" method="POST">
-								<button type="submit" class="btn close"><i class="far fa-check-circle"
-										style="color:green"></i></button></form>
+							<form action="/users/{{this.id}}/shop/component?_method=DELETE" method="POST">
+								<button type="submit" class="btn close"><i class="far fa-check-circle" style="color:green"></i></button>
+							</form>
 							{{else}}
-							<form action="/users/{{this.id}}/attraction/component" method="POST" style="display: contents;"><button
+							<form action="/users/{{this.id}}/shop/component" method="POST" style="display: contents;"><button
 									type="submit" class="btn close btn-sm "><i class="fas fa-calendar-alt"
 										style="color:green"></i></button></form>
 							{{/if}}
@@ -70,7 +49,7 @@
 	<nav aria-label="Page navigation example">
 		<ul class="pagination">
 			<li class="page-item">
-				<a class="page-link" href="/attractions?page={{prev}}" aria-label="Previous">
+				<a class="page-link" href="/shops?page={{prev}}" aria-label="Previous">
 					<span aria-hidden="true">&laquo;</span>
 				</a>
 			</li>
@@ -78,10 +57,10 @@
 			{{#ifCond this ../page}}
 			<li class="page-item active"><a class="page-link" href="#">{{this}}</a></li>
 			{{else}}
-			<li class="page-item"><a class="page-link" href="/attractions?page={{this}}">{{this}}</a></li>
+			<li class="page-item"><a class="page-link" href="/shops?page={{this}}">{{this}}</a></li>
 			{{/ifCond}}
 			{{/each}}
-			<a class="page-link" href="/attractions?page={{next}}" aria-label="Next">
+			<a class="page-link" href="/shops?page={{next}}" aria-label="Next">
 				<span aria-hidden="true">&raquo;</span>
 			</a>
 			</li>

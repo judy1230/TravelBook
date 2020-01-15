@@ -27,22 +27,18 @@ const authenticatedAdmin = (req, res, next) => {
 //index
 router.get('/', (req, res) => res.redirect('/index'))
 router.get('/index', toursController.getIndex)
-
-//router.get('/users/:id/tourEdit', authenticated, userController.tourEdit)
 //temp tour
 router.post('/users/:id/tour', authenticated, userController.postTour)
 router.put('/users/:id/dailyTour/', authenticated, calculate.calculateDisplay)
+router.get('/users/:tour_id/dailyTour', authenticated, calculate.calculateDisplay)
 //store to db tour
 router.get('/users/:id/tour/:tour_id', authenticated, userController.getUserDailyTour)
 router.get('/users/:id/tour/:tour_id/edit', authenticated, userController.getUserDailyTourEdit)
 router.put('/users/:id/tour/:tour_id/edit', authenticated, userController.putUserDailyTourEdit)
 router.delete('/users/:id/tour/:tour_id', authenticated, userController.deleteUserDailyTour)
-
-
-router.get('/users/:tour_id/dailyTour', authenticated,  calculate.calculateDisplay)
 //userController.calculateDuration
 router.get('/users/:id/favorite', authenticated,userController.getFavorites)
-router.post('/restaurant/:rest_id/component', authenticated,userController.addRestComponent)
+router.post('/users/:rest_id/restaurant/component', authenticated,userController.addRestComponent)
 router.delete('/users/:rest_id/restaurant/component', authenticated, userController.removeRestComponent)
 router.put('/users/:rest_id/restaurant/component', authenticated, userController.putRestComponent)
 router.post('/users/:attraction_id/attraction/component', authenticated,userController.addAttractionComponent)

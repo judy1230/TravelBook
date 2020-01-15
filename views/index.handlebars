@@ -1,4 +1,3 @@
-<title>Awesome Search Box</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
 	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
@@ -8,10 +7,10 @@
 	<div class="container_table">
 		<div class="container_table_cell">
 			<h2 class=" mt-5 font-italic" style="font-size: 58px;weight: 30px">TravelBook</h2>
-			<div class="searchbar">
+			{{!-- <div class="searchbar">
 				<input class="search_input" type="text" name="keyword" placeholder="搜尋台北 餐廳 景點 熱門伴手禮?">
 				<a href="/search" class="search_icon"><i class="fas fa-search"></i></a>
-			</div>
+			</div> --}}
 			<div class="social_icons">
 				{{!-- <i href=""><i class="fas fa-bed" aria-hidden="true"></i></i> --}}
 				<a href="/restaurants"><i class="fas fa-utensils" aria-hidden="true"></i></a>
@@ -29,6 +28,11 @@
 			<a href="/{{this.category}}s/{{this.id}}"><img class="img-responsive center-block rounded" src="{{this.image}}"
 					width="300px;" height="200px"></a>
 			<h6>{{this.name}}</h6>
+			<p class="m-auto" style="font-size: 14px;color:tomato;">{{this.status}}</p>
+			<div class="ratings row">
+				<div class="empty_star">★★★★★</div>
+				<div class="full_star" style="width: {{this.ratingStars}};">★★★★★</div>
+			</div>
 		</div>
 		{{/each}}
 	</div>
@@ -43,6 +47,15 @@
 			<a href="/{{this.category}}s/{{this.id}}"><img class="img-responsive center-block rounded" src="{{this.image}}"
 					width="300px;" height="200px"></a>
 			<h6>{{this.name}}</h6>
+			{{#ifCond this.opening_up ""}}
+			<p class="m-auto" style="font-size: 14px;color:tomato;">{{this.opening_hours}}</p>
+			{{else}}
+			<p class="m-auto" style="font-size: 14px;color:tomato;">{{this.status}}</p>
+			{{/ifCond}}
+			<div class="ratings card-text row">
+				<div class="empty_star">★★★★★</div>
+				<div class="full_star" style="width: {{this.ratingStars}};">★★★★★</div>
+			</div>
 		</div>
 		{{/each}}
 	</div>
@@ -56,6 +69,11 @@
 		<div class="swiper-slide mt-2">
 			<a href="/{{this.category}}s/{{this.id}}"><img class="img-responsive center-block rounded" src="{{this.image}}" width="300px" height="200px"></a>
 			<h6>{{this.name}}</h6>
+			<p class="m-auto" style="font-size: 14px;color:tomato;">{{this.status}}</p>
+			<div class="ratings card-text row">
+				<div class="empty_star">★★★★★</div>
+				<div class="full_star" style="width: {{this.ratingStars}};">★★★★★</div>
+			</div>
 		</div>
 		{{/each}}
 	</div>
@@ -128,24 +146,13 @@
 	}
 	.swiper-container {
     background-color: whitesmoke;
-		height: 300px;
+		height: 350px;
 	}
 	.comment_bg {
 		background-color:bisque;
 		border-radius: 20px;
 	}
-	 .searchbar{
-    margin-bottom: auto;
-    margin-top: auto;
-    height: 60px;
-    background-color: #353b48;
-    border-radius: 30px;
-    padding: 10px;
-		margin:auto;
-		width:50%;
-    }
-
-    .search_input{
+	.search_input{
     color: white;
     border: 0;
     outline: 0;
@@ -158,7 +165,7 @@
 
     .searchbar:hover > .search_input{
     padding: 0 10px;
-    width: 500px;
+    width: 250px;
     caret-color:red;
     transition: width 0.4s linear;
     }
@@ -179,4 +186,27 @@
     color:white;
     text-decoration:none;
     }
+			.ratings {
+		position: relative;
+		vertical-align: middle;
+		display: inline-block;
+		color: #ddd;
+		/*背景星星顏色*/
+		overflow: hidden;
+		font-size: 20px;
+		/*調整字體大小可放大縮小星星*/
+		text-shadow: 0px 1px 0 #999;
+	}
+
+	.full_star {
+		/*調整寬度可變更星等*/
+		position: absolute;
+		left: 0;
+		top: 0;
+		white-space: nowrap;
+		overflow: hidden;
+		color: orange
+			/*前景星星顏色*/
+	}
+
 </style>
