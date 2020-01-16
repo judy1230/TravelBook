@@ -660,7 +660,8 @@ let userController = {
 				UserId: req.user.id
 			}
 		}).then(components => {
-			components.destroy()
+			console.log('components', components)
+			components.map(d => d.destroy())
 			return res.redirect('back')
 		})
 	}
