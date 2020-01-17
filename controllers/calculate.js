@@ -28,6 +28,7 @@ const calculate = {
 		try {
 			let data = []
 			let tourComponents = []
+			//+8 is for heroku is utc time
 			startMinInit = parseInt(req.body.startMinInit) || new Date().getMinutes()+8
 			startHourInit = parseInt(req.body.startHourInit) || new Date().getHours()+8
 			date = req.body.date || `${new Date().getMonth() + 1} /  ${new Date().getDate()} / ${new Date().getFullYear()}`
