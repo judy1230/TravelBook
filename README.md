@@ -36,8 +36,7 @@
 <li>member可在profile頁面中檢視已儲存的行程</li>
 <li>member可在 profile頁面中檢視已儲存的行程 中 所用的到景點/ 餐廳/  購物 伴手禮名店 </li>
 </ul>
-# Display
-![Minion]()
+
 
 # Features
 |                               |                   Description               | 相關資料:               |
