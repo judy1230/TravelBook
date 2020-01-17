@@ -3,17 +3,8 @@ const User = db.User
 const Restaurant = db.Restaurant
 const Attraction = db.Attraction
 const Shop = db.Shop
-const Tour = db.Tour
 const Component = db.Component
-const Blog = db.Blog
-const Favorite = db.Favorite
-const Like = db.Like
-const Comment = db.Comment
-const Location = db.Location
 let navigator = require('web-midi-api')
-//const imgur = require('imgur-node-api')
-//const IMGUR_CLIENT_ID = '158d5ec5eff6842'
-//const fs = require('fs')
 const helpersreq = require('../_helpers')
 
 
@@ -34,12 +25,11 @@ const calculate = {
 				 origin = '宜蘭火車站'
 				 console.log('origin_Notavaialbe', origin)
       }
-
 		try {
 			let data = []
 			let tourComponents = []
-			startMinInit = parseInt(req.body.startMinInit) || new Date().getMinutes()
-			startHourInit = parseInt(req.body.startHourInit) || new Date().getHours()
+			startMinInit = parseInt(req.body.startMinInit) || new Date().getMinutes()-8
+			startHourInit = parseInt(req.body.startHourInit) || new Date().getHours()-8
 			date = req.body.date || `${new Date().getMonth() + 1} /  ${new Date().getDate()} / ${new Date().getFullYear()}`
       origin = req.body.origin || origin
 			//origin = req.body.origin || res.locals.origin
