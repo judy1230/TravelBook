@@ -68,6 +68,7 @@ const calculate = {
 			dataId = componentArray.data.map(d => d.id)
 			dataImage = componentArray.data.map(d => d.image)
 			dataStayTime = componentArray.stayTime.map(d => d)
+			console.log('componentArray.stayTime', componentArray.stayTime)
 			console.log('dataStayTime', dataStayTime)
 			dataCategory = componentArray.data.map(d => d.category)
 			data.splice(0, 0, origin)
