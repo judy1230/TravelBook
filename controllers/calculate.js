@@ -58,7 +58,6 @@ const calculate = {
 						name: r.name,
 						image: r.image,
 						id: r.id,
-						stayTime: r.stayTime,
 						category: r.category
 					})),
 					stayTime: components.map(r => r.stayTime)
@@ -67,9 +66,7 @@ const calculate = {
 			data = componentArray.data.map(d => d.name)
 			dataId = componentArray.data.map(d => d.id)
 			dataImage = componentArray.data.map(d => d.image)
-			dataStayTime = componentArray.stayTime.map(d => d)
-			console.log('componentArray.stayTime', componentArray)
-			console.log('dataStayTime', dataStayTime)
+			dataStayTime = componentArray.stayTime.map(d => d ? d : 90)
 			dataCategory = componentArray.data.map(d => d.category)
 			data.splice(0, 0, origin)
 			data.push(origin)

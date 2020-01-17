@@ -112,7 +112,6 @@ let userController = {
 						name: r.name,
 						image: r.image,
 						id: r.id,
-						stayTime: r.stayTime,
 						category: r.category
 					})),
 					stayTime: components.map(r => r.stayTime)
@@ -121,7 +120,8 @@ let userController = {
 			data = componentArray.data.map(d => d.name)
 			dataId = componentArray.data.map(d => d.id)
 			dataImage = componentArray.data.map(d => d.image)
-			dataStayTime = componentArray.stayTime.map(d => d)
+			//這裡是指是否有修改過的StayTime若有舊照原來的,若沒有則預設90
+			dataStayTime = componentArray.stayTime.map(d => d ? d : 90)
 			dataCategory = componentArray.data.map(d => d.category)
 			data.splice(0, 0, origin)
 			data.push(origin)
