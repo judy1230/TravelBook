@@ -91,7 +91,7 @@ const toursController = {
 		//console.log('req.user', req.user.Tours[0].dataValues.id)
 		return Restaurant.findAndCountAll({
 			order: [
-				['createdAt', 'DESC']
+				['id', 'ASC']
 			],
 			include: [
 				{ model: User, as: 'FavoritedUsers' },
@@ -154,7 +154,7 @@ const toursController = {
 	getAttractions: (req, res) => {
 		return Attraction.findAndCountAll({
 			order: [
-				['createdAt', 'DESC']
+				['id', 'ASC']
 			],
 			include: [
 				{ model: User, as: 'FavoritedUsers' },
@@ -217,7 +217,7 @@ const toursController = {
 	getShops: (req, res) => {
 		return Shop.findAndCountAll({
 			order: [
-				['createdAt', 'DESC']
+				['id', 'ASC']
 			],
 			include: [
 				{ model: User, as: 'FavoritedUsers' },
