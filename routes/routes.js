@@ -31,7 +31,7 @@ router.get('/users/:tour_id/dailyTour', authenticated, calculate.calculateDispla
 //store to db tour
 router.get('/users/:id/tour/:tour_id', authenticated, userController.getUserDailyTour)
 router.get('/users/:id/tour/:tour_id/edit', authenticated, userController.getUserDailyTourEdit)
-router.put('/users/:id/tour/:tour_id/edit', authenticated, userController.putUserDailyTourEdit)
+router.put('/users/:id/tour/:tour_id/edit', authenticated, userController.putUserDailyTourEdit, calculate.putTour)
 router.delete('/users/:id/tour/:tour_id', authenticated, userController.deleteUserDailyTour)
 //user favorite control
 router.get('/users/:id/favorite', authenticated, userController.getFavorites)
