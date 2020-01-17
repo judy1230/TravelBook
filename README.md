@@ -11,7 +11,7 @@
 <p>open browser with http://localhost:3000/</p>
 <p>default account/password: root@example.com/12345678, user1@example.com/12345678 </p>
 
-#User Story
+# User Story
 <ul>//一般使用者
 <li>user可以在網頁中找到所在地的熱門景點 (目前只有台北縣市)</li>
 <li>user可以在網頁中找到所在地的熱門餐廳  (目前只有台北縣市)</li>
@@ -37,7 +37,7 @@
 <li>member可在 profile頁面中檢視已儲存的行程 中 所用的到景點/ 餐廳/  購物 伴手禮名店 </li>
 </ul>
 
-#Display
+# Display
 ![image](https://github.com/judy1230/TravelBook/blob/master/public/image/travelbook-demo.gif)
 
 # Features
