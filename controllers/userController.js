@@ -269,7 +269,6 @@ let userController = {
 					startMinInit: tour.startMinInit
 				}
 			})
-			console.log('componentArray putedit', componentArray)
 			origin = req.body.origin || componentArray.origin
 			startHourInit = parseInt(req.body.startHourInit)|| componentArray.startHourInit
 			startMinInit = parseInt(req.body.startMinInit) || componentArray.startMinInit
@@ -336,7 +335,7 @@ let userController = {
 					id: req.params.tour_id
 				}
 			}).then(tour => {
-				tourComponents.pop()
+				
 				tour.update({
 					title: req.body.title,
 					origin: req.body.origin,
