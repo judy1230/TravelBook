@@ -31,7 +31,7 @@
 <li>member可透過景點/  餐廳 /  購物 伴手禮名店 規劃行程按鈕加入行程 </li>
 <li>member 可透過 預設的行程規劃結果加以修改 起程時間, 地點</li>
 <li>member可透過 預設的行程規劃結果 儲存行程</li>
-<li>member可編輯已儲存的行程</li>
+<li>member可編輯已儲存的行程: 只有起程時間,</li>
 <li>member可刪除已儲存的行程</li>
 <li>member可在profile頁面中檢視已儲存的行程</li>
 <li>member可在 profile頁面中檢視已儲存的行程 中 所用的到景點/ 餐廳/  購物 伴手禮名店 </li>
