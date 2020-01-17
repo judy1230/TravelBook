@@ -240,8 +240,6 @@ const calculate = {
 			})
 		} catch (err) { console.log(err) }
 	}
-
-
 }
 module.exports = calculate
 

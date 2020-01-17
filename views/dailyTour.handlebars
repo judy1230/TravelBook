@@ -41,7 +41,7 @@
 										<h6 class="card-title" href="#">{{this.destination}} {{this.end}}</h6>
 										<label>停留時間:</label>
 										<form action="/users/{{this.id}}/{{this.category}}/component?_method=PUT" method="POST">
-											<input type="text" name="stayTime" value=" {{this.stayTime}}" class="form-style text-center"style="color:purple; width:30%;"><span>mins</span>
+											<input type="text" name="stayTime" value="{{this.stayTime}}" class="form-style text-center"style="color:purple; width:30%;" placeholder="{{this.stayTime}}"><span>  mins</span>
 											<button type="submit" class="btn btn-outline-light btn-sm"style="color:yellowgreen;">修改時間</button>
 										</form>
 										<p class="card-text" style="font-size: 14px;"><span><i class="fas fa-car"
