@@ -53,11 +53,11 @@
 		</div>
 	</div>
 	<div class="row">
-	<a href="/users/{{userId}}/tour/{{id}}/edit" class="btn close btn-sm "><i class="fas fa-edit mr-1"style="color:brown" title="編輯"></i></a>
+	<a href="/users/{{user.id}}/tour/{{id}}/edit" class="btn close btn-sm "><i class="fas fa-edit mr-1"style="color:brown" title="編輯"></i></a>
 	{{!-- <div class='line-it-button' style='display: none;' data-type='share-a' data-lang='zh-Hant'></div> --}}
 	{{!-- <a href="/users/{{user.id}}/tour/{{id}}/share" class="btn close btn-sm "><i class="far fa-share-square mr-1"
 			style="color:brown" title="分享"></i></a> --}}
-	<form action="/users/{{userId}}/tour/{{id}}?_method=DELETE" method="POST" class="mt-1">
+	<form action="/users/{{user.id}}/tour/{{id}}?_method=DELETE" method="POST" class="mt-1">
 		<button type="submit" class="btn close btn-sm "><i class="far fa-trash-alt" style="color:crimson"title="刪除"></i></button>
 	</form>
 	</div>
