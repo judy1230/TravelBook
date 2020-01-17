@@ -10,9 +10,10 @@ const helpersreq = require('../_helpers')
 
 const calculate = {
 	calculateDisplay: async (req, res) => {
-		console.log('/////////////////// calculateDisplay ///////////')
+	  try {
+		  console.log('/////////////////// calculateDisplay ///////////')
 		///geolocaion
-	if ("geolocation" in navigator) {
+    	if ("geolocation" in navigator) {
 				 /* geolocation is available */
 				 console.log('geolocation is available')
 	      navigator.geolocation.getCurrentPosition(function(position) {
@@ -25,15 +26,14 @@ const calculate = {
 				 origin = '宜蘭火車站'
 				 console.log('origin_Notavaialbe', origin)
       }
-		try {
+
 			let data = []
 			let tourComponents = []
 			//+8 is for heroku is utc time
 			startMinInit = req.body.startMinInit ? parseInt(req.body.startMinInit) : new Date().getMinutes()
-			startHourInit = req.body.startHourInit ? parseInt(req.body.startHourInit) : new Date().getHours()+8
+			startHourInit = req.body.startHourInit ? parseInt(req.body.startHourInit) : new Date().getHours() + 8
 			date = req.body.date || `${new Date().getMonth() + 1} /  ${new Date().getDate()} / ${new Date().getFullYear()}`
       origin = req.body.origin || origin
-			//origin = req.body.origin || res.locals.origin
 			googleMapsClient = require('@google/maps').createClient({
 				key: process.env.API_KEY,
 				Promise: Promise
@@ -63,12 +63,10 @@ const calculate = {
 					stayTime: components.map(r => r.stayTime)
 				}
 			})
-
 			data = componentArray.data.map(d => d.name)
 			dataId = componentArray.data.map(d => d.id)
 			dataImage = componentArray.data.map(d => d.image)
-			dataStayTime = componentArray.stayTime.map(d => d ? d : 90)
-			//console.log('dataStayTime', dataStayTime)
+			dataStayTime = componentArray.stayTime.map(d => d)
 			dataCategory = componentArray.data.map(d => d.category)
 			data.splice(0, 0, origin)
 			data.push(origin)
@@ -99,11 +97,11 @@ const calculate = {
 				endMin = Math.floor(startMin + (duration.value / 60))
 				leaveMin = endMin + dataStayTime[i]
 
-				if (endMin > 60) {
+				if (endMin >= 60) {
 					diff = Math.floor(endMin / 60)
 					endMin %= 60
 				}
-				if (leaveMin > 60) {
+				if (leaveMin >= 60) {
 					diffLeave = parseInt(leaveMin / 60)
 					leaveMin %= 60
 				}

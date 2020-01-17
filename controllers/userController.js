@@ -121,7 +121,7 @@ let userController = {
 			data = componentArray.data.map(d => d.name)
 			dataId = componentArray.data.map(d => d.id)
 			dataImage = componentArray.data.map(d => d.image)
-			dataStayTime = componentArray.data.map(d => d.stayTime)
+			dataStayTime = componentArray.stayTime.map(d => d)
 			dataCategory = componentArray.data.map(d => d.category)
 			data.splice(0, 0, origin)
 			data.push(origin)
@@ -148,11 +148,11 @@ let userController = {
 				endMin = Math.floor(startMin + (duration.value / 60))
 				leaveMin = endMin + dataStayTime[i]
 				let diff = 0
-				if (endMin > 60) {
+				if (endMin >= 60) {
 					diff = Math.floor(endMin / 60)
 					endMin %= 60
 				}
-				if (leaveMin > 60) {
+				if (leaveMin >= 60) {
 					diffLeave = parseInt(leaveMin / 60)
 					leaveMin %= 60
 				}
@@ -175,8 +175,7 @@ let userController = {
 				endLocation = tourComponents[tourComponents.length - 1].destination,
 				endDuration = tourComponents[tourComponents.length - 1].duration,
 				endTime = tourComponents[tourComponents.length - 1].end
-
-        tourComponents.pop()
+			tourComponents.pop()
 			return Tour.create({
 				title: req.body.title,
 				UserId: req.user.id,
@@ -574,18 +573,16 @@ let userController = {
 		})
 	},
 	putRestComponent: (req, res) => {
-		console.log('///////////hello put rest////////')
 		return Component.findOne({
 			where: {
 				UserId: req.user.id,
 				RestaurantId: req.params.rest_id
 			}
 		}).then((component) => {
-			console.log('component', component)
 			component.update({
 				stayTime: req.body.stayTime
 			})
-			return res.redirect('back')
+			return res.redirect(`/users/${req.user.id}/dailyTour`)
 		})
 	},
 	addAttractionComponent: (req, res) => {
@@ -604,7 +601,7 @@ let userController = {
 			}
 		}).then((component) => {
 			component.destroy()
-			return res.redirect('back')
+			return res.redirect(`/users/${req.user.id}/dailyTour`)
 		})
 
 	},
@@ -653,7 +650,7 @@ let userController = {
 			component.update({
 				stayTime: req.body.stayTime
 			})
-			return res.redirect('back')
+			return res.redirect(`/users/${req.user.id}/dailyTour`)
 		})
 	},
 	removeAllComponents: (req, res) => {

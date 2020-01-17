@@ -26,17 +26,11 @@
 								<img src="{{this.image}}" class="card-img" height="160px" width="160px" alt="">
 							</div>
 							<div class="col-md-6">
-								{{!-- <form action="/users/{{this.id}}/{{this.category}}/component?_method=DELETE" method="POST"><button
-										type="submit" class="btn close btn-sm"><span aria-hidden="true">×</span></button>
-								</form> --}}
 								<div class="card-body">
 									<h6 class="card-title" href="#">{{this.destination}} {{this.end}}</h6>
-									<label>停留時間:</label>
-									<form action="/users/{{this.id}}/{{this.category}}/component?_method=PUT" method="POST">
-										<input type="text" name="stayTime" value=" {{this.stayTime}}" class="form-style text-center"
-											style="color:purple; width:30%;"><span>mins</span>
-										<button type="submit" class="btn btn-outline-light btn-sm" style="color:yellowgreen;">修改時間</button>
-									</form>
+								<label>停留時間:</label>
+								<span type="text" class="form-style text-center" style="color:purple; width:30%;">{{this.stayTime}}
+									mins</span>
 									<p class="card-text" style="font-size: 14px;"><span><i class="fas fa-car"
 												style="color:deepskyblue"></i></span> {{this.duration}}</p>
 								</div>
