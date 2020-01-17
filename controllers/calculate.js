@@ -107,8 +107,8 @@ const calculate = {
 					diffLeave = parseInt(leaveMin / 60)
 					leaveMin %= 60
 				}
-				endHour = startHour + diff
-				leaveHour = startHour + diffLeave
+				endHour = startHour + diff > 24 ? startHour + diff - 24 : startHour + diff
+				leaveHour = startHour + diffLeave > 24 ? startHour + diffLeave - 24 : startHour + diffLeave
 				image = dataImage[i]
 				tourComponents.push({
 					origin: location1,
@@ -127,8 +127,6 @@ const calculate = {
 				endDuration = tourComponents[tourComponents.length - 1].duration,
 				endTime = tourComponents[tourComponents.length - 1].end
 			tourComponents.pop()
-			//console.log('tourComponents', tourComponents[0].id)
-			//console.log('destination',destination)
 			return res.render('dailyTour', {
 				API_KEY: process.env.API_KEY,
 				title: req.body.title || "儲存前請輸入title",

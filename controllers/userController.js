@@ -125,7 +125,6 @@ let userController = {
 			dataCategory = componentArray.data.map(d => d.category)
 			data.splice(0, 0, origin)
 			data.push(origin)
-			//console.log('data',data)
 			for (let i = 0; i < data.length - 1; i++) {
 				let location1 = data[i]
 				let location2 = data[i + 1]
@@ -157,8 +156,8 @@ let userController = {
 					diffLeave = parseInt(leaveMin / 60)
 					leaveMin %= 60
 				}
-				endHour = startHour + diff
-				leaveHour = startHour + diffLeave
+				endHour = startHour + diff > 24 ? startHour + diff - 24 : startHour + diff
+				leaveHour = startHour + diffLeave > 24 ? startHour + diffLeave - 24 : startHour + diffLeave
 				image = dataImage[i]
 				tourComponents.push({
 					origin: location1,
@@ -309,8 +308,8 @@ let userController = {
 					diffLeave = parseInt(leaveMin / 60)
 					leaveMin %= 60
 				}
-				endHour = startHour + diff
-				leaveHour = startHour + diffLeave
+				endHour = startHour + diff > 24 ? startHour + diff - 24 : startHour + diff
+				leaveHour = startHour + diffLeave > 24 ? startHour + diffLeave - 24 : startHour + diffLeave
 				image = dataImage[i]
 				tourComponents.push({
 					origin: location1,
@@ -335,7 +334,7 @@ let userController = {
 					id: req.params.tour_id
 				}
 			}).then(tour => {
-				
+
 				tour.update({
 					title: req.body.title,
 					origin: req.body.origin,
