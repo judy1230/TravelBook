@@ -176,8 +176,8 @@ let userController = {
 				endLocation = tourComponents[tourComponents.length - 1].destination,
 				endDuration = tourComponents[tourComponents.length - 1].duration,
 				endTime = tourComponents[tourComponents.length - 1].end
-			console.log('tourComponents', tourComponents)
-        //tourComponents.pop()
+
+        tourComponents.pop()
 			return Tour.create({
 				title: req.body.title,
 				UserId: req.user.id,
@@ -193,7 +193,7 @@ let userController = {
 				days: "1",
 				tourComponents: tourComponents
 			}).then(tour => {
-				//console.log('tour.tourComponents', tour.tourComponents)
+
 				return res.redirect(`/users/${req.user.id}/tour/${tour.id}`)
 			})
 		} catch (err) { console.log(err) }
@@ -231,7 +231,7 @@ let userController = {
 				id: req.params.tour_id
 			}
 		}).then(tour => {
-			console.log('tour',tour)
+
 			return res.render('getUserDailyTourEdit', {
 				API_KEY: process.env.API_KEY,
 				title: tour.title,
@@ -269,7 +269,7 @@ let userController = {
 					startMinInit: tour.startMinInit
 				}
 			})
-			console.log('componentArray', componentArray)
+			console.log('componentArray putedit', componentArray)
 			origin = req.body.origin || componentArray.origin
 			startHourInit = parseInt(req.body.startHourInit)|| componentArray.startHourInit
 			startMinInit = parseInt(req.body.startMinInit) || componentArray.startMinInit
