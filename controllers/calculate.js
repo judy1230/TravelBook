@@ -28,8 +28,8 @@ const calculate = {
 		try {
 			let data = []
 			let tourComponents = []
-			startMinInit = parseInt(req.body.startMinInit) || new Date().getMinutes()-8
-			startHourInit = parseInt(req.body.startHourInit) || new Date().getHours()-8
+			startMinInit = parseInt(req.body.startMinInit) || new Date().getMinutes()+8
+			startHourInit = parseInt(req.body.startHourInit) || new Date().getHours()+8
 			date = req.body.date || `${new Date().getMonth() + 1} /  ${new Date().getDate()} / ${new Date().getFullYear()}`
       origin = req.body.origin || origin
 			//origin = req.body.origin || res.locals.origin
