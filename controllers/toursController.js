@@ -23,7 +23,7 @@ const toursController = {
 		try {
 			restaurants = await Restaurant.findAll({
 				order: [
-					['updatedAt', 'DESC']
+					['id', 'ASC']
 				],
 				include: [
 					{ model: User, as: 'FavoritedUsers' }
@@ -44,7 +44,7 @@ const toursController = {
 			})
 			attractions = await Attraction.findAll({
 				order: [
-					['updatedAt', 'DESC']
+					['id', 'ASC']
 				],
 				include: [
 					{ model: User, as: 'FavoritedUsers' }
@@ -64,7 +64,7 @@ const toursController = {
 			})
 			shops = await Shop.findAll({
 				order: [
-					['updatedAt', 'DESC']
+					['id', 'ASC']
 				],
 				include: [
 					{ model: User, as: 'FavoritedUsers' }
