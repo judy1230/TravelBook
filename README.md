@@ -10,6 +10,7 @@
 </pre></code>
 <p>open browser with http://localhost:3000/</p>
 <p>default account/password: root@example.com/12345678, user1@example.com/12345678 </p>
+<p>Live Demo : https://travelbook-demo.herokuapp.com/index </p>
 
 # User Story
 <ul>//一般使用者
