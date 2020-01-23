@@ -13,7 +13,7 @@ const Photos = db.Photos
 const Location = db.Location
 const pageLimit = 4
 //const Sequelize = require('sequelize')
-const currentTime = currentTime = (new Date().getHours() + 8) + new Date().getMinutes() / 60
+const currentTime = (new Date().getHours() + 8) + new Date().getMinutes() / 60
 //const helpersreq = require('../_helpers.js')
 
 
