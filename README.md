@@ -11,7 +11,7 @@
 <p>open browser with http://localhost:3000/</p>
 <p>default account/password: root@example.com/12345678, user1@example.com/12345678 </p>
 
-#User Story
+# User Story
 <ul>//一般使用者
 <li>user可以在網頁中找到所在地的熱門景點 (目前只有台北縣市)</li>
 <li>user可以在網頁中找到所在地的熱門餐廳  (目前只有台北縣市)</li>
@@ -31,12 +31,14 @@
 <li>member可透過景點/  餐廳 /  購物 伴手禮名店 規劃行程按鈕加入行程 </li>
 <li>member 可透過 預設的行程規劃結果加以修改 起程時間, 地點</li>
 <li>member可透過 預設的行程規劃結果 儲存行程</li>
-<li>member可編輯已儲存的行程</li>
+<li>member可編輯已儲存的行程: 只有起程時間,</li>
 <li>member可刪除已儲存的行程</li>
 <li>member可在profile頁面中檢視已儲存的行程</li>
 <li>member可在 profile頁面中檢視已儲存的行程 中 所用的到景點/ 餐廳/  購物 伴手禮名店 </li>
 </ul>
 
+# Display
+![image](https://github.com/judy1230/TravelBook/blob/master/public/image/travelbook-demo.gif)
 
 # Features
 |                               |                   Description               | 相關資料:               |
@@ -54,4 +56,4 @@
 | /users/id/profile/Edit( in Progress)   |         編輯會員個人頁面 || 
 | /users/id/( in Progress)   |         編輯會員個人頁面 || 
 # Authors
-  <li>Judy</li> <p>first edited on 10/07/2019</p>
+  <li>Judy</li> <p>first edited on 17/01/2020</p>
