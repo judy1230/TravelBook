@@ -20,23 +20,23 @@
 	</div>
 	<div class="col-md-5 ">
 		<div class="well">
-			<label><i class="fas fa-camera-retro" style="font-size: 36px;color:tomato;"></i></label>
+			<label><i class="fas fa-camera-retro" style="font-size: 36px;color:sienna"></i></label>
 			<h5 style="color: saddlebrown;">{{attraction.name}} </h5>
 
 			<ul class="list-unstyled">
 				{{#ifCond attraction.opening_up ""}}
-				<p style="font-size: 16px;color:tomato;">{{attraction.opening_hours}}<span class="fas fa-eye ml-4"style="color:darkolivegreen;font-size: 15px;">{{attraction.viewCounts}}</span><span class="fas fa-heart ml-4"style="color:darkorange;font-size: 15px; margin-right:4px;">{{attraction.LikedUsers.length}}</span></p>
+				<li style="font-size: 16px;color:tomato;">{{attraction.opening_hours}}<span class="fas fa-eye ml-4"style="color:darkolivegreen;font-size: 15px;"><span style="margin-left: 7px;">{{attraction.viewCounts}}</span></span><span class="fas fa-heart ml-4" style="color:darkorange;font-size: 15px;"><span
+						style="margin-left: 7px;">{{attraction.LikedUsers.length}}</span></span></li>
 				{{else}}
-				<p style="font-size: 16px;color:tomato;">{{status}}<span class="fas fa-eye ml-4"
-						style="color:darkolivegreen;font-size: 15px; ">{{attraction.viewCounts}}</span><span class="fas fa-heart ml-4"
-						style="color:darkorange;font-size: 15px; margin-right:4px;">{{attraction.LikedUsers.length}}</span></p>
+				<li style="font-size: 16px;color:tomato;">{{status}}<span class="fas fa-eye ml-4"
+						style="color:darkolivegreen;font-size: 15px;"><span style="margin-left: 7px;">{{attraction.viewCounts}}</span></span><span class="fas fa-heart ml-4"style="color:darkorange;font-size: 15px;"><span style="margin-left: 7px;">{{attraction.LikedUsers.length}}</span></span></li>
 				{{/ifCond}}
 				<li><strong>Opening Hour:</strong> {{attraction.opening_hours}}</li>
 				<li><strong>Tel:</strong> {{attraction.phone}} </li>
 				<li><strong>Address:</strong> {{attraction.address}} </li>
 			</ul>
 		</div>
-		<div class="row float-left">
+		<div class="row m-auto">
 			{{#if isFavorited }}
 			<form action="/attractions/{{attraction.id}}/favorite?_method=DELETE" method="POST" style="display: contents;">
 				<button type="submit" class="btn btn-outline-info btn-sm">移除收藏</button></form>
@@ -53,6 +53,7 @@
 			<form action="/users/{{attraction.id}}/attraction/component" method="POST" style="display: contents;"><button
 					type="submit" class="btn btn-success btn-sm ml-2">加入規劃</button></form>
 			{{/if}}
+			<a class="btn btn-outline-dark ml-3" href="javascript:history.back()">回上一頁</a>
 		</div>
 	</div>
 	<div class="container mt-2">
