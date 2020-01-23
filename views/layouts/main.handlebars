@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,22 +19,14 @@
 		href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css">
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
 </head>
 
 <body>
 	{{!-- 圖片輪播 --}}
-<script src="https://unpkg.com/swiper/js/swiper.js"> </script>
-<script src="https://unpkg.com/swiper/js/swiper.min.js"> </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-<script src="https://cdnjs.com/libraries/bodymovin" type="text/javascript"></script>
-
+	<script src="https://unpkg.com/swiper/js/swiper.js"> </script>
+	<script src="https://unpkg.com/swiper/js/swiper.min.js"> </script>
 	{{!-- Navbar --}}
 	<nav class="navbar navbar-expand-sm fixed-top navbar-dark bg-info text-justify" style="height: 12%;">
 		<a class="navbar-brand font-italic" href="/">TravelBook</a>
@@ -44,9 +37,9 @@
 				{{/ifCond}}
 				{{#if user}}
 				<span style="color: white;margin-right: 20px;">Hi, {{user.name}}</span>
-				{{!-- <img src="{{user.avatar}}"style="border-radius:50%;margin-right: 20px;" width="50px;" height="50px;"> --}}
+				<img src="{{user.avatar}}"style="border-radius:50%;margin-right: 20px;" width="50px;" height="50px;">
 				{{/if}}
-        {{#if user}}
+				{{#if user}}
 				<a class="fas fa-edit mr-3" href="/users/{{user.id}}/dailyTour" title="行程規劃"></a>
 				<a class="fas fa-briefcase mr-3" href="/users/{{user.id}}/favorite" title="收藏包"></a>
 				<a class="fas fa-portrait mr-3" href="/users/{{user.id}}/profile" title="個人資料"></a>
@@ -54,7 +47,7 @@
 
 				{{else}}
 				<button class="btn btn-outline-dark"><a href="/signin">LogIn</a></button>
-       {{/if}}
+				{{/if}}
 			</ul>
 		</div>
 	</nav>
@@ -72,12 +65,24 @@
 	</footer>
 
 	<style>
-   sticky-footer {
-	flex-shrink: none;
-	}
-
-
+		sticky-footer {
+			flex-shrink: none;
+		}
 	</style>
 
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+	<script src="https://cdnjs.com/libraries/bodymovin" type="text/javascript"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+		crossorigin="anonymous"></script>
 </body>
+
 </html>

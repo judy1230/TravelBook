@@ -9,7 +9,6 @@ const Tour = db.Tour
 const Favorite = db.Favorite
 const Comment = db.Comment
 const currentTime = (new Date().getHours() +8)+ new Date().getMinutes() / 60
-//const currentTime = Date.UTC().getHours() + Date.UTC().getMinutes() / 60
 //const Blog = db.Blog
 //const Like = db.Like
 //const Location = db.Location
@@ -49,9 +48,9 @@ let userController = {
 	signInPage: (req, res) => {
 		return res.render('signin')
 	},
-	signIn: (req, res) => {
+	signIn: (req, res, next) => {
 		req.flash('success_msg', '成功登入!')
-		res.redirect('/restaurants')
+		res.redirect('/index')
 	},
 	logout: (req, res) => {
 		req.flash('success_msg', '成功登出!')
@@ -277,7 +276,7 @@ let userController = {
 	postAttractionComment: (req, res) => {
 		return Comment.create({
 			UserId: req.user.id,
-			RestaurantId: req.params.attraction_id,
+			AttractionId: req.params.attraction_id,
 			comment: req.body.comment
 		}).then((comment) => {
 			return res.redirect('back')
@@ -286,7 +285,7 @@ let userController = {
 	postShopComment: (req, res) => {
 		return Comment.create({
 			UserId: req.user.id,
-			RestaurantId: req.params.shop_id,
+			ShopId: req.params.shop_id,
 			comment: req.body.comment
 		}).then((comment) => {
 			return res.redirect('back')
