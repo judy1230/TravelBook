@@ -24,7 +24,7 @@ const calculate = {
       } else {
 				 /* geolocation IS NOT available */
 				 console.log('geolocation IS NOT available')
-				 origin = '宜蘭火車站'
+				 origin = '台北火車站'
 				 console.log('origin_Notavaialbe', origin)
       }
 
