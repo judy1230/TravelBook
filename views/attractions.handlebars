@@ -1,5 +1,4 @@
-<div class="home_bg py-5 mt-4">
-
+<div class="home-bg row m-auto p-5">
 
 	<ul class="nav">
 		<li class="nav-item">
@@ -67,39 +66,12 @@
 	</div>
 	<br />
 	<br />
-	<nav aria-label="Page navigation example">
-		<ul class="pagination">
-			<li class="page-item">
-				<a class="page-link" href="/attractions?page={{prev}}" aria-label="Previous">
-					<span aria-hidden="true">&laquo;</span>
-				</a>
-			</li>
-			{{#each totalPage}}
-			{{#ifCond this ../page}}
-			<li class="page-item active"><a class="page-link" href="#">{{this}}</a></li>
-			{{else}}
-			<li class="page-item"><a class="page-link" href="/attractions?page={{this}}">{{this}}</a></li>
-			{{/ifCond}}
-			{{/each}}
-			<a class="page-link" href="/attractions?page={{next}}" aria-label="Next">
-				<span aria-hidden="true">&raquo;</span>
-			</a>
-			</li>
-		</ul>
-	</nav>
+
 
 
 </div>
 <style>
-	.home_bg {
-		background-image: url(https://www.crazyppt.com/wp-content/uploads/2018/10/1-1PRG01119.jpg);
-		background-size: cover;
-		background-position: center;
-		background-repeat: no-repeat;
-		width: 100%;
-		height: 100%;
-	}
-
+	
 	.ratings {
 		position: relative;
 		vertical-align: middle;
@@ -126,4 +98,9 @@
 	.shadow-sm {
 		background-color: papayawhip;
 	}
+	.card:hover {
+	transform: translate(0, 10px);
+	transition-delay: 0s;
+}
+
 </style>

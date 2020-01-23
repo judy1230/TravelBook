@@ -1,4 +1,4 @@
-<div class="home_bg mt-4">
+<div class="home-bg row m-auto p-5">
 
 
 	<ul class="nav">
@@ -21,7 +21,7 @@
 		{{#each restaurants}}
 		<div class="col-md-3">
 			<div class="card shadow-sm mt-5" style="width: 13rem; ">
-				<img class="card-img-top image-fluid " src="{{this.image}}" alt="Card image cap" width="200px" height="180px" >
+				<img class="card-img-top image-fluid " src="{{this.image}}" alt="Card image cap" width="200px" height="180px">
 				<div class="card-body text-center">
 					<a class="card-title font-weight-bold" href="/restaurants/{{this.id}}">{{this.name}}...</a>
 					<p class="m-auto" style="font-size: 14px;color:tomato;">{{this.status}}</p>
@@ -37,16 +37,16 @@
 								<button type="submit" class="btn close btn-sm"><i class="far fa-heart" style="color:red"></i></button>
 							</form>
 							{{else}}
-							<form action="restaurants/{{this.id}}/favorite" method="POST"><button type="submit" class="btn close btn-sm "><i
-										class="fas fa-heart" style="color:red"></i></button></form>
+							<form action="restaurants/{{this.id}}/favorite" method="POST"><button type="submit"
+									class="btn close btn-sm "><i class="fas fa-heart" style="color:red"></i></button></form>
 							{{/if}}
 						</div>
 
 						<div class="col-3 text-right">
 							{{#if this.isSelected }}
 							<form action="/users/{{this.id}}/restaurant/component?_method=DELETE" method="POST">
-								<button type="submit" class="btn close"><i class="far fa-check-circle"
-										style="color:green"></i></button></form>
+								<button type="submit" class="btn close"><i class="far fa-check-circle" style="color:green"></i></button>
+							</form>
 							{{else}}
 							<form action="/users/{{this.id}}/restaurant/component" method="POST" style="display: contents;"><button
 									type="submit" class="btn close btn-sm "><i class="fas fa-calendar-alt"
@@ -63,39 +63,12 @@
 	</div>
 	<br />
 	<br />
-	<nav aria-label="Page navigation example">
-		<ul class="pagination">
-			<li class="page-item">
-				<a class="page-link" href="/restaurants?page={{prev}}" aria-label="Previous">
-					<span aria-hidden="true">&laquo;</span>
-				</a>
-			</li>
-			{{#each totalPage}}
-			{{#ifCond this ../page}}
-			<li class="page-item active"><a class="page-link" href="#">{{this}}</a></li>
-			{{else}}
-			<li class="page-item"><a class="page-link" href="/restaurants?page={{this}}">{{this}}</a></li>
-			{{/ifCond}}
-			{{/each}}
-			<a class="page-link" href="/restaurants?page={{next}}" aria-label="Next">
-				<span aria-hidden="true">&raquo;</span>
-			</a>
-			</li>
-		</ul>
-	</nav>
+
 
 
 </div>
 <style>
-	.home_bg {
-		background-image: url(https://www.crazyppt.com/wp-content/uploads/2018/10/1-1PRG01119.jpg);
-		background-color: antiquewhite;
-		background-size: cover;
-		background-position: center;
-		background-repeat: no-repeat;
-		width: 100%;
-		height: 100%;
-	}
+	
 
 	.ratings {
 		position: relative;
@@ -123,4 +96,10 @@
 	.shadow-sm {
 		background-color: antiquewhite;
 	}
+  .card:hover {
+	transform: translate(0, 10px);
+	transition-delay: 0s;
+}
+
+
 </style>
