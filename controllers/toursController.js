@@ -13,7 +13,7 @@ const Photos = db.Photos
 const Location = db.Location
 const pageLimit = 4
 //const Sequelize = require('sequelize')
-const currentTime = new Date().getHours() + new Date().getMinutes() / 60
+const currentTime = currentTime = (new Date().getHours() + 8) + new Date().getMinutes() / 60
 //const helpersreq = require('../_helpers.js')
 
 
@@ -88,7 +88,6 @@ const toursController = {
 		} catch (err) { console.log(err) }
 	},
 	getRestaurants: (req, res) => {
-		//console.log('req.user', req.user.Tours[0].dataValues.id)
 		return Restaurant.findAndCountAll({
 			order: [
 				['id', 'ASC']

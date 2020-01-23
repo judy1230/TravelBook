@@ -54,8 +54,8 @@ router.put('/users/:shop_id/shop/component', authenticated, userController.putSh
 router.delete('/components/removeAllComponents', authenticated, userController.removeAllComponents)
 //user comment control
 router.post('/restaurant/:rest_id/comment', authenticated, userController.postRestComment)
-router.post('/restaurant/:attraction_id/comment', authenticated, userController.postAttractionComment)
-router.post('/restaurant/:shop_id/comment', authenticated, userController.postShopComment)
+router.post('/attraction/:attraction_id/comment', authenticated, userController.postAttractionComment)
+router.post('/shop/:shop_id/comment', authenticated, userController.postShopComment)
 router.delete('/comment/:comment_id', authenticatedAdmin, userController.removeComment)
 
 //restaurant, attraction,  display,
