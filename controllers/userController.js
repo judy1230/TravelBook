@@ -85,7 +85,6 @@ let userController = {
 
 	},
   postTour: async (req, res) => {
-		console.log('////////////////post tour/////////')
 		tourComponents = []
 		googleMapsClient = require('@google/maps').createClient({
 			key: process.env.API_KEY,
@@ -190,13 +189,14 @@ let userController = {
 				days: "1",
 				tourComponents: tourComponents
 			}).then(tour => {
-
+				req.flash('success_msg', '成功儲存Tour!')
 				return res.redirect(`/users/${req.user.id}/tour/${tour.id}`)
 			})
 		} catch (err) { console.log(err) }
 
 	},
-  getUserDailyTour: (req, res) => {
+	getUserDailyTour: (req, res) => {
+
 		return Tour.findOne({
 			where: {
 				UserId: req.user.id,
@@ -250,7 +250,8 @@ let userController = {
 		origin = req.body.origin
 		return next()
 	},
-  deleteUserDailyTour: (req, res) => {
+	deleteUserDailyTour: (req, res) => {
+		req.flash('warning_msg', '確定刪除Tour?')
 		return Tour.findByPk(req.params.tour_id)
 		.then(tour => {
 			//console.log('tour', tour)
@@ -264,6 +265,7 @@ let userController = {
 			RestaurantId: req.params.rest_id,
 			comment: req.body.comment
 		}).then((comment) => {
+			req.flash('success_msg', '留言成功!')
 			return res.redirect('back')
 		})
 	},
@@ -279,6 +281,7 @@ let userController = {
 			AttractionId: req.params.attraction_id,
 			comment: req.body.comment
 		}).then((comment) => {
+			req.flash('success_msg', '留言成功!')
 			return res.redirect('back')
 		})
 	},
@@ -288,6 +291,7 @@ let userController = {
 			ShopId: req.params.shop_id,
 			comment: req.body.comment
 		}).then((comment) => {
+			req.flash('success_msg', '留言成功!')
 			return res.redirect('back')
 		})
 	},
@@ -408,6 +412,7 @@ let userController = {
 			UserId: req.user.id,
 			RestaurantId: req.params.rest_id,
 		}).then((favorite) => {
+			req.flash('success_msg', '已成功收藏!')
 			return res.redirect('back')
 		})
 	},
@@ -417,6 +422,7 @@ let userController = {
 			RestaurantId: req.params.rest_id,
 		}).then((favorite) => {
 			favorite.destroy()
+			req.flash('success_msg', '已成功取消收藏!')
 			return res.redirect('back')
 		})
 	},
@@ -425,6 +431,7 @@ let userController = {
 			UserId: req.user.id,
 			AttractionId: req.params.attraction_id,
 		}).then((favorite) => {
+			req.flash('success_msg', '已成功收藏!')
 			return res.redirect('back')
 		})
 	},
@@ -434,6 +441,7 @@ let userController = {
 			AttractionId: req.params.attraction_id,
 		}).then((favorite) => {
 			favorite.destroy()
+			req.flash('success_msg', '已成功取消收藏!')
 			return res.redirect('back')
 		})
 	},
@@ -442,6 +450,7 @@ let userController = {
 			UserId: req.user.id,
 			ShopId: req.params.shop_id,
 		}).then((favorite) => {
+			req.flash('success_msg', '已成功收藏!')
 			return res.redirect('back')
 		})
 	},
@@ -451,6 +460,7 @@ let userController = {
 			ShopId: req.params.shop_id,
 		}).then((favorite) => {
 			favorite.destroy()
+			req.flash('success_msg', '已成功取消收藏!')
 			return res.redirect('back')
 		})
 	},
@@ -459,6 +469,7 @@ let userController = {
 			UserId: req.user.id,
 			RestaurantId: req.params.rest_id
 		}).then((component) => {
+			req.flash('success_msg', '已成功加入規劃!')
 			return res.redirect('back')
 		})
 	},
@@ -470,6 +481,7 @@ let userController = {
 			}
 		}).then((component) => {
 			component.destroy()
+			req.flash('success_msg', '已成功取消規劃!')
 			return res.redirect('back')
 		})
 	},
@@ -483,6 +495,7 @@ let userController = {
 			component.update({
 				stayTime: req.body.stayTime
 			})
+			req.flash('success_msg', '已成功修改停留時間!')
 			return res.redirect(`/users/${req.user.id}/dailyTour`)
 		})
 	},
@@ -491,6 +504,7 @@ let userController = {
 			UserId: req.user.id,
 			AttractionId: req.params.attraction_id,
 		}).then((component) => {
+			req.flash('success_msg', '已成功加入規劃!')
 			return res.redirect('back')
 		})
 	},
@@ -502,6 +516,7 @@ let userController = {
 			}
 		}).then((component) => {
 			component.destroy()
+			req.flash('success_msg', '已成功取消規劃!')
 			return res.redirect(`/users/${req.user.id}/dailyTour`)
 		})
 
@@ -516,6 +531,7 @@ let userController = {
 			component.update({
 				stayTime: req.body.stayTime
 			})
+			req.flash('success_msg', '已成功修改停留時間!')
 			return res.redirect('back')
 		})
 	},
@@ -524,6 +540,7 @@ let userController = {
 			UserId: req.user.id,
 			ShopId: req.params.shop_id,
 		}).then((component) => {
+			req.flash('success_msg', '已成功加入規劃!')
 			return res.redirect('back')
 		})
 	},
@@ -535,22 +552,22 @@ let userController = {
 			}
 		}).then((component) => {
 			component.destroy()
+			req.flash('success_msg', '已成功取消規劃!')
 			return res.redirect('back')
 		})
 
 	},
 	putShopComponent: (req, res) => {
-		console.log('///////////hello put shop////////')
 		return Component.findOne({
 			where: {
 				UserId: req.user.id,
 				ShopId: req.params.shop_id
 			}
 		}).then((component) => {
-			console.log('component', component)
 			component.update({
 				stayTime: req.body.stayTime
 			})
+			req.flash('success_msg', '已成功修改停留時間!')
 			return res.redirect(`/users/${req.user.id}/dailyTour`)
 		})
 	},
@@ -560,8 +577,8 @@ let userController = {
 				UserId: req.user.id
 			}
 		}).then(components => {
-			console.log('components', components)
 			components.map(d => d.destroy())
+			req.flash('success_msg', '已清空!')
 			return res.redirect('back')
 		})
 	}

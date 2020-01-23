@@ -38,6 +38,8 @@
 	{{!-- Navbar --}}
 	<nav class="navbar navbar-expand-sm fixed-top navbar-dark bg-info text-justify" style="height: 50px;">
 		<a class="navbar-brand font-italic" href="/index">TravelBook</a>
+			{{> messages}}
+
 		<div class="navbar-collapse  navbar-text mt-3">
 			<ul class="container text-right">
 				{{#ifCond user.role 'admin'}}
@@ -57,6 +59,7 @@
 				<button class="btn btn-outline-light"><a href="/signin"style="color:green;">LogIn</a></button>
 				{{/if}}
 			</ul>
+
 		</div>
 	</nav>
 	<main role="main">
