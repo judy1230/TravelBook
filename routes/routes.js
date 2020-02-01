@@ -26,8 +26,8 @@ router.get('/', (req, res) => res.redirect('/index'))
 router.get('/index', toursController.getIndex)
 //temp tour
 router.post('/users/:id/tour', authenticated, geolocation.getCurrentPosition, userController.postTour)
-router.put('/users/:id/dailyTour/', authenticated, geolocation.getCurrentPosition, calculate.calculateDisplay)
-router.get('/users/:tour_id/dailyTour', authenticated, geolocation.getCurrentPosition, calculate.calculateDisplay)
+router.put('/users/:id/dailyTour/', authenticated, calculate.duration, userController.getDailyTour)
+router.get('/users/:tour_id/dailyTour', authenticated, geolocation.getCurrentPosition, calculate.duration, geolocation.getWeather, userController.getDailyTour)
 //store to db tour
 router.get('/users/:id/tour/:tour_id', authenticated, userController.getUserDailyTour)
 router.get('/users/:id/tour/:tour_id/edit', authenticated, userController.getUserDailyTourEdit)

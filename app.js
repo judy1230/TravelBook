@@ -6,7 +6,8 @@ const bodyParser = require('body-parser')
 const flash = require('connect-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
-const navigator = require('web-midi-api')
+const geolocation = require('./config/geolocation')
+//const navigator = require('web-midi-api')
 //const geolocation = require('geolocation')
 const port = process.env.PORT || 3000
 if (process.env.NODE_ENV !== 'production') {      // 如果不是 production 模式
@@ -37,15 +38,15 @@ app.use(passport.session())
 //setup flash
 app.use(flash())
 
-///geolocaion
-
 
 app.use((req, res, next) => {
 	console.log(req.method, req.path)
 	res.locals.success_msg = req.flash('success_msg')
 	res.locals.error_msg = req.flash('error_msg')
 	res.locals.user = req.user
-	//res.locals.origin = '台北火車站'
+	//res.locals.origin = req.origin
+	//res.locals.temp = req.temp
+	//res.locals.weather = req.weather
 	next()
 })
 

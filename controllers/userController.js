@@ -84,6 +84,27 @@ let userController = {
 		} catch (err) { console.log(err) }
 
 	},
+	getDailyTour: (req, res) => {
+		tourComponents = req.tourComponents
+		temp = req.temp
+		weather = req.weather
+		return res.render('dailyTour', {
+			API_KEY: process.env.API_KEY,
+			title: req.body.title || "儲存前請輸入title",
+			origin,
+			destination,
+			endLocation: origin,
+			endDuration,
+			endTime,
+			tourComponents,
+			date,
+			startMinInit,
+			startHourInit,
+			typeofOrigin: typeof (origin) === typeof ("string") ? true : false,
+			weather,
+			temp
+		})
+	},
   postTour: async (req, res) => {
 		tourComponents = []
 		googleMapsClient = require('@google/maps').createClient({

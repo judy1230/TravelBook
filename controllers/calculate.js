@@ -1,21 +1,22 @@
 const db = require('../models')
-const User = db.User
 const Restaurant = db.Restaurant
 const Attraction = db.Attraction
 const Shop = db.Shop
 const Component = db.Component
 const Tour = db.Tour
-let navigator = require('web-midi-api')
-const helpersreq = require('../_helpers')
-let googleMapsClient = require('@google/maps').createClient({
-	key: process.env.API_KEY,
-	Promise: Promise
-})
+const geolocation = require('../config/geolocation')
+
+
 
 
 const calculate = {
-	calculateDisplay: async (req, res, next) => {
-	  try {
+
+	duration: async (req, res, next) => {
+		let googleMapsClient = require('@google/maps').createClient({
+			key: process.env.API_KEY,
+			Promise: Promise
+		})
+		try {
 			let data = []
 			let tourComponents = []
 			//+8 is for heroku is utc time
@@ -92,6 +93,8 @@ const calculate = {
 				endHour = startHour + diff > 24 ? startHour + diff - 24 : startHour + diff
 				leaveHour = startHour + diffLeave > 24 ? startHour + diffLeave - 24 : startHour + diffLeave
 				image = dataImage[i]
+        //temp = req.geolocation.getWeather()
+
 				tourComponents.push({
 					origin: location1,
 					destination: location2,
@@ -106,31 +109,17 @@ const calculate = {
 			}
 			destination = tourComponents[tourComponents.length - 1].origin
 			endLocation = tourComponents[tourComponents.length - 1].destination,
-			endDuration = tourComponents[tourComponents.length - 1].duration,
-			endTime = tourComponents[tourComponents.length - 1].end
+				endDuration = tourComponents[tourComponents.length - 1].duration,
+				endTime = tourComponents[tourComponents.length - 1].end
 			tourComponents.pop()
+			//pass tourComponents to next middleware
+			req.tourComponents = tourComponents
+			next()
 
-			return res.render('dailyTour', {
-				API_KEY: process.env.API_KEY,
-				title: req.body.title || "儲存前請輸入title",
-				origin,
-				destination,
-				endLocation: origin,
-				endDuration,
-				endTime,
-				tourComponents,
-				date,
-				startMinInit,
-				startHourInit,
-				typeofOrigin: typeof(origin)
-			})
 		} catch (err) { console.log(err) }
+
 	},
 	putTour: async (req, res) => {
-		googleMapsClient = require('@google/maps').createClient({
-			key: process.env.API_KEY,
-			Promise: Promise
-		})
 		try {
 			componentArray = await Tour.findOne({
 				where: {
@@ -201,8 +190,8 @@ const calculate = {
 				})
 			}
 
-			destination = tourComponents[tourComponents.length - 1].destination,
-				endLocation = tourComponents[tourComponents.length - 1].destination,
+			destination = tourComponents[tourComponents.length - 1].origin,
+				//endLocation = tourComponents[tourComponents.length - 1].destination,
 				endDuration = tourComponents[tourComponents.length - 1].duration,
 				endTime = tourComponents[tourComponents.length - 1].end
 			return Tour.findOne({
@@ -211,11 +200,11 @@ const calculate = {
 					id: req.params.tour_id
 				}
 			}).then(tour => {
-
 				tour.update({
 					title: req.body.title,
 					origin: req.body.origin,
 					date: req.body.date,
+					endLocation: req.body.origin,
 					startHourInit: parseInt(req.body.startHourInit),
 					startMinInit: parseInt(req.body.startMinInit),
 					tourComponents: tourComponents,
@@ -227,4 +216,5 @@ const calculate = {
 	}
 }
 module.exports = calculate
+
 
