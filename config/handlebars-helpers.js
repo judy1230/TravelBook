@@ -4,7 +4,6 @@ const helpersreq = require('../_helpers')
 module.exports = {
 	ifCond: function (a, b, options) {
 		if (a === b) {
-
 			return options.fn(this)
 		}
 		return options.inverse(this)
@@ -13,7 +12,9 @@ module.exports = {
 		return moment(a).fromNow()
 	},
 	ifEquals: function (arg1, arg2, options) {
-
+		console.log('arg1', arg1)
+		console.log('arg2', arg2)
+		console.log('arg1 === arg2', arg1 === arg2)
 		return (arg1 === arg2) ? options.fn(this) : options.inverse(this)
 	},
 	getInputDate: function (date, options) {

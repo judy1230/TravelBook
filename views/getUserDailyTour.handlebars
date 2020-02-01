@@ -1,14 +1,14 @@
-<div class="home_bg mt-4 mb-5 p-5 row">
+	<div class="home_bg mt-4 mb-5 p-5 row">
 		<div class="tour-form ml-5">
-			<h5 name="title" value="{{title}}" class="title text-center form-style"
-				style="width: 30%; margin-right:25px;">{{title}}</h5>
+			<h5 name="title" value="{{title}}" class="title text-center form-style" style="width: 30%; margin-right:25px;">
+				{{title}}</h5>
 			<ul class="moveable timeline" id="items-list">
 				<li class="input-append row">
 					<p class=" form-style text-center" style="width: 25%; margin-right:25px;">{{origin}}</p>
 					<p class=" form-style text-center" class="form-style datepicker text-center" style="width:30%; ">日期: {{date}}
 					</p>
-					<p type="text" class="time  text-center"
-						style="color:mediumblue; font-size:14px;width:12%; margin-left:15px;">{{startHourInit}} : {{startMinInit}}
+					<p type="text" class="time  text-center" style="color:mediumblue; font-size:14px;width:12%; margin-left:15px;">
+						{{startHourInit}} : {{startMinInit}}
 				</li>
 
 				{{#each tourComponents}}
@@ -40,155 +40,160 @@
 			</ul>
 		</div>
 
-	<!-- 地圖放置處 -->
+		<!-- 地圖放置處 -->
 
-	<div class="col-4 ml-5 mt-5 text-center sticky-top">
-		<div class=" sticky-top" id="map">
-			<iframe width="450" height="300" frameborder="0" style="border:0"
-				src="https://www.google.com/maps/embed/v1/directions?key={{API_KEY}}&origin={{origin}}&destination={{destination}}">>
-			</iframe>
+		<div class="col-4 ml-5 mt-5 text-center sticky-top">
+			<div class=" sticky-top" id="map">
+				<iframe width="450" height="300" frameborder="0" style="border:0"
+					src="https://www.google.com/maps/embed/v1/directions?key={{API_KEY}}&origin={{originInMap}}&destination={{destination}}">>
+				</iframe>
+			</div>
 		</div>
+		<div class="row">
+			<a href="/users/{{user.id}}/tour/{{id}}/edit" class="btn close btn-sm "><i class="fas fa-edit mr-1"
+					style="color:brown" title="編輯"></i></a>
+			{{!-- <div class='line-it-button' style='display: none;' data-type='share-a' data-lang='zh-Hant'></div> --}}
+			{{!-- <a href="/users/{{user.id}}/tour/{{id}}/share" class="btn close btn-sm "><i class="far fa-share-square mr-1"
+				style="color:brown" title="分享"></i></a> --}}
+			<form action="/users/{{user.id}}/tour/{{id}}?_method=DELETE" method="POST" class="mt-1">
+				<button type="submit" class="btn close btn-sm "><i class="far fa-trash-alt" style="color:crimson"
+						title="刪除"></i></button>
+			</form>
+		</div>
+
 	</div>
-	<div class="row">
-	<a href="/users/{{user.id}}/tour/{{id}}/edit" class="btn close btn-sm "><i class="fas fa-edit mr-1"style="color:brown" title="編輯"></i></a>
-	{{!-- <div class='line-it-button' style='display: none;' data-type='share-a' data-lang='zh-Hant'></div> --}}
-	{{!-- <a href="/users/{{user.id}}/tour/{{id}}/share" class="btn close btn-sm "><i class="far fa-share-square mr-1"
-			style="color:brown" title="分享"></i></a> --}}
-	<form action="/users/{{user.id}}/tour/{{id}}?_method=DELETE" method="POST" class="mt-1">
-		<button type="submit" class="btn close btn-sm "><i class="far fa-trash-alt" style="color:crimson"title="刪除"></i></button>
-	</form>
-	</div>
 
-</div>
+	{{!-- <script src='//scdn.line-apps.com/n/line_it/thirdparty/loader.min.js' async='async' defer='defer'></script> --}}
+	<script>
+		$('.datepicker').datepicker({
+			clearBtn: true,
+			orientation: "auto right",
+			forceParse: false,
+			daysOfWeekHighlighted: "0,6",
+			todayHighlight: true
+		})
+	</script>
 
-{{!-- <script src='//scdn.line-apps.com/n/line_it/thirdparty/loader.min.js' async='async' defer='defer'></script> --}}
-<script>
-	$('.datepicker').datepicker({
-		clearBtn: true,
-		orientation: "auto right",
-		forceParse: false,
-		daysOfWeekHighlighted: "0,6",
-		todayHighlight: true
-	})
-</script>
+	<style>
+		input {
+			padding: 5px 10px;
+			background: rgb(192, 192, 192, 0.3);
+			border: 0 none;
+			cursor: pointer;
+			-webkit-border-radius: 5px;
+			border-radius: 5px;
+		}
 
-<style>
-	input {
-		padding: 5px 10px;
-		background: rgb(192, 192, 192, 0.3);
-		border: 0 none;
-		cursor: pointer;
-		-webkit-border-radius: 5px;
-		border-radius: 5px;
-	}
+		.home_bg {
+			background-image: url(https://png.pngtree.com/thumb_back/fh260/back_pic/05/10/85/72598e504024b48.jpg);
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+			width: 100%;
+			height: 100%;
+		}
 
-	.home_bg {
-		background-image: url(https://png.pngtree.com/thumb_back/fh260/back_pic/05/10/85/72598e504024b48.jpg);
-		background-size: cover;
-		background-position: center;
-		background-repeat: no-repeat;
-		width: 100%;
-		height: 100%;
-	}
+		ul.timeline {
+			list-style-type: none;
+			position: relative;
+		}
 
-	ul.timeline {
-		list-style-type: none;
-		position: relative;
-	}
+		ul.timeline:before {
+			content: ' ';
+			background: #d4d9df;
+			display: inline-block;
+			position: absolute;
+			left: 29px;
+			width: 2px;
+			height: 100%;
+			z-index: 200;
+		}
 
-	ul.timeline:before {
-		content: ' ';
-		background: #d4d9df;
-		display: inline-block;
-		position: absolute;
-		left: 29px;
-		width: 2px;
-		height: 100%;
-		z-index: 200;
-	}
+		ul.timeline>li {
+			margin: 20px 0;
+			padding-left: 20px;
+		}
 
-	ul.timeline>li {
-		margin: 20px 0;
-		padding-left: 20px;
-	}
+		ul.timeline>li:before {
+			content: ' ';
+			background: white;
+			display: inline-block;
+			position: absolute;
+			border-radius: 50%;
+			border: 3px solid #22c0e8;
+			left: 20px;
+			width: 20px;
+			height: 20px;
+			z-index: 400;
+		}
 
-	ul.timeline>li:before {
-		content: ' ';
-		background: white;
-		display: inline-block;
-		position: absolute;
-		border-radius: 50%;
-		border: 3px solid #22c0e8;
-		left: 20px;
-		width: 20px;
-		height: 20px;
-		z-index: 400;
-	}
-
-	/*[draggable="true"] {
-		user-select: none;
-		-moz-user-select: none;
-		-webkit-user-select: none;
-		-ms-user-select: none;
-	}
+		/*[draggable="true"] {
+			user-select: none;
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+		}
 
 
 
-	ul.moveable {
-		list-style: none;
-		margin: 0px;
+		ul.moveable {
+			list-style: none;
+			margin: 0px;
 
-		li {
-			list-style-image: none;
-			margin: 10px;
-			border: 1px solid #ccc;
-			padding: 4px;
-			border-radius: 4px;
-			color: #666;
-			cursor: move;
+			li {
+				list-style-image: none;
+				margin: 10px;
+				border: 1px solid #ccc;
+				padding: 4px;
+				border-radius: 4px;
+				color: #666;
+				cursor: move;
 
-			/* &:hover {
-			background-color: #eee;
-		} */
-	}
-	}
+				/* &:hover {
+				background-color: #eee;
+			} */
+		}
+		}
 
-	*/ .tour-form input.form-style {
-		width: 100%;
-		border: none;
-		border-bottom: 1px solid #333;
-		text-transform: capitalize;
-		padding-bottom: 5px;
-		margin-bottom: 10px;
-		outline: none;
-		background-color: transparent;
-	}
+		*/ .tour-form input.form-style {
+			width: 100%;
+			border: none;
+			border-bottom: 1px solid #333;
+			text-transform: capitalize;
+			padding-bottom: 5px;
+			margin-bottom: 10px;
+			outline: none;
+			background-color: transparent;
+		}
 
-	.form-submit {
-		text-align: left;
-		padding: 0 15px;
+		.form-submit {
+			text-align: left;
+			padding: 0 15px;
 
-	}
+		}
 
-	.form-submit input {
-		font-size: 16px;
-		text-transform: capitalize;
-		background-color: transparent;
-		border: 1px solid #000;
-		border-radius: 12px;
-		padding: 15px 15px;
-		margin-top: 10px;
-		margin-bottom: 10px;
-		cursor: pointer;
-		-webkit-transition: .4s linear;
-		-moz-transition: .4s linear;
-		-ms-transition: .4s linear;
-		-o-transition: .4s linear transition: .4s linear;
-		float: right;
-	}
+		.form-submit input {
+			font-size: 16px;
+			text-transform: capitalize;
+			background-color: transparent;
+			border: 1px solid #000;
+			border-radius: 12px;
+			padding: 15px 15px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			cursor: pointer;
+			-webkit-transition: .4s linear;
+			-moz-transition: .4s linear;
+			-ms-transition: .4s linear;
+			-o-transition: .4s linear transition: .4s linear;
+			float: right;
+		}
 
-	.form-submit input:hover {
-		background-color: #000;
-		color: #fff;
-	}
-</style>
+		.form-submit input:hover {
+			background-color: #000;
+			color: #fff;
+		}
+	</style>
+
+
+

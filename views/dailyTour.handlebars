@@ -1,3 +1,4 @@
+
 <div class="home-bg row m-auto p-5">
 	{{#ifCond title "儲存前請輸入title"}}
 	<form action="/users/{{user.id}}/dailyTour/?_method=PUT" method="POST" class="form-input col-6" style="width:50%;">
@@ -11,8 +12,14 @@
 					style="width: 30%; margin-right:25px;" placeholder="儲存前請輸入title">
 				<ul class="moveable timeline" id="items-list">
 					<li class="input-append row">
+						<p id="weather"></p>
+						{{#ifEquals typeofOrigin "String"}}
 						<input type="text" name="origin" value="{{origin}}" class=" form-style text-center"
-							style="width: 25%; margin-right:25px;" placeholder={{origin}}>
+							style="width: 25%; margin-right:25px;">
+							{{else}}
+							<input type="text" name="originInList" value="目前位置"  class=" form-style text-center"
+								style="width: 25%; margin-right:25px;">
+						{{/ifEquals}}
 						<input type="text" name="date" class="form-style datepicker text-center" style="width:30%; "
 							value="{{date}}" placeholder="日期: {{date}}">
 						<input type="text" name="startHourInit" class="time  text-center"
@@ -34,13 +41,15 @@
 								<div class="col-md-6">
 									{{!-- need to fix un-removed fist item --}}
 									<form action="/users/{{this.id}}/{{this.category}}/component?_method=DELETE" method="POST">
-										<button type="submit" id="delete" class="btn close btn-sm" onclick="deleteComponent()"><span
+										<button type="submit" id="delete" class="btn close btn-sm" ><span
 												aria-hidden="true">×</span></button>
 									</form>
 									<div class="card-body">
 										<h6 class="card-title" href="#">{{this.destination}} {{this.end}}</h6>
+										<span id="weather"></span>
 										<label>停留時間:</label>
 										<form action="/users/{{this.id}}/{{this.category}}/component?_method=PUT" method="POST">
+										  <input type="hidden" name="category" value="{{this.category}}">
 											<input type="text" name="stayTime" value="{{this.stayTime}}" class="form-style text-center"style="color:purple; width:30%;" placeholder="{{this.stayTime}}"><span>  mins</span>
 											<button type="submit" class="btn btn-outline-light btn-sm"style="color:yellowgreen;">修改時間</button>
 										</form>
@@ -53,19 +62,22 @@
 					</li>
 					{{/each}}
 					<li class="row">
+						{{#ifEquals typeofOrigin "String"}}
 						<p class="form-style text-center mr-3 font-weight-bold">{{endLocation}}</p>
+						{{else}}
+						<p class="form-style text-center mr-3 font-weight-bold">目前位置</p>
+						{{/ifEquals}}
 						<span class="form-style text-center mr-3">{{endTime}}</span>
 						<p><span><i class="fas fa-car" style="color:deepskyblue"></i></span>: {{endDuration}}</p>
 					</li>
 				</ul>
+
 				<div class="form-submit out-line-close">
 					<input type="submit" name="submit" value="重新計算">
 				</div>
-				{{!-- <div class="form-submit out-line-close">
-			<input type="submit" name="submit" value="reset">
-		</div> --}}
 			</div>
 		</form>
+
 		<!-- 地圖放置處 -->
 
 		<div class="col-4 ml-5 mt-5 text-center sticky-top">
@@ -80,6 +92,7 @@
 					aria-hidden="true">清空</span></button>
 		</form>
 
+
 </div>
 
 
@@ -91,6 +104,7 @@
 		daysOfWeekHighlighted: "0,6",
 		todayHighlight: true
 	})
+
 </script>
 
 <style>

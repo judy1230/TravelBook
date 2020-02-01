@@ -7,38 +7,22 @@ const Component = db.Component
 const Tour = db.Tour
 let navigator = require('web-midi-api')
 const helpersreq = require('../_helpers')
+let googleMapsClient = require('@google/maps').createClient({
+	key: process.env.API_KEY,
+	Promise: Promise
+})
 
 
 const calculate = {
-	calculateDisplay: async (req, res) => {
+	calculateDisplay: async (req, res, next) => {
 	  try {
-		  console.log('/////////////////// calculateDisplay ///////////')
-		///geolocaion
-    	if ("geolocation" in navigator) {
-				 /* geolocation is available */
-				 console.log('geolocation is available')
-	      navigator.geolocation.getCurrentPosition(function(position) {
-				origin = position.coords.latitude, position.coords.longitude;
-				console.log('origin_avaialbe', origin)
-       });
-      } else {
-				 /* geolocation IS NOT available */
-				 console.log('geolocation IS NOT available')
-				 origin = '台北火車站'
-				 console.log('origin_Notavaialbe', origin)
-      }
-
 			let data = []
 			let tourComponents = []
 			//+8 is for heroku is utc time
 			startMinInit = req.body.startMinInit ? parseInt(req.body.startMinInit) : new Date().getMinutes()
 			startHourInit = req.body.startHourInit ? parseInt(req.body.startHourInit) : new Date().getHours() + 8
 			date = req.body.date || `${new Date().getMonth() + 1} /  ${new Date().getDate()} / ${new Date().getFullYear()}`
-      origin = req.body.origin || origin
-			googleMapsClient = require('@google/maps').createClient({
-				key: process.env.API_KEY,
-				Promise: Promise
-			})
+			origin = req.body.origin || origin
 			componentArray = await Component.findAll({
 				where: {
 					UserId: req.user.id
@@ -122,21 +106,23 @@ const calculate = {
 			}
 			destination = tourComponents[tourComponents.length - 1].origin
 			endLocation = tourComponents[tourComponents.length - 1].destination,
-				endDuration = tourComponents[tourComponents.length - 1].duration,
-				endTime = tourComponents[tourComponents.length - 1].end
+			endDuration = tourComponents[tourComponents.length - 1].duration,
+			endTime = tourComponents[tourComponents.length - 1].end
 			tourComponents.pop()
+
 			return res.render('dailyTour', {
 				API_KEY: process.env.API_KEY,
 				title: req.body.title || "儲存前請輸入title",
 				origin,
 				destination,
-				endLocation,
+				endLocation: origin,
 				endDuration,
 				endTime,
 				tourComponents,
 				date,
 				startMinInit,
-				startHourInit
+				startHourInit,
+				typeofOrigin: typeof(origin)
 			})
 		} catch (err) { console.log(err) }
 	},

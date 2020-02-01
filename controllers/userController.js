@@ -90,7 +90,7 @@ let userController = {
 			key: process.env.API_KEY,
 			Promise: Promise
 		})
-		try {
+		 try {
 			componentArray = await Component.findAll({
 				where: {
 					UserId: req.user.id
@@ -169,8 +169,7 @@ let userController = {
 					image: image
 				})
 			}
-			  destination = tourComponents[tourComponents.length - 1].destination,
-				endLocation = tourComponents[tourComponents.length - 1].destination,
+			  destination = tourComponents[tourComponents.length - 1].origin,
 				endDuration = tourComponents[tourComponents.length - 1].duration,
 				endTime = tourComponents[tourComponents.length - 1].end
 			tourComponents.pop()
@@ -178,10 +177,10 @@ let userController = {
 				title: req.body.title,
 				UserId: req.user.id,
 				temp: false,
-				origin: req.body.origin,
+				origin: req.body.origin === undefined ? '目前位置': req.body.origin,
 				destination: destination,
 				endDuration: endDuration,
-				endLocation: endLocation,
+				endLocation: req.body.origin === undefined ? '目前位置' : req.body.origin,
 				endTime: endTime,
 				date: req.body.date,
 				startHourInit: req.body.startHourInit,
@@ -204,10 +203,12 @@ let userController = {
 			}
 		}).then(tour => {
 			//tour.tourComponents.pop()
+			console.log('tour.origin', tour.origin)
 			return res.render('getUserDailyTour', {
 				API_KEY: process.env.API_KEY,
 				title: tour.title,
 				origin: tour.origin,
+				originInMap: tour.origin === '目前位置' ? origin : tour.origin,
 				destination: tour.destination,
 				endDuration: tour.endDuration,
 				endLocation: tour.endLocation,
@@ -329,7 +330,7 @@ let userController = {
 			locations = Restaurants.map(d => d.address)
 			for (i = 0; i < locations.length; i++) {
 				duration = await googleMapsClient.directions({
-					origin: res.locals.origin,
+					origin: origin,
 					destination: locations[i]
 				}).asPromise()
 					.then((response) => {

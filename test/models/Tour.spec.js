@@ -24,48 +24,48 @@ describe('# Tour Model', () => {
   })
 
   const Tour = TourModel(sequelize, dataTypes)
-  const like = new Tour()
+  const tour = new Tour()
   checkModelName(Tour)('Tour')
 
   context('properties', () => {
     ;[
-    ].forEach(checkPropertyExists(like))
+    ].forEach(checkPropertyExists(tour))
   })
 
   context('associations', () => {
     const Comment = 'Comment'
-    const Like = 'Like'
+    //const Like = 'Like'
     const Favorite = 'Favorite'
-    const Location = 'Location'
+    //const Location = 'Location'
     const User = 'User'
     before(() => {
-      Tour.associate({ Comment })
-      Tour.associate({ Like })
-      Tour.associate({ Favorite })
-      Tour.associate({ Location })
+      //Tour.associate({ Comment })
+      //Tour.associate({ Like })
+      //Tour.associate({ Favorite })
+      //Tour.associate({ Location })
       Tour.associate({ User })
     })
 
-    it('should have many comments', (done) => {
-      expect(Tour.hasMany).to.have.been.calledWith(Comment)
-      done()
-    })
-    it('should have many favorites', (done) => {
-      expect(Tour.hasMany).to.have.been.calledWith(Favorite)
-      done()
-    })
-    it('should have many liks', (done) => {
-      expect(Tour.hasMany).to.have.been.calledWith(Like)
-      done()
-    })
+    // it('should have many comments', (done) => {
+    //   expect(Tour.hasMany).to.have.been.calledWith(Comment)
+    //   done()
+    // })
+    // it('should have many favorites', (done) => {
+    //   expect(Tour.hasMany).to.have.been.calledWith(Favorite)
+    //   done()
+    // })
+    // it('should have many liks', (done) => {
+    //   expect(Tour.hasMany).to.have.been.calledWith(Like)
+    //   done()
+    // })
     it('should belong to user', (done) => {
       expect(Tour.belongsTo).to.have.been.calledWith(User)
       done()
     })
-    it('should belong to locations', (done) => {
-      expect(Tour.belongsTo).to.have.been.calledWith(Location)
-      done()
-    })
+    // it('should belong to locations', (done) => {
+    //   expect(Tour.belongsTo).to.have.been.calledWith(Location)
+    //   done()
+    // })
   })
 
   context('action', () => {
@@ -73,29 +73,29 @@ describe('# Tour Model', () => {
     let data = null
 
     it('create', (done) => {
-      db.Tweet.create({UserId: 1, description: 'hi'}).then((tweet) => {
-        data = tweet
+      db.Tour.create({UserId: 1, title: 'test'}).then((tour) => {
+        data = tour
         done()
       })
     })
     it('read', (done) => {
-      db.Tweet.findByPk(data.id).then((tweet) => {
-        expect(data.id).to.be.equal(tweet.id)
+      db.Tour.findByPk(data.id).then((tour) => {
+        expect(data.id).to.be.equal(tour.id)
           done()
         })
     })
     it('update', (done) => {
-      db.Tweet.update({}, { where: { id: data.id }}).then(() => {
-        db.Tweet.findByPk(data.id).then((tweet) => {
-          expect(data.updatedAt).to.be.not.equal(tweet.updatedAt)
+      db.Tour.update({}, { where: { id: data.id }}).then(() => {
+        db.Tour.findByPk(data.id).then((tour) => {
+          expect(data.updatedAt).to.be.not.equal(tour.updatedAt)
           done()
         })
       })
     })
     it('delete', (done) => {
-      db.Tweet.destroy({ where: { id: data.id }}).then(() => {
-        db.Tweet.findByPk(data.id).then((tweet) => {
-          expect(tweet).to.be.equal(null)
+      db.Tour.destroy({ where: { id: data.id }}).then(() => {
+        db.Tour.findByPk(data.id).then((tour) => {
+          expect(tour).to.be.equal(null)
           done()
         })
       })
