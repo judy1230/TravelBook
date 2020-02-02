@@ -223,8 +223,6 @@ let userController = {
 				id: req.params.tour_id
 			}
 		}).then(tour => {
-			//tour.tourComponents.pop()
-			console.log('tour.origin', tour.origin)
 			return res.render('getUserDailyTour', {
 				API_KEY: process.env.API_KEY,
 				title: tour.title,

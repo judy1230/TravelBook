@@ -120,6 +120,10 @@ const calculate = {
 
 	},
 	putTour: async (req, res) => {
+		let googleMapsClient = require('@google/maps').createClient({
+			key: process.env.API_KEY,
+			Promise: Promise
+		})
 		try {
 			componentArray = await Tour.findOne({
 				where: {
@@ -143,6 +147,7 @@ const calculate = {
 			dataStayTime = componentArray.stayTime.map(d => d)
 			dataCategory = componentArray.data.map(d => d.category)
 			data.splice(0, 0, origin)
+			data.push(origin)
 			for (let i = 0; i < data.length - 1; i++) {
 				let location1 = data[i]
 				let location2 = data[i + 1]
@@ -189,11 +194,11 @@ const calculate = {
 					image: image
 				})
 			}
-
 			destination = tourComponents[tourComponents.length - 1].origin,
-				//endLocation = tourComponents[tourComponents.length - 1].destination,
+				endLocation = tourComponents[tourComponents.length - 1].destination,
 				endDuration = tourComponents[tourComponents.length - 1].duration,
 				endTime = tourComponents[tourComponents.length - 1].end
+			tourComponents.pop()
 			return Tour.findOne({
 				where: {
 					UserId: req.user.id,
@@ -204,12 +209,13 @@ const calculate = {
 					title: req.body.title,
 					origin: req.body.origin,
 					date: req.body.date,
-					endLocation: req.body.origin,
 					startHourInit: parseInt(req.body.startHourInit),
 					startMinInit: parseInt(req.body.startMinInit),
 					tourComponents: tourComponents,
+					endDuration: endDuration,
+					endLocation: endLocation,
+					endTime: endTime
 				})
-
 				return res.redirect(`/users/${req.user.id}/tour/${tour.id}`)
 			})
 		} catch (err) { console.log(err) }
