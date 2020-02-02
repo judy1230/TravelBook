@@ -55,7 +55,7 @@ const calculate = {
 			dataCategory = componentArray.data.map(d => d.category)
 			data.splice(0, 0, origin)
 			data.push(origin)
-
+      console.log('data',data)
 
 			for (let i = 0; i < data.length - 1; i++) {
 				let location1 = data[i]

@@ -349,7 +349,7 @@ let userController = {
 			locations = Restaurants.map(d => d.address)
 			for (i = 0; i < locations.length; i++) {
 				duration = await googleMapsClient.directions({
-					origin: req.origin,
+					origin: origin,
 					destination: locations[i]
 				}).asPromise()
 					.then((response) => {
@@ -376,7 +376,7 @@ let userController = {
 			locations = Attractions.map(d => d.address)
 			for (i = 0; i < locations.length; i++) {
 				duration = await googleMapsClient.directions({
-					origin: req.origin,
+					origin: origin,
 					destination: locations[i]
 				}).asPromise()
 					.then((response) => {
@@ -403,7 +403,7 @@ let userController = {
 			locations = Shops.map(d => d.address)
 			for (i = 0; i < locations.length; i++) {
 				duration = await googleMapsClient.directions({
-					origin: req.origin,
+					origin: origin,
 					destination: locations[i]
 				}).asPromise()
 					.then((response) => {
