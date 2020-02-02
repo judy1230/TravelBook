@@ -84,13 +84,34 @@ let userController = {
 		} catch (err) { console.log(err) }
 
 	},
+	getDailyTour: (req, res) => {
+		tourComponents = req.tourComponents
+		temp = req.temp
+		weather = req.weather
+		return res.render('dailyTour', {
+			API_KEY: process.env.API_KEY,
+			title: req.body.title || "儲存前請輸入title",
+			origin,
+			destination,
+			endLocation: origin,
+			endDuration,
+			endTime,
+			tourComponents,
+			date,
+			startMinInit,
+			startHourInit,
+			typeofOrigin: typeof (origin) === typeof ("string") ? true : false,
+			weather,
+			temp
+		})
+	},
   postTour: async (req, res) => {
 		tourComponents = []
 		googleMapsClient = require('@google/maps').createClient({
 			key: process.env.API_KEY,
 			Promise: Promise
 		})
-		try {
+		 try {
 			componentArray = await Component.findAll({
 				where: {
 					UserId: req.user.id
@@ -169,8 +190,7 @@ let userController = {
 					image: image
 				})
 			}
-			  destination = tourComponents[tourComponents.length - 1].destination,
-				endLocation = tourComponents[tourComponents.length - 1].destination,
+			  destination = tourComponents[tourComponents.length - 1].origin,
 				endDuration = tourComponents[tourComponents.length - 1].duration,
 				endTime = tourComponents[tourComponents.length - 1].end
 			tourComponents.pop()
@@ -178,10 +198,10 @@ let userController = {
 				title: req.body.title,
 				UserId: req.user.id,
 				temp: false,
-				origin: req.body.origin,
+				origin: req.body.origin === undefined ? '目前位置': req.body.origin,
 				destination: destination,
 				endDuration: endDuration,
-				endLocation: endLocation,
+				endLocation: req.body.origin === undefined ? '目前位置' : req.body.origin,
 				endTime: endTime,
 				date: req.body.date,
 				startHourInit: req.body.startHourInit,
@@ -203,11 +223,11 @@ let userController = {
 				id: req.params.tour_id
 			}
 		}).then(tour => {
-			//tour.tourComponents.pop()
 			return res.render('getUserDailyTour', {
 				API_KEY: process.env.API_KEY,
 				title: tour.title,
 				origin: tour.origin,
+				originInMap: tour.origin === '目前位置' ? origin : tour.origin,
 				destination: tour.destination,
 				endDuration: tour.endDuration,
 				endLocation: tour.endLocation,
@@ -329,7 +349,7 @@ let userController = {
 			locations = Restaurants.map(d => d.address)
 			for (i = 0; i < locations.length; i++) {
 				duration = await googleMapsClient.directions({
-					origin: res.locals.origin,
+					origin: origin,
 					destination: locations[i]
 				}).asPromise()
 					.then((response) => {

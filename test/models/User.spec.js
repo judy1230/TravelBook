@@ -34,17 +34,17 @@ describe('# User Model', () => {
   context('associations', () => {
     const Comment = 'Comment'
     const Tour = 'Tour'
-    const Blog = 'Blog'
-    const Like = 'Like'
+    //const Blog = 'Blog'
+    //const Like = 'Like'
     const Favorite = 'Favorite'
     const Component = 'Component'
     before(() => {
       User.associate({ Comment })
       User.associate({ Tour })
-      User.associate({ Blog })
+      //User.associate({ Blog })
       User.associate({ Component })
       User.associate({ Favorite })
-      User.associate({ Like })
+      //User.associate({ Like })
     })
 
     it('should have many comments', (done) => {
@@ -55,20 +55,20 @@ describe('# User Model', () => {
       expect(User.hasMany).to.have.been.calledWith(Tour)
       done()
     })
-    it('should have many likes', (done) => {
-      expect(User.hasMany).to.have.been.calledWith(Like)
-      done()
-    })
-    it('should have many blogs', (done) => {
-      expect(User.hasMany).to.have.been.calledWith(Blog)
-      done()
-    })
+    // it('should have many likes', (done) => {
+    //   expect(User.hasMany).to.have.been.calledWith(Like)
+    //   done()
+    // })
+    // it('should have many blogs', (done) => {
+    //   expect(User.hasMany).to.have.been.calledWith(Blog)
+    //   done()
+    // })
     it('should have many favorites', (done) => {
-      expect(User.belongsToMany).to.have.been.calledWith(Favorite)
+      expect(User.hasMany).to.have.been.calledWith(Favorite)
       done()
     })
     it('should have many components', (done) => {
-      expect(User.belongsToMany).to.have.been.calledWith(Component)
+      expect(User.hasMany).to.have.been.calledWith(Component)
       done()
     })
   })

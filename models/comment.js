@@ -36,8 +36,8 @@ module.exports = (sequelize, DataTypes) => {
     Comment.belongsTo(models.Attraction)
     Comment.belongsTo(models.Shop)
     Comment.belongsTo(models.User)
-    Comment.belongsTo(models.Blog)
-    Comment.belongsTo(models.Tour)
+    //Comment.belongsTo(models.Blog)
+    //Comment.belongsTo(models.Tour)
   };
   return Comment;
 };

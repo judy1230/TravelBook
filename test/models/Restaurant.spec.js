@@ -24,7 +24,7 @@ describe('# Restaurant Model', () => {
   })
 
   const Restaurant = RestaurantModel(sequelize, dataTypes)
-  const restaurant = new restaurant()
+  const restaurant = new Restaurant()
   checkModelName(Restaurant)('Restaurant')
 
   context('properties', () => {
@@ -35,16 +35,16 @@ describe('# Restaurant Model', () => {
   context('associations', () => {
     const Comment = 'Comment'
     const Component = 'Component'
-    const Like = 'Like'
+    //const Like = 'Like'
     const Favorite = 'Favorite'
-    const Location = 'Location'
+    //const Location = 'Location'
     const User = 'User'
     before(() => {
       Restaurant.associate({ Comment })
       Restaurant.associate({ Component })
-      Restaurant.associate({ Like })
+      //Restaurant.associate({ Like })
       Restaurant.associate({ Favorite })
-      Restaurant.associate({ Location })
+      //Restaurant.associate({ Location })
       Restaurant.associate({ User })
     })
 
@@ -60,18 +60,14 @@ describe('# Restaurant Model', () => {
       expect(Restaurant.hasMany).to.have.been.calledWith(Favorite)
       done()
     })
-    it('should have many liks', (done) => {
-      expect(Restaurant.hasMany).to.have.been.calledWith(Like)
-      done()
-    })
-    it('should belong to user', (done) => {
-      expect(Restaurant.belongsTo).to.have.been.calledWith(User)
-      done()
-    })
-    it('should belong to locations', (done) => {
-      expect(Restaurant.belongsTo).to.have.been.calledWith(Location)
-      done()
-    })
+    // it('should have many liks', (done) => {
+    //   expect(Restaurant.hasMany).to.have.been.calledWith(Like)
+    //   done()
+    // })
+    // it('should belong to locations', (done) => {
+    //   expect(Restaurant.belongsTo).to.have.been.calledWith(Location)
+    //   done()
+    // })
   })
 
   context('action', () => {
@@ -79,28 +75,28 @@ describe('# Restaurant Model', () => {
     let data = null
 
     it('create', (done) => {
-      db.restaurant.create({UserId: 1, description: 'hi'}).then((restaurant) => {
+      db.Restaurant.create({UserId: 1, name: '鼎泰豐'}).then((restaurant) => {
         data = restaurant
         done()
       })
     })
     it('read', (done) => {
-      db.restaurant.findByPk(data.id).then((restaurant) => {
+      db.Restaurant.findByPk(data.id).then((restaurant) => {
         expect(data.id).to.be.equal(restaurant.id)
           done()
         })
     })
     it('update', (done) => {
-      db.restaurant.update({}, { where: { id: data.id }}).then(() => {
-        db.restaurant.findByPk(data.id).then((restaurant) => {
+      db.Restaurant.update({}, { where: { id: data.id }}).then(() => {
+        db.Restaurant.findByPk(data.id).then((restaurant) => {
           expect(data.updatedAt).to.be.not.equal(restaurant.updatedAt)
           done()
         })
       })
     })
     it('delete', (done) => {
-      db.restaurant.destroy({ where: { id: data.id }}).then(() => {
-        db.restaurant.findByPk(data.id).then((restaurant) => {
+      db.Restaurant.destroy({ where: { id: data.id }}).then(() => {
+        db.Restaurant.findByPk(data.id).then((restaurant) => {
           expect(restaurant).to.be.equal(null)
           done()
         })

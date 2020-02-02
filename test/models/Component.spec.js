@@ -23,22 +23,24 @@ describe('# Component Model', () => {
   })
 
   const Component = ComponentModel(sequelize, dataTypes)
-  const component = new component()
+  const component = new Component()
   checkModelName(Component)('Component')
 
   context('properties', () => {
     ;[
-    ].forEach(checkPropertyExists(Component))
+    ].forEach(checkPropertyExists(component))
   })
 
   context('associations', () => {
     const User = 'User'
     const Restaurant = 'Restaurant'
     const Attraction = 'Attraction'
+    const Shop = ' Shop'
     before(() => {
       Component.associate({ User })
       Component.associate({ Restaurant })
       Component.associate({ Attraction })
+      Component.associate({ Shop })
     })
 
     it('should belong to user', (done) => {
@@ -51,6 +53,10 @@ describe('# Component Model', () => {
     })
     it('should belong to attraction', (done) => {
       expect(Component.belongsTo).to.have.been.calledWith(Attraction)
+      done()
+    })
+    it('should belong to attraction', (done) => {
+      expect(Component.belongsTo).to.have.been.calledWith(Shop)
       done()
     })
   })

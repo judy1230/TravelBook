@@ -22,27 +22,29 @@ describe('# Comment Model', () => {
     done()
   })
 
-  const Comment = ReplyModel(sequelize, dataTypes)
-  const like = new Comment()
+  const Comment = CommentModel(sequelize, dataTypes)
+  const comment = new Comment()
   checkModelName(Comment)('Comment')
 
   context('properties', () => {
     ;[
-    ].forEach(checkPropertyExists(like))
+    ].forEach(checkPropertyExists(comment))
   })
 
   context('associations', () => {
     const User = 'User'
     const Restaurant = 'Restaurant'
     const Attraction = 'Attraction'
-    const Tour = 'Tour'
-    const Blog = 'Blog'
+    const Shop = 'Shop'
+    //const Tour = 'Tour'
+    //const Blog = 'Blog'
     before(() => {
       Comment.associate({ User })
       Comment.associate({ Restaurant })
       Comment.associate({ Attraction })
-      Comment.associate({ Tour })
-      Comment.associate({ Blog })
+      Comment.associate({ Shop })
+      //Comment.associate({ Tour })
+      //Comment.associate({ Blog })
     })
 
     it('should belong to user', (done) => {
@@ -57,14 +59,14 @@ describe('# Comment Model', () => {
       expect(Comment.belongsTo).to.have.been.calledWith(Attraction)
       done()
     })
-    it('should belong to tour', (done) => {
-      expect(Comment.belongsTo).to.have.been.calledWith(Tour)
-      done()
-    })
-    it('should belong to tour', (done) => {
-      expect(Comment.belongsTo).to.have.been.calledWith(Blog)
-      done()
-    })
+    // it('should belong to tour', (done) => {
+    //   expect(Comment.belongsTo).to.have.been.calledWith(Tour)
+    //   done()
+    // })
+    // it('should belong to tour', (done) => {
+    //   expect(Comment.belongsTo).to.have.been.calledWith(Blog)
+    //   done()
+    // })
   })
 
   context('action', () => {

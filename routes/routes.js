@@ -5,6 +5,7 @@ const toursController = require('../controllers/toursController.js')
 const userController = require('../controllers/userController.js')
 const calculate = require('../controllers/calculate.js')
 const passport = require('../config/passport')
+const geolocation = require('../config/geolocation')
 //const helpersreq = require('../_helpers')
 
 const authenticated = (req, res, next) => {
@@ -24,16 +25,16 @@ const authenticatedAdmin = (req, res, next) => {
 router.get('/', (req, res) => res.redirect('/index'))
 router.get('/index', toursController.getIndex)
 //temp tour
-router.post('/users/:id/tour', authenticated, userController.postTour)
-router.put('/users/:id/dailyTour/', authenticated, calculate.calculateDisplay)
-router.get('/users/:tour_id/dailyTour', authenticated, calculate.calculateDisplay)
+router.post('/users/:id/tour', authenticated, geolocation.getCurrentPosition, userController.postTour)
+router.put('/users/:id/dailyTour/', authenticated, calculate.duration, userController.getDailyTour)
+router.get('/users/:tour_id/dailyTour', authenticated, geolocation.getCurrentPosition, calculate.duration, geolocation.getWeather, userController.getDailyTour)
 //store to db tour
 router.get('/users/:id/tour/:tour_id', authenticated, userController.getUserDailyTour)
 router.get('/users/:id/tour/:tour_id/edit', authenticated, userController.getUserDailyTourEdit)
 router.put('/users/:id/tour/:tour_id/edit', authenticated, userController.putUserDailyTourEdit, calculate.putTour)
 router.delete('/users/:id/tour/:tour_id', authenticated, userController.deleteUserDailyTour)
 //user favorite control
-router.get('/users/:id/favorite', authenticated, userController.getFavorites)
+router.get('/users/:id/favorite', authenticated, geolocation.getCurrentPosition,userController.getFavorites)
 router.post('/restaurants/:rest_id/favorite', authenticated, userController.addFavoriteRest)
 router.delete('/restaurants/:rest_id/favorite', authenticated, userController.removeFavoriteRest)
 router.post('/attractions/:attraction_id/favorite', authenticated, userController.addFavoriteAttraction)

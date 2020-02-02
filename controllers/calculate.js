@@ -1,44 +1,29 @@
 const db = require('../models')
-const User = db.User
 const Restaurant = db.Restaurant
 const Attraction = db.Attraction
 const Shop = db.Shop
 const Component = db.Component
 const Tour = db.Tour
-let navigator = require('web-midi-api')
-const helpersreq = require('../_helpers')
+const geolocation = require('../config/geolocation')
+
+
 
 
 const calculate = {
-	calculateDisplay: async (req, res) => {
-	  try {
-		  console.log('/////////////////// calculateDisplay ///////////')
-		///geolocaion
-    	if ("geolocation" in navigator) {
-				 /* geolocation is available */
-				 console.log('geolocation is available')
-	      navigator.geolocation.getCurrentPosition(function(position) {
-				origin = position.coords.latitude, position.coords.longitude;
-				console.log('origin_avaialbe', origin)
-       });
-      } else {
-				 /* geolocation IS NOT available */
-				 console.log('geolocation IS NOT available')
-				 origin = '台北火車站'
-				 console.log('origin_Notavaialbe', origin)
-      }
 
+	duration: async (req, res, next) => {
+		let googleMapsClient = require('@google/maps').createClient({
+			key: process.env.API_KEY,
+			Promise: Promise
+		})
+		try {
 			let data = []
 			let tourComponents = []
 			//+8 is for heroku is utc time
 			startMinInit = req.body.startMinInit ? parseInt(req.body.startMinInit) : new Date().getMinutes()
 			startHourInit = req.body.startHourInit ? parseInt(req.body.startHourInit) : new Date().getHours() + 8
 			date = req.body.date || `${new Date().getMonth() + 1} /  ${new Date().getDate()} / ${new Date().getFullYear()}`
-      origin = req.body.origin || origin
-			googleMapsClient = require('@google/maps').createClient({
-				key: process.env.API_KEY,
-				Promise: Promise
-			})
+			origin = req.body.origin || origin
 			componentArray = await Component.findAll({
 				where: {
 					UserId: req.user.id
@@ -108,6 +93,8 @@ const calculate = {
 				endHour = startHour + diff > 24 ? startHour + diff - 24 : startHour + diff
 				leaveHour = startHour + diffLeave > 24 ? startHour + diffLeave - 24 : startHour + diffLeave
 				image = dataImage[i]
+        //temp = req.geolocation.getWeather()
+
 				tourComponents.push({
 					origin: location1,
 					destination: location2,
@@ -125,23 +112,15 @@ const calculate = {
 				endDuration = tourComponents[tourComponents.length - 1].duration,
 				endTime = tourComponents[tourComponents.length - 1].end
 			tourComponents.pop()
-			return res.render('dailyTour', {
-				API_KEY: process.env.API_KEY,
-				title: req.body.title || "儲存前請輸入title",
-				origin,
-				destination,
-				endLocation,
-				endDuration,
-				endTime,
-				tourComponents,
-				date,
-				startMinInit,
-				startHourInit
-			})
+			//pass tourComponents to next middleware
+			req.tourComponents = tourComponents
+			next()
+
 		} catch (err) { console.log(err) }
+
 	},
 	putTour: async (req, res) => {
-		googleMapsClient = require('@google/maps').createClient({
+		let googleMapsClient = require('@google/maps').createClient({
 			key: process.env.API_KEY,
 			Promise: Promise
 		})
@@ -168,6 +147,7 @@ const calculate = {
 			dataStayTime = componentArray.stayTime.map(d => d)
 			dataCategory = componentArray.data.map(d => d.category)
 			data.splice(0, 0, origin)
+			data.push(origin)
 			for (let i = 0; i < data.length - 1; i++) {
 				let location1 = data[i]
 				let location2 = data[i + 1]
@@ -214,18 +194,17 @@ const calculate = {
 					image: image
 				})
 			}
-
-			destination = tourComponents[tourComponents.length - 1].destination,
+			destination = tourComponents[tourComponents.length - 1].origin,
 				endLocation = tourComponents[tourComponents.length - 1].destination,
 				endDuration = tourComponents[tourComponents.length - 1].duration,
 				endTime = tourComponents[tourComponents.length - 1].end
+			tourComponents.pop()
 			return Tour.findOne({
 				where: {
 					UserId: req.user.id,
 					id: req.params.tour_id
 				}
 			}).then(tour => {
-
 				tour.update({
 					title: req.body.title,
 					origin: req.body.origin,
@@ -233,12 +212,15 @@ const calculate = {
 					startHourInit: parseInt(req.body.startHourInit),
 					startMinInit: parseInt(req.body.startMinInit),
 					tourComponents: tourComponents,
+					endDuration: endDuration,
+					endLocation: endLocation,
+					endTime: endTime
 				})
-
 				return res.redirect(`/users/${req.user.id}/tour/${tour.id}`)
 			})
 		} catch (err) { console.log(err) }
 	}
 }
 module.exports = calculate
+
 
