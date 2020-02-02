@@ -28,14 +28,14 @@ module.exports = {
       updatedAt: new Date(),
     }], {});
 
-    queryInterface.bulkInsert('Locations',
-      Array.from({ length: 5 }).map(d =>
-        ({
-          name: faker.name.findName(),
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        })
-      ), {});
+    // queryInterface.bulkInsert('Locations',
+    //   Array.from({ length: 5 }).map(d =>
+    //     ({
+    //       name: faker.name.findName(),
+    //       createdAt: new Date(),
+    //       updatedAt: new Date(),
+    //     })
+    //   ), {});
     queryInterface.bulkInsert('Restaurants',
       restaurants.map((item) =>
         ({
@@ -151,17 +151,17 @@ module.exports = {
           updatedAt: new Date(),
         })
       ), {});
-    queryInterface.bulkInsert('Favorites',
-      Array.from({ length: 3 }).map(d =>
-        ({
-          UserId: Math.floor(Math.random() * 3) + 1,
-          RestaurantId: Math.floor(Math.random() * 10) + 1,
-          AttractionId: Math.floor(Math.random() * 10) + 1,
-          ShopId: Math.floor(Math.random() * 10) + 1,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        })
-      ), {});
+    // queryInterface.bulkInsert('Favorites',
+    //   Array.from({ length: 3 }).map(d =>
+    //     ({
+    //       UserId: Math.floor(Math.random() * 3) + 1,
+    //       RestaurantId: Math.floor(Math.random() * 10) + 1,
+    //       AttractionId: Math.floor(Math.random() * 10) + 1,
+    //       ShopId: Math.floor(Math.random() * 10) + 1,
+    //       createdAt: new Date(),
+    //       updatedAt: new Date(),
+    //     })
+    //   ), {});
     return queryInterface.bulkInsert('Likes',
       Array.from({ length: 3 }).map(d =>
         ({
@@ -183,11 +183,11 @@ module.exports = {
     queryInterface.bulkDelete('Restaurants', null, {});
     queryInterface.bulkDelete('Attractions', null, {});
     queryInterface.bulkDelete('Shops', null, {});
-    queryInterface.bulkDelete('Locations', null, {});
+    //queryInterface.bulkDelete('Locations', null, {});
     //queryInterface.bulkDelete('Tours', null, {});
     //queryInterface.bulkDelete('Blogs', null, {});
     queryInterface.bulkDelete('Comment', null, {});
-    queryInterface.bulkDelete('Favorites', null, {});
+    //queryInterface.bulkDelete('Favorites', null, {});
     return queryInterface.bulkDelete('Likes', null, {});
     //return queryInterface.bulkDelete('Components', null, {});
   }
