@@ -28,17 +28,17 @@ module.exports = {
 		axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${process.env.API_KEY}`, {
 		})
 			.then(function (response) {
-				origin =  Object.values(response.data.location)
-				lat = response.data.location.lat.toString()
-				lon = response.data.location.lng.toString()
+				//origin =  Object.values(response.data.location)
+				//lat = response.data.location.lat.toString()
+				//lon = response.data.location.lng.toString()
+				origin = [24.7859287, 121.77640849999999]
+				lat = 24.7859287
+				lon = 121.77640849999999
 				next()
 			})
 			.catch(function (error) {
 				console.log(error);
 			});
-
-	},
-	geolocation: (req, res, next) => {
 
 	}
 
