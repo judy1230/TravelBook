@@ -4,7 +4,7 @@ const Attraction = db.Attraction
 const Shop = db.Shop
 const Component = db.Component
 const Tour = db.Tour
-const geolocation = require('../config/geolocation')
+//const geolocation = require('../config/geolocation')
 
 
 
