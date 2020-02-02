@@ -31,7 +31,7 @@ module.exports = {
 				origin =  Object.values(response.data.location)
 				lat = response.data.location.lat.toString()
 				lon = response.data.location.lng.toString()
-
+        req.origin = origin
 				next()
 			})
 			.catch(function (error) {

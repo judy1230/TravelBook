@@ -376,7 +376,7 @@ let userController = {
 			locations = Attractions.map(d => d.address)
 			for (i = 0; i < locations.length; i++) {
 				duration = await googleMapsClient.directions({
-					origin: res.locals.origin,
+					origin: req.origin,
 					destination: locations[i]
 				}).asPromise()
 					.then((response) => {
