@@ -23,7 +23,7 @@ const calculate = {
 			startMinInit = req.body.startMinInit ? parseInt(req.body.startMinInit) : new Date().getMinutes()
 			startHourInit = req.body.startHourInit ? parseInt(req.body.startHourInit) : new Date().getHours() + 8
 			date = req.body.date || `${new Date().getMonth() + 1} /  ${new Date().getDate()} / ${new Date().getFullYear()}`
-			origin = req.body.origin || origin
+			origin = req.body.origin ==='目前位置' ? origin : req.body.origin || origin
 			componentArray = await Component.findAll({
 				where: {
 					UserId: req.user.id
@@ -55,8 +55,6 @@ const calculate = {
 			dataCategory = componentArray.data.map(d => d.category)
 			data.splice(0, 0, origin)
 			data.push(origin)
-      console.log('data',data)
-
 			for (let i = 0; i < data.length - 1; i++) {
 				let location1 = data[i]
 				let location2 = data[i + 1]
